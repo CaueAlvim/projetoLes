@@ -12,7 +12,7 @@ function App() {
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: '30px',
     backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -76,7 +76,7 @@ function App() {
             <StyledInputBase
               placeholder="Pesquisar…"
               inputProps={{ 'aria-label': 'search' }}
-              sx={{ width: '50rem' }}
+              sx={{ width: { xs: '20rem', lg: '50rem', md: '30rem' } }}
             />
           </Search>
         </Box>
