@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import AppBar from './components/AppBar'
 import './index.css'
+import Index from './pages'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AppBar/>
+    <Index/>
   </React.StrictMode>,
 )

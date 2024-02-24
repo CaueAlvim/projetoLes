@@ -61,7 +61,7 @@ function App() {
 
         <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} />
 
-        <Box sx={{ flexGrow:  1, display: 'flex', justifyContent: 'center', marginRight: { lg: '11rem' } }}>
+        <Box sx={{ flexGrow:  1, display: 'flex', justifyContent: 'center' }}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
