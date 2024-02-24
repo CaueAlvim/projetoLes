@@ -41,18 +41,11 @@ function App() {
     '& .MuiInputBase-input': {
       padding: theme.spacing(1, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '20ch',
-        },
-      },
     },
   }));
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#212121' }} >
+    <AppBar position="fixed" sx={{ backgroundColor: '#559bbc' }} >
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setDrawerOpen(true)}>
           <MenuIcon>
@@ -68,15 +61,15 @@ function App() {
 
         <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} />
 
-        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ flexGrow:  1, display: 'flex', justifyContent: 'center', marginRight: { lg: '11rem' } }}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Pesquisar…"
+              placeholder="O que gostaria de ler?"
               inputProps={{ 'aria-label': 'search' }}
-              sx={{ width: { xs: '20rem', lg: '50rem', md: '30rem' } }}
+              sx={{ width: { xs: '20rem', md: '30rem', lg: '50rem' } }}
             />
           </Search>
         </Box>
