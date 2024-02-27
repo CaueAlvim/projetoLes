@@ -45,7 +45,7 @@ function App() {
   }));
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#559bbc' }} >
+    <AppBar sx={{ backgroundColor: '#559bbc', position:'relative', height: '4.2rem' }} >
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setDrawerOpen(true)}>
           <MenuIcon>
