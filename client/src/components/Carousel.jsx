@@ -11,7 +11,7 @@ function Carousel({ setBgColor }) {
 
     const banners = [carousel1, carousel2, {}];
 
-    const colors = ['#22272E', '#4F6FD8', '#ffffff']
+    const colors = ['#22272E', '#4F6FD8', '#70a86c']
 
     const handleSlideChange = (swiper) => {
         setBgColor(colors[swiper.realIndex]);
