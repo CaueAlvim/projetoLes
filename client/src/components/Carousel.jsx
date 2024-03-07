@@ -31,7 +31,7 @@ function Carousel({ setBgColor }) {
             navigation={true}
             allowTouchMove={false}
             modules={[Autoplay, Pagination, Navigation]}
-            style={{ height: '26rem', width: '100%' }}
+            style={{ height: '20rem', width: '100%' }}
             onSlideChange={handleSlideChange}
         >
             {banners.map((image, index) => (

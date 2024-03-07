@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import logo from '../assets/logo.png';
 
-function App() {
+function AppBarSearch() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const Search = styled('div')(({ theme }) => ({
@@ -83,4 +83,4 @@ function App() {
   )
 }
 
-export default App
+export default AppBarSearch
