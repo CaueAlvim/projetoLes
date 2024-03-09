@@ -11,7 +11,7 @@ function Carousel({ setBgColor }) {
 
     const banners = [carousel1, carousel2, {}];
 
-    const colors = ['#22272E', '#4F6FD8', '#70a86c']
+    const colors = ['#22272E', '#4F6FD8', '#bc7655']
 
     const handleSlideChange = (swiper) => {
         setBgColor(colors[swiper.realIndex]);
@@ -29,7 +29,7 @@ function Carousel({ setBgColor }) {
                 clickable: true,
             }}
             navigation={true}
-            allowTouchMove={false}
+            allowTouchMove={true}
             modules={[Autoplay, Pagination, Navigation]}
             style={{ height: '20rem', width: '100%' }}
             onSlideChange={handleSlideChange}

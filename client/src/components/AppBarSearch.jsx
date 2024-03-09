@@ -6,9 +6,11 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import logo from '../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 function AppBarSearch() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const navigate = useNavigate();
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -59,7 +61,7 @@ function AppBarSearch() {
           {['TESTE']}
         </Drawer>
 
-        <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} />
+        <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')}  />
 
         <Box sx={{ flexGrow:  1, display: 'flex', justifyContent: 'center' }}>
           <Search>
