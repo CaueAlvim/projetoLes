@@ -1,5 +1,6 @@
 import { Paper, Typography, Button } from '@mui/material';
 import { styled } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCardContainer = styled(Paper)(({ theme }) => ({
   display: 'flex',
@@ -12,6 +13,8 @@ const ProductCardContainer = styled(Paper)(({ theme }) => ({
 }));
 
 const ProductCard = ({ product }) => {
+  const navigate = useNavigate();
+
   return (
     <ProductCardContainer>
       <img src={product.image} alt={product.name} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
@@ -21,7 +24,7 @@ const ProductCard = ({ product }) => {
       <Typography variant="body2" color="text.secondary">
         {product.price}
       </Typography>
-      <Button variant="contained" color="primary" style={{ marginTop: '0.5rem' }}>
+      <Button variant="contained" color="primary" style={{ marginTop: '0.5rem' }} onClick={() => navigate(`/detalhes-produto/${product.id}`)}>
         COMPRAR
       </Button>
     </ProductCardContainer>
