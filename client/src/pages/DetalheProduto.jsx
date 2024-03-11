@@ -15,7 +15,10 @@ function DetalheProduto() {
 
                     <Grid container item xs={12} md={10} sx={{ height: '45rem', width: 'auto', marginTop: '1.5rem' }}>
 
-                        <Grid container item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'white', borderRadius: '10px 0 0 10px' }}>
+                        <Grid container item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', 
+                                                                  alignItems: 'center', justifyContent: 'center', 
+                                                                  width: '100%', backgroundColor: 'white', 
+                                                                  borderRadius: '10px 0 0 10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)' }}>
                             <Card sx={{ width: 'auto', height: 'auto'}}>
                                 <CardMedia
                                     component="img"
@@ -25,7 +28,10 @@ function DetalheProduto() {
                             </Card>
                         </Grid>
 
-                        <Grid container item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'white', borderRadius: '0 10px 10px 0' }}>
+                        <Grid container item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', 
+                                                                  alignItems: 'center', justifyContent: 'center', 
+                                                                  width: '100%', backgroundColor: 'white', 
+                                                                  borderRadius: '0 10px 10px 0', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)' }}>
                             <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
                                 {product.name}
                             </Typography>
