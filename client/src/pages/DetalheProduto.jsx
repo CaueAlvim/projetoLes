@@ -13,7 +13,7 @@ function DetalheProduto() {
 
                 <Grid container item sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
-                    <Grid container item xs={12} md={10} sx={{ height: '45rem', width: 'auto', marginTop: '1.5rem' }}>
+                    <Grid container xs={12} md={10} sx={{ height: '45rem', width: 'auto', marginTop: '1.5rem' }}>
 
                         <Grid item xs={12} md={6} sx={{
                             display: 'flex', flexDirection: 'column',
