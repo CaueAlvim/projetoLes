@@ -8,16 +8,21 @@ import {
 
 import Index from './pages'
 import DetalheProduto from './pages/DetalheProduto';
+import Carrinho from './pages/Carrinho';
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Index />
+    element: <Index/>
   },
   {
     path: "/detalhes-produto/:id",
-    element: <DetalheProduto />
+    element: <DetalheProduto/>
+  },
+  {
+    path: "/carrinho",
+    element: <Carrinho/>
   },
 ]);
 

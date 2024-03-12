@@ -5,6 +5,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -77,7 +78,11 @@ function AppBarSearch() {
         </Box>
 
         <Button color="inherit">
-          <AccountCircleIcon></AccountCircleIcon>
+          <AccountCircleIcon/>
+        </Button>
+
+        <Button color="inherit" onClick={() => navigate('/carrinho')}>
+          <ShoppingCartIcon/>
         </Button>
 
       </Toolbar>
