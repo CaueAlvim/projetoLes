@@ -31,7 +31,7 @@ function Index() {
         <Grid container sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: backgroundColor, alignItems: 'center' }}>
           <Carousel setBgColor={setBackgroundColor} />
 
-          <Grid container item xs={12} sx={{backgroundColor: '#f1f1f1', height: 'auto', width: '91vw', borderRadius: '10px', marginBottom: '1.5rem' }}>
+          <Grid container item xs={12} sx={{backgroundColor: '#f1f1f1', height: 'auto', width: '80vw', borderRadius: '10px', marginBottom: '1.5rem' }}>
             {products.map((product) => (
               <Grid item xs={4} key={product.id}>
                 <ProductCard product={product} />
