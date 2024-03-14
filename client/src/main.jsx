@@ -9,6 +9,7 @@ import {
 import Index from './pages'
 import DetalheProduto from './pages/DetalheProduto';
 import Carrinho from './pages/Carrinho';
+import Checkout from './pages/Checkout';
 
 
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/carrinho",
     element: <Carrinho/>
+  },
+  {
+    path: "/checkout",
+    element: <Checkout/>
   },
 ]);
 
