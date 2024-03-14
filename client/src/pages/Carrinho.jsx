@@ -28,7 +28,7 @@ function Carrinho() {
                 <Grid container item sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
                     <Grid container item spacing={2} xs={12} md={12} sx={{ height: 'auto', width: '91vw', marginTop: '1.5rem' }}>
-                        <Grid item xs={12} md={8} >
+                        <Grid item xs={12} md={8} sx={{ height: '87vh', overflow: 'scroll' }}>
                                 {products.map((product) => (
                                     <Grid item xs={12} key={product.id} sx={{  }}>
                                         <ProductCardCarrinho product={product} />
