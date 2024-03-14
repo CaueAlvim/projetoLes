@@ -5,7 +5,6 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-
 import Index from './pages'
 import DetalheProduto from './pages/DetalheProduto';
 import Carrinho from './pages/Carrinho';
