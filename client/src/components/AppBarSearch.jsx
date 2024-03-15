@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AppBar, IconButton, Toolbar, Button, Box, Drawer } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Button, Box, Drawer, Badge } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InputBase from '@mui/material/InputBase';
@@ -47,8 +47,18 @@ function AppBarSearch() {
     },
   }));
 
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+       right: -3,
+       top: 1,
+       border: `2px solid #bc7655`,
+       backgroundColor: '#bc7655',
+       padding: '0 4px',
+    },
+   }));
+
   return (
-    <AppBar sx={{ backgroundColor: '#559bbc', position:'relative', height: '4.2rem' }} >
+    <AppBar sx={{ backgroundColor: '#559bbc', position: 'relative', height: '4.2rem' }} >
       <Toolbar>
         <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setDrawerOpen(true)}>
           <MenuIcon>
@@ -62,9 +72,9 @@ function AppBarSearch() {
           {['TESTE']}
         </Drawer>
 
-        <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')}  />
+        <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
 
-        <Box sx={{ flexGrow:  1, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -78,12 +88,14 @@ function AppBarSearch() {
         </Box>
 
         <Button color="inherit">
-          <AccountCircleIcon/>
+          <AccountCircleIcon />
         </Button>
 
-        <Button color="inherit" onClick={() => navigate('/carrinho')}>
-          <ShoppingCartIcon/>
-        </Button>
+        <IconButton aria-label="cart" color="inherit" onClick={() => navigate('/carrinho')}>
+          <StyledBadge badgeContent={4} color="secondary">
+            <ShoppingCartIcon />
+          </StyledBadge>
+        </IconButton>
 
       </Toolbar>
     </AppBar>

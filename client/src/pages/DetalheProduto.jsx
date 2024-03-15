@@ -1,4 +1,6 @@
 import { Grid, Button, Typography, Box, TextField, CardMedia, Card } from '@mui/material';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
 import AppBarSearch from '../components/AppBarSearch';
 import Footer from '../components/Footer';
 
@@ -15,7 +17,7 @@ function DetalheProduto() {
 
                     <Grid container item xs={12} md={10} sx={{ height: '45rem', width: 'auto', marginTop: '1.5rem' }}>
 
-                        <Grid item xs={12} md={6} sx={{
+                        <Grid item xs={12} md={7} sx={{
                             display: 'flex', flexDirection: 'column',
                             alignItems: 'center', justifyContent: 'center',
                             width: '100%', backgroundColor: 'white',
@@ -30,13 +32,13 @@ function DetalheProduto() {
                             </Card>
                         </Grid>
 
-                        <Grid item xs={12} md={6} sx={{
+                        <Grid item xs={12} md={5} sx={{
                             display: 'flex', flexDirection: 'column',
-                            alignItems: 'center', justifyContent: 'center',
+                            alignItems: 'flex-start', justifyContent: 'center',
                             width: '100%', backgroundColor: 'white',
                             borderRadius: '0 10px 10px 0', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)'
                         }}>
-                            <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                            <Typography variant="h4" sx={{ ml: '1.25rem', fontWeight: 'bold' }}>
                                 {product.name}
                             </Typography>
 
@@ -44,29 +46,37 @@ function DetalheProduto() {
                                 {product.description}
                             </Typography>
 
-                            <Typography variant="h5" sx={{ mb: 2, mt: 2, fontWeight: 'bold' }}>
+                            <Typography variant="h5" sx={{ mb: 2, mt: 2, ml: '1.25rem', fontWeight: 'bold' }}>
                                 R$ 2.470,58
                             </Typography>
-                            <hr style={{ borderTop: '1px solid #e5e5e5', width: '90%', margin: '2rem auto' }} />
-                            <Typography variant="h6" sx={{ mb: 2 }}>
-                                Calcule o frete:
-                            </Typography>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <TextField size="small" variant="outlined" sx={{ width: '75%' }} />
-                                <Button variant="contained" color="primary" size="small">
-                                    OK
-                                </Button>
+                            <hr style={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '2rem auto' }} />
+
+                            <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', gap: 1, flexDirection: 'row' }}>
+                                <Typography variant="h6">
+                                    Calcule o frete:
+                                </Typography>
+
+
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                    <TextField size="small" variant="outlined" sx={{ width: '75%' }} />
+                                    <Button variant="contained" color="primary" size="small">
+                                        OK
+                                    </Button>
+                                </Box>
                             </Box>
-                            <hr style={{ borderTop: '1px solid #e5e5e5', width: '90%', margin: '2rem auto' }} />
+
+                            <hr style={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '2rem auto' }} />
 
                             <Grid container spacing={1} sx={{ mt: 1 }}>
                                 <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <Button variant="contained" color="primary" sx={{ height: '3.7rem', width: '80%', fontSize: '.9rem' }}>
+                                        <LocalMallIcon sx={{ mr: '8px' }}/>
                                         Comprar
                                     </Button>
                                 </Grid>
                                 <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <Button variant="contained" color="primary" sx={{ height: '3.7rem', width: '80%', fontSize: '.9rem' }}>
+                                        <AddShoppingCartIcon sx={{ mr: '8px' }}/>
                                         Adicionar ao carrinho
                                     </Button>
                                 </Grid>

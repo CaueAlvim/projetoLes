@@ -1,24 +1,42 @@
-import { Grid, Button, Typography, Box, TextField, CardMedia, Card, CardContent } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
 import AppBarSearch from '../components/AppBarSearch';
 import Footer from '../components/Footer';
 import ProductCardCarrinho from '../components/ProductCardCarrinho';
+import ResumoCompra from '../components/ResumoCompra';
 
 function Carrinho() {
+    const [valorTotal, setValorTotal] = useState();
+    const [valorFrete, setValorFrete] = useState();
+
+    useEffect(() => {
+        fetchProdutos();
+        calcularTotais();
+    }, []);
+
+    // useEffect(() => {
+    //     calcularTotais();
+    // }, [products.length]);
+
+    const fetchProdutos = () => {
+        console.log('placeholder func');
+    }
 
     const products = [
-        { id: 2, name: 'Livro 2', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1  },
-        { id: 3, name: 'Livro 3', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1  },
-        { id: 1, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100', quantity: 1  },
-        { id: 4, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100', quantity: 1  },
-        { id: 5, name: 'Livro 2', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1  },
-        { id: 6, name: 'Livro 3', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1  },
-        { id: 7, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100', quantity: 1  },
-        { id: 8, name: 'Livro 2', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1  },
-        { id: 9, name: 'Livro 3', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1  },
-        { id: 10, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100', quantity: 1  },
-        { id: 11, name: 'Livro 2', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1  },
-        { id: 12, name: 'Livro 3', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1 },
+        { id: 1, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1  },
+        { id: 2, name: 'Livro 2', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1  },
+        { id: 3, name: 'Livro 3', image: 'https://via.placeholder.com/100', price: 'R$100', quantity: 1  },
+        { id: 4, name: 'Livro 4', image: 'https://via.placeholder.com/100', price: 'R$100', quantity: 1  },
+        { id: 5, name: 'Livro 5', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1  },
+        { id: 6, name: 'Livro 6', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1  },
+        { id: 7, name: 'Livro 7', image: 'https://via.placeholder.com/100', price: 'R$100', quantity: 1  },
+        { id: 8, name: 'Livro 8', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1  },
+        { id: 9, name: 'Livro 9', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1  },
     ];
+
+    const calcularTotais = () => {
+        setValorTotal(products?.reduce((somador, produto) => somador + parseFloat(produto.price?.replace('R$', '')), 0)); //,0 valor inicial do somador
+    }
 
     return (
         <>
@@ -37,46 +55,18 @@ function Carrinho() {
                         </Grid>
 
                         <Grid item xs={12} md={4} sx={{ mt: '.5rem' }}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', height: '18rem', bgcolor: 'white', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)' }}>
-                                <Box sx={{ borderBottom: '1px solid #000', paddingBottom: '10px', width: '100%' }}>
-                                    <Typography variant="h4" sx={{ ml: 1.1, mt: 1.1 }}>
-                                        Resumo da compra
-                                    </Typography>
-                                </Box>
-
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
-                                    <Typography variant="h6" sx={{ ml: 1.1 }}>
-                                        Total produtos
-                                    </Typography>
-                                    <Typography variant="h6" sx={{ mr: 1.5 }}>
-                                        {10}
-                                    </Typography>
-                                </Box>
-
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
-                                    <Typography variant="h6" sx={{ ml: 1.1 }}>
-                                        Total c/ frete
-                                    </Typography>
-                                    <Typography variant="h6" sx={{ mr: 1.5 }}>
-                                        R$ 100,00
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
-                                    <Button variant="contained" color="primary" sx={{ height: '3.7rem', width: '90%', fontSize: '.9rem' }}>
-                                        Fazer Checkout
-                                    </Button>
-                                </Box>
-
-                            </Box>
-
+                            <ResumoCompra
+                                isCheckout={false}
+                                quantidadeProdutos={products.length}
+                                valorTotal={valorTotal}
+                                valorFrete={30}
+                            />
                         </Grid>
                     </Grid>
                 </Grid>
 
                 <Footer />
             </Grid>
-
-
         </>
     );
 }
