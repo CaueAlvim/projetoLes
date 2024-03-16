@@ -2,6 +2,7 @@ import { Grid, Button, Typography, Box, FormControl, TextField, Select, InputLab
 import AppBarSearch from '../components/AppBarSearch';
 import Footer from '../components/Footer';
 import ResumoCompra from '../components/ResumoCompra';
+import AddCardIcon from '@mui/icons-material/AddCard';
 
 function Checkout() {
     const products = [
@@ -25,25 +26,34 @@ function Checkout() {
 
                     <Grid container item spacing={2} xs={12} md={12} sx={{ height: 'auto', width: '91vw', marginTop: '1.5rem' }}>
 
-                        <Grid item xs={12} md={8} sx={{ height: '87vh', overflow: 'scroll', mt: '.5rem' }}>
+                        <Grid item xs={12} md={8} sx={{ height: 'auto', mt: '.5rem' }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column', height: 'auto', bgcolor: 'white', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)' }}>
                                 <Box sx={{ borderBottom: '1px solid #000', paddingBottom: '10px', width: '100%' }}>
                                     <Typography variant="h4" sx={{ ml: 1.8, mt: 1.8 }}>
                                         Checkout
                                     </Typography>
                                 </Box>
-                                <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
-                                    <InputLabel id="demo-simple-select-filled-label">Selecionar cartão cadastrado</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-filled-label"
-                                        id="demo-simple-select-filled"
-                                        value={''}
-                                        onChange={() => 1}
-                                    >
-                                        <MenuItem value={10}>RECEBA</MenuItem>
-                                        <MenuItem value={10}>DESAPAREÇA</MenuItem>
-                                    </Select>
-                                </FormControl>
+                                <Grid container sx={{ width: 'auto', alignItems: 'center' }}>
+                                    <Grid item xs={11}>
+                                        <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
+                                            <InputLabel id="demo-simple-select-filled-label">Selecionar cartão cadastrado</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-filled-label"
+                                                id="demo-simple-select-filled"
+                                                value={''}
+                                                onChange={() => 1}
+                                            >
+                                                <MenuItem value={10}>CARTÃO 1</MenuItem>
+                                                <MenuItem value={20}>CARTÃO 2</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={1} >
+                                        <Button sx={{ ml: 1 }}>
+                                            <AddCardIcon />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </Box>
                         </Grid>
 

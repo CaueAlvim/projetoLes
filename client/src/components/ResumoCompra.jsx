@@ -13,28 +13,28 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
             </Box>
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
-                <Typography variant="h6" sx={{ ml: 1.1 }}>
+                <Typography variant="h6" sx={{ ml: 2.25 }}>
                     Quantidade de produtos
                 </Typography>
-                <Typography variant="h6" sx={{ mr: 1.5 }}>
+                <Typography variant="h6" sx={{ mr: 2.25 }}>
                     {quantidadeProdutos}
                 </Typography>
             </Box>
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
-                <Typography variant="h6" sx={{ ml: 1.1 }}>
+                <Typography variant="h6" sx={{ ml: 2.25 }}>
                     Valor total
                 </Typography>
-                <Typography variant="h6" sx={{ mr: 1.5 }}>
+                <Typography variant="h6" sx={{ mr: 2.25 }}>
                     R$ {valorTotal}
                 </Typography>
             </Box>
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
-                <Typography variant="h6" sx={{ ml: 1.1 }}>
+                <Typography variant="h6" sx={{ ml: 2.25 }}>
                     Total c/ frete
                 </Typography>
-                <Typography variant="h6" sx={{ mr: 1.5 }}>
+                <Typography variant="h6" sx={{ mr: 2.25 }}>
                     R$ {valorTotal + valorFrete}
                 </Typography>
             </Box>
@@ -46,8 +46,8 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
                     </Typography>
 
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <TextField size="small" variant="outlined" sx={{ width: '75%' }} />
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: '1rem', width: '100%' }}>
+                        <TextField size="small" variant="outlined" sx={{ width: '90%' }} />
                         <Button variant="contained" color="primary" size="small">
                             OK
                         </Button>
