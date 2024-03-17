@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { Grid, Button, Typography, Box, FormControl, TextField, Select, InputLabel, MenuItem } from '@mui/material';
 import AppBarSearch from '../components/AppBarSearch';
 import Footer from '../components/Footer';
 import ResumoCompra from '../components/ResumoCompra';
 import AddCardIcon from '@mui/icons-material/AddCard';
+import AddLocationIcon from '@mui/icons-material/AddLocation';
+import ArrowBackIosNewTwoToneIcon from '@mui/icons-material/ArrowBackIosNewTwoTone';
 
 function Checkout() {
     const products = [
@@ -16,6 +19,14 @@ function Checkout() {
         { id: 8, name: 'Livro 8', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1 },
         { id: 9, name: 'Livro 9', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1 },
     ];
+
+    const [showNewAddressForm, setShowNewAddressForm] = useState(false);
+    const [showNewCardForm, setShowNewCardForm] = useState(false);
+
+    const handleClickGoBack = () => {
+        setShowNewCardForm(false);
+        setShowNewAddressForm(false);
+    }
 
     return (
         <>
@@ -33,27 +44,164 @@ function Checkout() {
                                         Checkout
                                     </Typography>
                                 </Box>
-                                <Grid container sx={{ width: 'auto', alignItems: 'center' }}>
-                                    <Grid item xs={11}>
-                                        <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
-                                            <InputLabel id="demo-simple-select-filled-label">Selecionar cartão cadastrado</InputLabel>
-                                            <Select
-                                                labelId="demo-simple-select-filled-label"
-                                                id="demo-simple-select-filled"
-                                                value={''}
-                                                onChange={() => 1}
-                                            >
-                                                <MenuItem value={10}>CARTÃO 1</MenuItem>
-                                                <MenuItem value={20}>CARTÃO 2</MenuItem>
-                                            </Select>
-                                        </FormControl>
+
+                                {!showNewCardForm && !showNewAddressForm && (
+                                    <Grid container sx={{ width: 'auto', alignItems: 'center' }}>
+                                        <Grid item xs={11}>
+                                            <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
+                                                <InputLabel id="demo-simple-select-filled-label">Selecionar cartão cadastrado</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-filled-label"
+                                                    id="demo-simple-select-filled"
+                                                    value={''}
+                                                    onChange={() => 1}
+                                                >
+                                                    <MenuItem value={10}>CARTÃO 1</MenuItem>
+                                                    <MenuItem value={20}>CARTÃO 2</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={1} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                            <Button onClick={() => setShowNewCardForm(true)} sx={{ ml: 1 }}>
+                                                <AddCardIcon />
+                                            </Button>
+                                        </Grid>
+
+                                        <Grid item xs={11}>
+                                            <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
+                                                <InputLabel id="demo-simple-select-filled-label">Selecionar endereço cadastrado</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-filled-label"
+                                                    id="demo-simple-select-filled"
+                                                    value={''}
+                                                    onChange={() => 1}
+                                                >
+                                                    <MenuItem value={10}>ENDEREÇO 1</MenuItem>
+                                                    <MenuItem value={20}>ENDEREÇO 2</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={1} sx={{ display: 'flex', justifyContent: 'center' }} >
+                                            <Button onClick={() => setShowNewAddressForm(true)} sx={{ ml: 1 }}>
+                                                <AddLocationIcon />
+                                            </Button>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={1} >
-                                        <Button sx={{ ml: 1 }}>
-                                            <AddCardIcon />
+                                )}
+
+
+                                {showNewCardForm && !showNewAddressForm && (
+                                    <Grid container sx={{ width: 'auto', alignItems: 'flex-start' }}>
+                                        <Grid item xs={10}>
+                                            <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                            required
+                                                            id="nomeCartao"
+                                                            label="Nome no cartão"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={7}>
+                                                        <TextField
+                                                            required
+                                                            id="numCartao"
+                                                            label="Nº do cartão"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={2}>
+                                                        <TextField
+                                                            required
+                                                            id="cartaoCvv"
+                                                            label="CVV"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <TextField
+                                                            required
+                                                            id="dataValidade"
+                                                            label="Data de validade"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                            <Button size='medium' onClick={handleClickGoBack} sx={{ ml: 1, mt: 2 }}>
+                                                <ArrowBackIosNewTwoToneIcon /> Voltar
+                                            </Button>
+                                        </Grid>
+                                        <Button variant="contained" sx={{ margin: 2 }}>
+                                            SALVAR
                                         </Button>
                                     </Grid>
-                                </Grid>
+                                )}
+
+                                {!showNewCardForm && showNewAddressForm && (
+                                    <Grid container sx={{ width: 'auto', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
+                                        <Grid item xs={10}>
+                                            <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                            required
+                                                            id="streetAddress"
+                                                            label="Street Address"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <TextField
+                                                            required
+                                                            id="city"
+                                                            label="City"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <TextField
+                                                            required
+                                                            id="state"
+                                                            label="State"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <TextField
+                                                            required
+                                                            id="postalCode"
+                                                            label="Postal Code"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={6}>
+                                                        <TextField
+                                                            required
+                                                            id="country"
+                                                            label="Country"
+                                                            sx={{ width: '100%' }}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                            <Button size='medium' onClick={handleClickGoBack} sx={{ ml: 1, mt: 2 }}>
+                                                <ArrowBackIosNewTwoToneIcon /> Voltar
+                                            </Button>
+                                        </Grid>
+                                        <Button variant="contained" sx={{ margin: 2 }}>
+                                            SALVAR
+                                        </Button>
+                                    </Grid>
+
+
+                                )}
+
                             </Box>
                         </Grid>
 
