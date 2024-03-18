@@ -91,7 +91,7 @@ function Checkout() {
 
 
                                 {showNewCardForm && !showNewAddressForm && (
-                                    <Grid container sx={{ width: 'auto', alignItems: 'flex-start' }}>
+                                    <Grid container sx={{ width: 'auto', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
                                         <Grid item xs={10}>
                                             <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
                                                 <Grid container spacing={2}>
@@ -146,43 +146,43 @@ function Checkout() {
                                         <Grid item xs={10}>
                                             <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
                                                 <Grid container spacing={2}>
-                                                    <Grid item xs={12}>
+                                                    <Grid item xs={12} md={8}>
                                                         <TextField
                                                             required
-                                                            id="streetAddress"
-                                                            label="Street Address"
+                                                            id="endRua"
+                                                            label="Rua"
                                                             sx={{ width: '100%' }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={12} md={6}>
+                                                    <Grid item xs={12} md={4}>
                                                         <TextField
                                                             required
-                                                            id="city"
-                                                            label="City"
+                                                            id="endCep"
+                                                            label="CEP"
                                                             sx={{ width: '100%' }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={12} md={6}>
+                                                    <Grid item xs={12} md={5}>
                                                         <TextField
                                                             required
-                                                            id="state"
-                                                            label="State"
+                                                            id="endBairro"
+                                                            label="Bairro"
                                                             sx={{ width: '100%' }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={12} md={6}>
+                                                    <Grid item xs={12} md={5}>
                                                         <TextField
                                                             required
-                                                            id="postalCode"
-                                                            label="Postal Code"
+                                                            id="endCidade"
+                                                            label="Cidade"
                                                             sx={{ width: '100%' }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={12} md={6}>
+                                                    <Grid item xs={12} md={2}>
                                                         <TextField
                                                             required
-                                                            id="country"
-                                                            label="Country"
+                                                            id="endEstado"
+                                                            label="UF"
                                                             sx={{ width: '100%' }}
                                                         />
                                                     </Grid>

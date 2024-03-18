@@ -10,7 +10,6 @@ import logo from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 
 function AppBarSearch() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
 
   const Search = styled('div')(({ theme }) => ({
@@ -60,17 +59,6 @@ function AppBarSearch() {
   return (
     <AppBar sx={{ backgroundColor: '#559bbc', position: 'relative', height: '4.2rem' }} >
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} onClick={() => setDrawerOpen(true)}>
-          <MenuIcon>
-          </MenuIcon>
-        </IconButton>
-
-        <Drawer
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-        >
-          {['TESTE']}
-        </Drawer>
 
         <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
 
@@ -87,7 +75,7 @@ function AppBarSearch() {
           </Search>
         </Box>
 
-        <Button color="inherit">
+        <Button color="inherit" onClick={() => navigate('/home')}>
           <AccountCircleIcon />
         </Button>
 

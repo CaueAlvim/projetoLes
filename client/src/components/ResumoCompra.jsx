@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 
 function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }) {
@@ -21,6 +21,8 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
                 </Typography>
             </Box>
 
+            <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: ' auto' }} />
+
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
                 <Typography variant="h6" sx={{ ml: 2.25 }}>
                     Valor total
@@ -30,7 +32,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
                 </Typography>
             </Box>
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6" sx={{ ml: 2.25 }}>
                     Total c/ frete
                 </Typography>
@@ -40,13 +42,13 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
             </Box>
 
             {isCheckout && (
-                <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', gap: 1, flexDirection: 'row', mt: '1rem' }}>
+                <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', gap: 1, flexDirection: 'row' }}>
                     <Typography variant="h6">
                         Cupom de troca:
                     </Typography>
 
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: '1rem', width: '100%' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: '1rem', width: '100%', mt: .5 }}>
                         <TextField size="small" variant="outlined" sx={{ width: '90%' }} />
                         <Button variant="contained" color="primary" size="small">
                             OK
@@ -55,7 +57,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
                 </Box>
             )}
 
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1.5rem', mb: '1rem' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: .9, mb: '1rem' }}>
                 {isCheckout ? (
                     <Button variant="contained" color="primary" sx={{ height: '3.7rem', width: '90%', fontSize: '.9rem' }}>
                         Finalizar Compra

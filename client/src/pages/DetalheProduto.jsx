@@ -1,4 +1,4 @@
-import { Grid, Button, Typography, Box, TextField, CardMedia, Card } from '@mui/material';
+import { Grid, Button, Typography, Box, TextField, CardMedia, Card, Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import AppBarSearch from '../components/AppBarSearch';
@@ -49,7 +49,7 @@ function DetalheProduto() {
                             <Typography variant="h5" sx={{ mb: 2, mt: 2, ml: '1.25rem', fontWeight: 'bold' }}>
                                 R$ 2.470,58
                             </Typography>
-                            <hr style={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '2rem auto' }} />
+                            <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '2rem auto' }} />
 
                             <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', gap: 1, flexDirection: 'row' }}>
                                 <Typography variant="h6">
@@ -65,7 +65,7 @@ function DetalheProduto() {
                                 </Box>
                             </Box>
 
-                            <hr style={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '2rem auto' }} />
+                            <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '2rem auto' }} />
 
                             <Grid container spacing={1} sx={{ mt: 1 }}>
                                 <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'center' }}>

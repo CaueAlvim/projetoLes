@@ -9,6 +9,7 @@ import Index from './pages'
 import DetalheProduto from './pages/DetalheProduto';
 import Carrinho from './pages/Carrinho';
 import Checkout from './pages/Checkout';
+import AdmHome from './pages/AdmHome';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: <Checkout/>
+  },
+  {
+    path: "/home",
+    element: <AdmHome/>
   },
 ]);
 
