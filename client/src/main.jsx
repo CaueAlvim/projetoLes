@@ -10,6 +10,7 @@ import DetalheProduto from './pages/DetalheProduto';
 import Carrinho from './pages/Carrinho';
 import Checkout from './pages/Checkout';
 
+
 const router = createBrowserRouter([
   {
     path: "/",
