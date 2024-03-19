@@ -1,8 +1,11 @@
-import { Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import moment from 'moment';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useState } from 'react';
+import ProductCardDevolucao from './ProductCardDevolucao';
 
 function AdmPedidos() {
-
+    const [openDevolucaoDialog, setOpenDevolucaoDialog] = useState(false);
     const pedidosTable = [
         { numero: '1111111111', usuario: 'NOMEUSUARIO1', dataPedido: '2023-12-02' },
         { numero: '2222222222', usuario: 'NOMEUSUARIO2', dataPedido: '2023-12-30' },
@@ -12,9 +15,39 @@ function AdmPedidos() {
         { numero: '6666666666', usuario: 'NOMEUSUARIO6', dataPedido: '2023-12-06' },
     ];
 
+    const product = { id: 1, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100' };
+
+    const handleCloseDevolucaoModal = () => {
+        setOpenDevolucaoDialog(false);
+    }
+
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
+
+            <Dialog
+                open={openDevolucaoDialog}
+                keepMounted
+                onClose={handleCloseDevolucaoModal}
+                aria-describedby="descricao"
+            >
+                <DialogTitle>{"Deseja solicitar a devolução deste item?"}</DialogTitle>
+                <DialogContent>
+                    <Typography variant="body1" sx={{ mt: 3 }}>
+                        Dados do pedido
+                    </Typography>
+                    <Divider variant='fullWidth' sx={{ width: '100%', margin: ' auto', bgcolor: 'black' }} />
+                    <ProductCardDevolucao product={product} />
+                    <DialogContentText id="descricao" sx={{ mt: 4 }}>
+                        Após enviar esta solicitação você receberá um retorno em até 3 dias.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDevolucaoModal}>Seguir</Button>
+                </DialogActions>
+            </Dialog>
+
+
             <Paper elevation={3} sx={{ width: '75%', height: 'auto' }}>
                 <Typography variant="h4" sx={{ ml: 2, mt: 2 }}>
                     Pedidos
@@ -39,7 +72,7 @@ function AdmPedidos() {
                     </Grid>
                 </Container>
 
-                <Divider variant='fullWidth' sx={{width: '97%', margin: ' auto' }} />
+                <Divider variant='fullWidth' sx={{ width: '97%', margin: ' auto' }} />
 
                 <Container fixed sx={{ my: 5 }}>
                     <TableContainer component={Paper} sx={{ width: '100%' }}>
@@ -49,6 +82,7 @@ function AdmPedidos() {
                                     <TableCell>Nº do pedido</TableCell>
                                     <TableCell align="center">Feito por</TableCell>
                                     <TableCell align="right">Data do pedido</TableCell>
+                                    <TableCell align="right"></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -63,7 +97,11 @@ function AdmPedidos() {
                                         <TableCell align="right">
                                             {moment(row.dataPedido).format('DD/MM/YYYY')}
                                         </TableCell>
-
+                                        <TableCell align="right">
+                                            <Button onClick={() => setOpenDevolucaoDialog(true)} sx={{ height: '.5rem' }}>
+                                                <MoreHorizIcon />
+                                            </Button>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
