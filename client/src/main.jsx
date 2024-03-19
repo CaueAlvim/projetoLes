@@ -9,7 +9,7 @@ import Index from './pages'
 import DetalheProduto from './pages/DetalheProduto';
 import Carrinho from './pages/Carrinho';
 import Checkout from './pages/Checkout';
-import AdmHome from './pages/AdmHome';
+import UserHome from './pages/UserHome';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <AdmHome/>
+    element: <UserHome/>
   },
 ]);
 

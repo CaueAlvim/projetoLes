@@ -89,7 +89,6 @@ function Checkout() {
                                     </Grid>
                                 )}
 
-
                                 {showNewCardForm && !showNewAddressForm && (
                                     <Grid container sx={{ width: 'auto', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
                                         <Grid item xs={10}>

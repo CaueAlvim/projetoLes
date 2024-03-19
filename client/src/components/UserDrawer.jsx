@@ -3,15 +3,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
-function UserDrawer({ isAdmin }) {
+function UserDrawer({ isAdmin, setPage }) {
 
     return (
         <Box sx={{ bgcolor: 'white', width: '20rem' }}>
             <Grid item xs={12}>
                 <List>
-
                     <ListItem disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => setPage('MINHACONTA')}>
                             <ListItemIcon>
                                 <AccountCircleIcon />
                             </ListItemIcon>
@@ -20,7 +19,7 @@ function UserDrawer({ isAdmin }) {
                     </ListItem>
 
                     <ListItem disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => setPage('PEDIDOS')}>
                             <ListItemIcon>
                                 <ReceiptLongIcon />
                             </ListItemIcon>
@@ -30,7 +29,7 @@ function UserDrawer({ isAdmin }) {
 
                     {isAdmin && (
                         <ListItem disablePadding>
-                            <ListItemButton>
+                            <ListItemButton onClick={() => setPage('USUARIOS')}>
                                 <ListItemIcon>
                                     <SupervisorAccountIcon />
                                 </ListItemIcon>
