@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import UserDrawer from '../components/UserDrawer';
 import logo from '../assets/logo.png';
-import UserData from '../components/UserData';
+import UserData from './UserData';
 import { useState } from 'react';
-import AdmPedidos from '../components/AdmPedidos';
-import AdmUsuarios from '../components/AdmUsuarios';
+import UserPedidos from './UserPedidos';
+import AdmUsuarios from './AdmUsuarios';
 
 function UserHome() {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ function UserHome() {
             case 'MINHACONTA':
                 return <UserData />;
             case 'PEDIDOS':
-                return <AdmPedidos />;
+                return <UserPedidos />;
             case 'USUARIOS':
                 return <AdmUsuarios />;
             default:

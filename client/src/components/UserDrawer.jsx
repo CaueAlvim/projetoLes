@@ -23,7 +23,7 @@ function UserDrawer({ isAdmin, setPage }) {
                             <ListItemIcon>
                                 <ReceiptLongIcon />
                             </ListItemIcon>
-                            {isAdmin ? (<ListItemText primary={'Detalhes dos pedidos'} />) : (<ListItemText primary={'Meus pedidos'} />)}
+                            <ListItemText primary={ isAdmin ? 'Detalhes dos pedidos' : 'Meus pedidos'} />
                         </ListItemButton>
                     </ListItem>
 
@@ -37,7 +37,6 @@ function UserDrawer({ isAdmin, setPage }) {
                             </ListItemButton>
                         </ListItem>
                     )}
-
                 </List>
             </Grid>
             <Grid item xs={12}>

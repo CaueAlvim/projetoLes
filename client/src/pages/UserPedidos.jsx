@@ -1,26 +1,47 @@
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import moment from 'moment';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useState } from 'react';
-import ProductCardDevolucao from './ProductCardDevolucao';
+import ProductCardDevolucao from '../components/ProductCardDevolucao';
 
-function AdmPedidos() {
+function UserPedidos() {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openMenu, setOpenMenu] = useState(false);
     const [openDevolucaoDialog, setOpenDevolucaoDialog] = useState(false);
+    const [openStatusDialog, setOpenStatusDialog] = useState(false);
+    const [produtoSelecionado, setProdutoSelecionado] = useState({ status: '' });
+
     const pedidosTable = [
-        { numero: '1111111111', usuario: 'NOMEUSUARIO1', dataPedido: '2023-12-02' },
-        { numero: '2222222222', usuario: 'NOMEUSUARIO2', dataPedido: '2023-12-30' },
-        { numero: '3333333333', usuario: 'NOMEUSUARIO3', dataPedido: '2023-12-03' },
-        { numero: '4444444444', usuario: 'NOMEUSUARIO4', dataPedido: '2023-12-04' },
-        { numero: '5555555555', usuario: 'NOMEUSUARIO5', dataPedido: '2023-12-05' },
-        { numero: '6666666666', usuario: 'NOMEUSUARIO6', dataPedido: '2023-12-06' },
+        { numero: '123', usuario: 'NOMEUSUARIO1', status: 'ENCAMINHADO', dataPedido: '2023-12-02' },
+        { numero: '456', usuario: 'NOMEUSUARIO2', status: 'AGUARDANDO PAGAMENTO', dataPedido: '2023-12-30' },
+        { numero: '789', usuario: 'NOMEUSUARIO3', status: 'FINALIZADO', dataPedido: '2023-12-03' },
     ];
 
     const product = { id: 1, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100' };
 
-    const handleCloseDevolucaoModal = () => {
+    const handleOpenDialogDevolucao = () => {
+        setOpenDevolucaoDialog(true)
+        setOpenMenu(false);
+    }
+
+    const handleOpenDialogStatus = () => {
+        setOpenStatusDialog(true);
+        setOpenMenu(false);
+    }
+
+    const handleCloseDialogDevolucao = () => {
         setOpenDevolucaoDialog(false);
     }
 
+    const handleCloseDialogStatus = () => {
+        setOpenStatusDialog(false);
+    }
+
+    const handleClickMoreOptions = (event, itemSelecinado) => {
+        setAnchorEl(event.currentTarget);
+        setProdutoSelecionado(itemSelecinado)
+        setOpenMenu(true);
+    }
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
@@ -28,10 +49,10 @@ function AdmPedidos() {
             <Dialog
                 open={openDevolucaoDialog}
                 keepMounted
-                onClose={handleCloseDevolucaoModal}
+                onClose={handleCloseDialogDevolucao}
                 aria-describedby="descricao"
             >
-                <DialogTitle>{"Deseja solicitar a devolução deste item?"}</DialogTitle>
+                <DialogTitle>{"Deseja solicitar a troca/devolução deste item?"}</DialogTitle>
                 <DialogContent>
                     <Typography variant="body1" sx={{ mt: 3 }}>
                         Dados do pedido
@@ -43,10 +64,36 @@ function AdmPedidos() {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDevolucaoModal}>Seguir</Button>
+                    <Button onClick={handleCloseDialogDevolucao}>Seguir</Button>
                 </DialogActions>
             </Dialog>
 
+            <Dialog
+                open={openStatusDialog}
+                keepMounted
+                onClose={handleCloseDialogStatus}
+                aria-describedby="descricao"
+            >
+                <DialogTitle>{"Deseja alterar status deste pedido?"}</DialogTitle>
+                <DialogContent>
+                    <Select
+                        id="alterarStatus"
+                        value={produtoSelecionado.status}
+                        fullWidth
+                        onChange={(e) => {
+                            setProdutoSelecionado(prevState => ({ ...prevState, status: e.target.value }));
+                        }}
+                    >
+                        <MenuItem value={'ENCAMINHADO'}>ENCAMINHADO</MenuItem>
+                        <MenuItem value={'AGUARDANDO PAGAMENTO'}>AGUARDANDO PAGAMENTO</MenuItem>
+                        <MenuItem value={'FINALIZADO'}>FINALIZADO</MenuItem>
+                    </Select>
+
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialogStatus}>OK</Button>
+                </DialogActions>
+            </Dialog>
 
             <Paper elevation={3} sx={{ width: '75%', height: 'auto' }}>
                 <Typography variant="h4" sx={{ ml: 2, mt: 2 }}>
@@ -81,6 +128,7 @@ function AdmPedidos() {
                                 <TableRow>
                                     <TableCell>Nº do pedido</TableCell>
                                     <TableCell align="center">Feito por</TableCell>
+                                    <TableCell align="center">Status</TableCell>
                                     <TableCell align="right">Data do pedido</TableCell>
                                     <TableCell align="right"></TableCell>
                                 </TableRow>
@@ -94,13 +142,24 @@ function AdmPedidos() {
                                         <TableCell align="center" component="th" scope="row">
                                             {row.usuario}
                                         </TableCell>
+                                        <TableCell align="center" component="th" scope="row">
+                                            {row.status}
+                                        </TableCell>
                                         <TableCell align="right">
                                             {moment(row.dataPedido).format('DD/MM/YYYY')}
                                         </TableCell>
                                         <TableCell align="right">
-                                            <Button onClick={() => setOpenDevolucaoDialog(true)} sx={{ height: '.5rem' }}>
+                                            <Button onClick={(e) => handleClickMoreOptions(e, row)} sx={{ height: '.5rem' }}>
                                                 <MoreHorizIcon />
                                             </Button>
+                                            <Menu
+                                                anchorEl={anchorEl}
+                                                open={openMenu}
+                                                onClose={() => setOpenMenu(false)}
+                                            >
+                                                <MenuItem onClick={handleOpenDialogStatus}>Alterar Status</MenuItem>
+                                                <MenuItem onClick={handleOpenDialogDevolucao}>Solicitar Troca/Devolução</MenuItem>
+                                            </Menu>
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -114,4 +173,4 @@ function AdmPedidos() {
     )
 }
 
-export default AdmPedidos;
+export default UserPedidos;
