@@ -1,12 +1,50 @@
-import { Grid, Button, FormControl, TextField, Select, InputLabel, MenuItem } from '@mui/material';
+import { Grid, Button, FormControl, TextField, Select, InputLabel, MenuItem, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ArrowBackIosNewTwoToneIcon from '@mui/icons-material/ArrowBackIosNewTwoTone';
+import { useState } from 'react';
 
-function CheckoutForm({newCardForm, setNewCardForm, newAddressForm, setNewAddressForm, handleClickGoBack}) {
+function CheckoutForm({ newCardForm, setNewCardForm, newAddressForm, setNewAddressForm, handleClickGoBack }) {
+    const [chosePaymentMethod, setChosePaymentMethod] = useState(true);
+
     return (
         <>
-            {!newCardForm && !newAddressForm && (
+            {chosePaymentMethod && (
+                <Grid container >
+
+                    <Grid item xs={10}>
+                        <FormControl sx={{ m: 1 }}>
+                            <FormLabel id="demo-radio-buttons-group-label">Escolha o método de pagamento</FormLabel>
+                            <RadioGroup
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                defaultValue="female"
+                                name="radio-buttons-group"
+                            >
+                                <FormControlLabel value="female" control={<Radio />} label="Cartão de crédito" />
+                                <FormControlLabel value="male" control={<Radio />} label="2 Cartões" />
+                                <FormControlLabel value="other" control={<Radio />} label="Cupom de troca" />
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+
+                    <Grid item xs={2} sx={{ position: 'relative' }}>
+                        <Button
+                            variant='contained'
+                            sx={{ height: '2.5rem', position: 'absolute', right: 10, bottom: 10 }}
+                            onClick={() => setChosePaymentMethod(false)} >Salvar
+                        </Button>
+                    </Grid>
+
+                </Grid>
+            )}
+
+            {!chosePaymentMethod && (
+                <Button onClick={() => setChosePaymentMethod(true)} sx={{ my: 2 }}>
+                    <ArrowBackIosNewTwoToneIcon /> Selecionar método de pagamento
+                </Button>
+            )}
+
+            {!newCardForm && !newAddressForm && !chosePaymentMethod && (
                 <Grid container sx={{ width: 'auto', alignItems: 'center' }}>
                     <Grid item xs={11}>
                         <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
@@ -50,7 +88,7 @@ function CheckoutForm({newCardForm, setNewCardForm, newAddressForm, setNewAddres
                 </Grid>
             )}
 
-            {newCardForm && !newAddressForm && (
+            {newCardForm && !newAddressForm && !chosePaymentMethod && (
                 <Grid container sx={{ width: 'auto', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
                     <Grid item xs={10}>
                         <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
@@ -101,7 +139,7 @@ function CheckoutForm({newCardForm, setNewCardForm, newAddressForm, setNewAddres
                 </Grid>
             )}
 
-            {!newCardForm && newAddressForm && (
+            {!newCardForm && newAddressForm && !chosePaymentMethod && (
                 <Grid container sx={{ width: 'auto', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
                     <Grid item xs={10}>
                         <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>

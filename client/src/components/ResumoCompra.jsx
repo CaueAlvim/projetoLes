@@ -44,7 +44,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
             {isCheckout && (
                 <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', gap: 1, flexDirection: 'row' }}>
                     <Typography variant="h6">
-                        Cupom de troca:
+                        Cupom promocional:
                     </Typography>
 
 
