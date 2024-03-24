@@ -7,6 +7,7 @@ import { useState } from 'react';
 function CheckoutForm({ newCardForm, setNewCardForm, newAddressForm, setNewAddressForm, handleClickGoBack }) {
     const [chosePaymentMethod, setChosePaymentMethod] = useState(true);
 
+    
     return (
         <>
             {chosePaymentMethod && (
