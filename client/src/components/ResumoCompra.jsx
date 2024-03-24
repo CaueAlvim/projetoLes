@@ -59,7 +59,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
 
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: .9, mb: '1rem' }}>
                 {isCheckout ? (
-                    <Button variant="contained" color="primary" sx={{ height: '3.7rem', width: '90%', fontSize: '.9rem' }}>
+                    <Button variant="contained" color="primary" onClick={() => navigate('/finalizacao')} sx={{ height: '3.7rem', width: '90%', fontSize: '.9rem' }}>
                         Finalizar Compra
                     </Button>
                 )
