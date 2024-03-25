@@ -24,15 +24,15 @@ public class Cliente {
     private LocalDate dataCadastro;
 
     @OneToMany
-    @JoinColumn(name="cidade")
+    @JoinColumn(name="endereco")
     private List<Endereco> endereco;
 
     @OneToMany
-    @JoinColumn(name="cidade")
+    @JoinColumn(name="cupom")
     private List<Cupom> cupons;
 
     @OneToMany
-    @JoinColumn(name="cidade")
+    @JoinColumn(name="cartao")
     private List<Cartao> cartoes;
 
 }
