@@ -1,16 +1,15 @@
-import { useState } from 'react'
-import { AppBar, IconButton, Toolbar, Button, Box, Drawer, Badge } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { AppBar, IconButton, Toolbar, Button, Box, Badge } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
+import ModalCadastroLogin from './ModalCadastro';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from '../assets/logo.png';
-import { useNavigate } from 'react-router-dom';
 
 function AppBarSearch() {
-  const navigate = useNavigate();
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -48,45 +47,56 @@ function AppBarSearch() {
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
-       right: -3,
-       top: 1,
-       border: `2px solid #bc7655`,
-       backgroundColor: '#bc7655',
-       padding: '0 4px',
+      right: -3,
+      top: 1,
+      border: `2px solid #bc7655`,
+      backgroundColor: '#bc7655',
+      padding: '0 4px',
     },
-   }));
+  }));
+
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(false);
+  const [openModalCadastro, setOpenModalCadastro] = useState(false);
 
   return (
-    <AppBar sx={{ backgroundColor: '#559bbc', position: 'relative', height: '4.2rem' }} >
-      <Toolbar>
+    <>
+      <AppBar sx={{ backgroundColor: '#559bbc', position: 'relative', height: '4.2rem' }} >
+        <Toolbar>
 
-        <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
+          <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
 
-        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="O que gostaria de ler?"
-              inputProps={{ 'aria-label': 'search' }}
-              sx={{ width: { xs: '20rem', md: '30rem', lg: '50rem' } }}
-            />
-          </Search>
-        </Box>
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="O que gostaria de ler?"
+                inputProps={{ 'aria-label': 'search' }}
+                sx={{ width: { xs: '20rem', md: '30rem', lg: '50rem' } }}
+              />
+            </Search>
+          </Box>
 
-        <Button color="inherit" onClick={() => navigate('/home')}>
-          <AccountCircleIcon />
-        </Button>
+          <Button color="inherit" onClick={() => setOpenModalCadastro(true)}>
+            Login
+          </Button>
 
-        <IconButton aria-label="cart" color="inherit" onClick={() => navigate('/carrinho')}>
-          <StyledBadge badgeContent={4} color="secondary">
-            <ShoppingCartIcon />
-          </StyledBadge>
-        </IconButton>
+          <Button color="inherit" onClick={() => navigate('/home')}>
+            <AccountCircleIcon />
+          </Button>
 
-      </Toolbar>
-    </AppBar>
+          <IconButton aria-label="cart" color="inherit" onClick={() => navigate('/carrinho')}>
+            <StyledBadge badgeContent={4} color="secondary">
+              <ShoppingCartIcon />
+            </StyledBadge>
+          </IconButton>
+
+        </Toolbar>
+      </AppBar>
+      <ModalCadastroLogin open={openModalCadastro} setOpen={setOpenModalCadastro} setIsLogin={setIsLogin} />
+    </>
   )
 }
 
