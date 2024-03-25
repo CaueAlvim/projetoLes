@@ -9,6 +9,7 @@ import com.ecommerce.serverr.validator.ClienteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,20 +27,23 @@ public class ClienteService {
     }
 
     public void salvar(ClienteForm form) throws Exception {
-        if (form.getNome() == null || form.getSenha() == null || form.getEmail() == null) {
-            throw new Exception("Os campos não podem estar vazios");
+        if (form.getNome() == null ||
+            form.getSenha() == null ||
+            form.getEmail() == null ||
+            form.getCpf() == null ||
+            form.getTelefone() == null) {
+                throw new Exception("Os campos não podem estar vazios");
         }
         Cliente cliente = form.transform();
+        cliente.setDataCadastro(LocalDate.now());
         repository.save(cliente);
 
     }
 
     public void editar(ClienteForm form) throws Exception{
-        Cliente cliente = ClienteValidator.validate(form.getId());
-        if(!cliente.getNome().equals(form.getNome())) { cliente.setNome(form.getNome()); }
-        if(!cliente.getSenha().equals(form.getSenha())) { cliente.setSenha(form.getSenha()); }
-        if(!cliente.getEmail().equals(form.getEmail())) { cliente.setEmail(form.getEmail()); }
-        repository.save(cliente);
+        ClienteValidator.validate(form.getId());
+        Cliente newCliente = form.transform();
+        repository.save(newCliente);
     }
 
     public List<ClienteDTO> pesquisar(ClienteFilter filter) throws Exception {
@@ -53,6 +57,6 @@ public class ClienteService {
     }
 
     public void excluir(Integer id) throws Exception{
-        repository.save(ClienteValidator.validate(id));
+        repository.delete(ClienteValidator.validate(id));
     }
 }

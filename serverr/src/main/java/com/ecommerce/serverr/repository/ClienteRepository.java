@@ -15,8 +15,8 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     Optional<Cliente> findById(Integer id);
 
     @Query(value = "SELECT * FROM cliente c WHERE (:nome is null or c.nome = :nome) " +
-                   "AND (:dataInicial is null or c.dataCadastro >= :dataInicial) " +
-                   "AND (:dataFinal is null or c.dataCadastro <= :dataFinal)", nativeQuery = true)
+                   "AND (:dataInicial is null or c.data_cadastro >= :dataInicial) " +
+                   "AND (:dataFinal is null or c.data_cadastro <= :dataFinal)", nativeQuery = true)
     List<Cliente> pesquisar(@Param("nome") String nome, @Param("dataInicial") LocalDate dataInicial, @Param("dataFinal") LocalDate dataFinal);
 
 
