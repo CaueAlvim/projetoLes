@@ -1,12 +1,38 @@
-import { Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import moment from 'moment';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
-import { useState } from 'react';
-import moment from 'moment';
+import PersonIcon from '@mui/icons-material/Person';
+import ClienteService from '../services/ClienteService';
 
 function UserData() {
-    const [currentTab, setCurrentTab] = useState('CUPONS');
+    const [currentTab, setCurrentTab] = useState('DADOS');
+    const [userData, setUserData] = useState({ nome: '', email: '', senha: '', cpf: '', telefone: '' });
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            const userObject = JSON.parse(storedUser);
+            fetchUser(userObject);
+        }
+    }, [currentTab === 'DADOS']);
+
+    const fetchUser = async (userToFetch) => {
+        const fetchedUser = await ClienteService.carregar(userToFetch.id);
+        setUserData(fetchedUser);
+    }
+
+    const handleAlterarUsuario = async () => {
+        try {
+            await ClienteService.salvar(userData);
+            window.location.reload();
+            console.log("Alteração realizada com sucesso!");
+        } catch (error) {
+            console.error("Falha nas alterações:", error);
+        }
+    }
 
     const cupomTable = [
         { nome: 'AAAAAAAAAAAAAAAAAA', valor: 159.10 },
@@ -18,12 +44,12 @@ function UserData() {
     ];
 
     const enderecosTable = [
-        { rua: 'RUA 2', bairro:'BAIRRO A', numero: 1001 },
-        { rua: 'RUA 3', bairro:'BAIRRO B', numero: 1002 },
-        { rua: 'RUA 1', bairro:'BAIRRO C', numero: 1003 },
-        { rua: 'RUA 4', bairro:'BAIRRO X', numero: 1004 },
-        { rua: 'RUA 5', bairro:'BAIRRO Y', numero: 1005 },
-        { rua: 'RUA 6', bairro:'BAIRRO Z', numero: 1006 },
+        { rua: 'RUA 2', bairro: 'BAIRRO A', numero: 1001 },
+        { rua: 'RUA 3', bairro: 'BAIRRO B', numero: 1002 },
+        { rua: 'RUA 1', bairro: 'BAIRRO C', numero: 1003 },
+        { rua: 'RUA 4', bairro: 'BAIRRO X', numero: 1004 },
+        { rua: 'RUA 5', bairro: 'BAIRRO Y', numero: 1005 },
+        { rua: 'RUA 6', bairro: 'BAIRRO Z', numero: 1006 },
     ];
 
     const cartoesTable = [
@@ -45,16 +71,93 @@ function UserData() {
                 <Divider variant='fullWidth' sx={{ borderTop: '1px solid #e5e5e5', width: '100%', margin: ' auto', bgcolor: 'black' }} />
 
                 <Grid container sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
+                        <Button variant="outlined" onClick={() => setCurrentTab('DADOS')} endIcon={<PersonIcon />} sx={{ height: '3rem', mx: 1, width: '94%' }}>Meus dados</Button>
+                    </Grid>
+                    <Grid item xs={3}>
                         <Button variant="outlined" onClick={() => setCurrentTab('CUPONS')} endIcon={<ReceiptIcon />} sx={{ height: '3rem', mx: 1, width: '94%' }}>Cupons</Button>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                         <Button variant="outlined" onClick={() => setCurrentTab('ENDERECOS')} endIcon={<HomeIcon />} sx={{ height: '3rem', mx: 1, width: '94%' }}>Endereços</Button>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                         <Button variant="outlined" onClick={() => setCurrentTab('CARTOES')} endIcon={<CreditCardIcon />} sx={{ height: '3rem', mx: 1, width: '94%' }}>Cartões</Button>
                     </Grid>
                 </Grid>
+                {currentTab === 'DADOS' && (
+                    <Container fixed sx={{ my: 5 }}>
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="name"
+                            name="name"
+                            label="Nome completo"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={userData.nome}
+                            onChange={(event) => setUserData({ ...userData, nome: event.target.value })}
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="cpf"
+                            name="cpf"
+                            label="CPF"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={userData.cpf}
+                            onChange={(event) => setUserData({ ...userData, cpf: event.target.value })}
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="telefone"
+                            name="telefone"
+                            label="Telefone"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={userData.telefone}
+                            onChange={(event) => setUserData({ ...userData, telefone: event.target.value })}
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="email"
+                            name="email"
+                            label="E-mail"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value={userData.email}
+                            onChange={(event) => setUserData({ ...userData, email: event.target.value })}
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="password"
+                            name="password"
+                            label="Senha"
+                            type="password"
+                            fullWidth
+                            variant="standard"
+                            value={userData.senha}
+                            onChange={(event) => setUserData({ ...userData, senha: event.target.value })}
+                        />
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
+                            <Button variant='contained' onClick={handleAlterarUsuario}>
+                                alterar
+                            </Button>
+                        </Box>
+                    </Container>
+                )}
 
                 {currentTab === 'CUPONS' && (
                     <Container fixed sx={{ my: 5 }}>

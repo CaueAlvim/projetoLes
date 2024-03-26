@@ -26,6 +26,17 @@ public class ClienteService {
         return ClienteValidator.validate(id);
     }
 
+    public Cliente login(ClienteForm form) throws Exception {
+        if (form.getEmail() == null || form.getSenha() == null) {
+            throw new Exception("Os campos não podem estar vazios");
+        }
+        Cliente clienteLogin = ClienteValidator.validatePorEmail(form.getEmail());
+        if (clienteLogin.getSenha().equals(form.getSenha())){
+            return clienteLogin;
+        }
+        return null;
+    }
+
     public void salvar(ClienteForm form) throws Exception {
         if (form.getNome() == null ||
             form.getSenha() == null ||
@@ -48,12 +59,14 @@ public class ClienteService {
 
     public List<ClienteDTO> pesquisar(ClienteFilter filter) throws Exception {
         List<Cliente> clientes = repository.pesquisar(filter.getNome(), filter.getDataInicial(), filter.getDataFinal());
-        return clientes.stream().map(c -> ClienteDTO.builder().
-                nome(c.getNome()).
-                email(c.getEmail()).
-                cpf(c.getCpf()).
-                telefone(c.getTelefone()).
-                build()).collect(Collectors.toList());
+        return clientes.stream().map(c -> ClienteDTO.builder()
+                        .id(c.getId())
+                        .nome(c.getNome())
+                        .email(c.getEmail())
+                        .cpf(c.getCpf())
+                        .telefone(c.getTelefone())
+                        .dataCadastro(c.getDataCadastro())
+                        .build()).collect(Collectors.toList());
     }
 
     public void excluir(Integer id) throws Exception{

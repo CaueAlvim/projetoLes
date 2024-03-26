@@ -17,4 +17,8 @@ public class ClienteValidator {
     public static Cliente validate(Integer id) throws Exception {
         return repository.findById(id).orElseThrow(() -> new Exception("Cliente inválido"));
     }
+
+    public static Cliente validatePorEmail(String email) throws Exception {
+        return repository.findByEmail(email).orElseThrow(() -> new Exception("Cliente inválido"));
+    }
 }

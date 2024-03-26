@@ -17,16 +17,16 @@ function UserDrawer({ isAdmin, setPage }) {
                             <ListItemText primary={'Minha conta'} />
                         </ListItemButton>
                     </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={() => setPage('PEDIDOS')}>
-                            <ListItemIcon>
-                                <ReceiptLongIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={ isAdmin ? 'Detalhes dos pedidos' : 'Meus pedidos'} />
-                        </ListItemButton>
-                    </ListItem>
-
+                    {isAdmin && (
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={() => setPage('PEDIDOS')}>
+                                <ListItemIcon>
+                                    <ReceiptLongIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={isAdmin ? 'Detalhes dos pedidos' : 'Meus pedidos'} />
+                            </ListItemButton>
+                        </ListItem>
+                    )}
                     {isAdmin && (
                         <ListItem disablePadding>
                             <ListItemButton onClick={() => setPage('USUARIOS')}>

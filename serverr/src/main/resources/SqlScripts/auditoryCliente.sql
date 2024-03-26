@@ -2,13 +2,14 @@ DROP TABLE IF EXISTS auditory_cliente;
 CREATE TABLE auditory_cliente (
     audit_action varchar(255) DEFAULT NULL,
     audit_created_at datetime DEFAULT NULL,
-    `id` integer(11) not null,
-    `cpf` VARCHAR(255) NOT NULL,
-    `data_cadastro` datetime NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
-    `nome` VARCHAR(255) NOT NULL,
-    `senha` VARCHAR(255) NOT NULL,
-    `telefone` VARCHAR(255) NOT NULL
+    `id` INTEGER(11) NULL,
+    `cpf` VARCHAR(255) NULL,
+    `data_cadastro` datetime NULL,
+    `email` VARCHAR(255) NULL,
+    `nome` VARCHAR(255) NULL,
+    `senha` VARCHAR(255) NULL,
+    `telefone` VARCHAR(255) NULL,
+    `is_admin` BIT(1) NULL
 );
 
 DROP TRIGGER IF EXISTS create_cliente;

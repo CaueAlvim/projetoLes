@@ -13,11 +13,10 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     Optional<Cliente> findById(Integer id);
+    Optional<Cliente> findByEmail (String email);
 
-    @Query(value = "SELECT * FROM cliente c WHERE (:nome is null or c.nome = :nome) " +
-                   "AND (:dataInicial is null or c.data_cadastro >= :dataInicial) " +
-                   "AND (:dataFinal is null or c.data_cadastro <= :dataFinal)", nativeQuery = true)
-    List<Cliente> pesquisar(@Param("nome") String nome, @Param("dataInicial") LocalDate dataInicial, @Param("dataFinal") LocalDate dataFinal);
-
+    @Query(value = "SELECT * FROM cliente c WHERE (?1 IS NULL OR c.nome LIKE CONCAT('%', ?1, '%')) " +
+                   "AND (c.data_cadastro BETWEEN ?2 AND ?3)", nativeQuery = true)
+    List<Cliente> pesquisar(String nome, LocalDate dataInicial, LocalDate dataFinal);
 
 }

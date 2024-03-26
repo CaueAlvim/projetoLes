@@ -4,13 +4,21 @@ import Footer from '../components/Footer';
 import UserDrawer from '../components/UserDrawer';
 import logo from '../assets/logo.png';
 import UserData from './UserData';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UserPedidos from './UserPedidos';
 import AdmUsuarios from './AdmUsuarios';
 
 function UserHome() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState('NONE');
+    const [user, setUser] = useState({ isAdmin: false});
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
 
     const renderPage = () => {
         switch (currentPage) {
@@ -35,10 +43,8 @@ function UserHome() {
                 </AppBar>
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', overflow: 'scroll', height: 'calc(100vh - 9.7rem)' }}>
-                    <UserDrawer isAdmin={true} setPage={setCurrentPage} />
-
+                    <UserDrawer isAdmin={user.isAdmin} setPage={setCurrentPage} />
                     {renderPage()}
-
                 </Box>
                 <Footer />
             </Grid>

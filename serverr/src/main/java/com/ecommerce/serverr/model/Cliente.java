@@ -22,6 +22,8 @@ public class Cliente {
     private String senha;
     private String telefone;
     private LocalDate dataCadastro;
+    @Builder.Default
+    private boolean isAdmin = false;
 
     @OneToMany
     @JoinColumn(name="endereco")

@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import moment from 'moment';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useState } from 'react';
 import ProductCardDevolucao from '../components/ProductCardDevolucao';
 
 function UserPedidos() {

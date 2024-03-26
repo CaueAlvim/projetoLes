@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AppBar, IconButton, Toolbar, Button, Box, Badge } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import ModalCadastroLogin from './ModalCadastro';
@@ -58,6 +58,14 @@ function AppBarSearch() {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
+  const [user, setUser] = useState(undefined);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   return (
     <>
@@ -79,13 +87,18 @@ function AppBarSearch() {
             </Search>
           </Box>
 
-          <Button color="inherit" onClick={() => setOpenModalCadastro(true)}>
-            Login
-          </Button>
+          {user === undefined ? (
+            <Button color="inherit" onClick={() => setOpenModalCadastro(true)}>
+              Login
+            </Button>
+          )
+            :
+            (
+              <Button color="inherit" onClick={() => navigate('/home')}>
+                <AccountCircleIcon />
+              </Button>
+            )}
 
-          <Button color="inherit" onClick={() => navigate('/home')}>
-            <AccountCircleIcon />
-          </Button>
 
           <IconButton aria-label="cart" color="inherit" onClick={() => navigate('/carrinho')}>
             <StyledBadge badgeContent={4} color="secondary">
