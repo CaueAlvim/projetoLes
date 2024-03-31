@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { AppBar, IconButton, Toolbar, Button, Box, Badge } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import ModalCadastroLogin from './ModalCadastro';
+import ModalCadastroEndereco from './ModalCadastroEndereco';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -58,6 +59,7 @@ function AppBarSearch() {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
+  const [openModalCadastroEndereco, setOpenModalCadastroEndereco] = useState(false);
   const [user, setUser] = useState(undefined);
 
   useEffect(() => {
@@ -108,7 +110,8 @@ function AppBarSearch() {
 
         </Toolbar>
       </AppBar>
-      <ModalCadastroLogin open={openModalCadastro} setOpen={setOpenModalCadastro} setIsLogin={setIsLogin} />
+      <ModalCadastroLogin open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenCadastroEndereco={setOpenModalCadastroEndereco} />
+      <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} />
     </>
   )
 }
