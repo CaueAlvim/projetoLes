@@ -2,8 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AppBar, IconButton, Toolbar, Button, Box, Badge } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import ModalCadastroLogin from './ModalCadastro';
+import ModalLogin from './ModalLogin';
 import ModalCadastroEndereco from './ModalCadastroEndereco';
+import ModalCadastro from './ModalCadastro';
+import ModalCadastroCartao from './ModalCadastroCartao';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -57,10 +59,13 @@ function AppBarSearch() {
   }));
 
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
+  const [user, setUser] = useState(undefined);
+  const [userCadastro, setUserCadastro] = useState(undefined);
+  const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openModalCadastroEndereco, setOpenModalCadastroEndereco] = useState(false);
-  const [user, setUser] = useState(undefined);
+  const [openModalCadastroCartao, setOpenModalCadastroCartao] = useState(false);
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -90,7 +95,7 @@ function AppBarSearch() {
           </Box>
 
           {user === undefined ? (
-            <Button color="inherit" onClick={() => setOpenModalCadastro(true)}>
+            <Button color="inherit" onClick={() => setOpenModalLogin(true)}>
               Login
             </Button>
           )
@@ -110,8 +115,11 @@ function AppBarSearch() {
 
         </Toolbar>
       </AppBar>
-      <ModalCadastroLogin open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenCadastroEndereco={setOpenModalCadastroEndereco} />
-      <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} />
+      <ModalLogin open={openModalLogin} setOpen={setOpenModalLogin} setOpenModalCadastro={setOpenModalCadastro} />
+      <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setUserRegister={setUserCadastro}/>
+      <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} userRegister={userCadastro} setUserRegister={setUserCadastro}/>
+      <ModalCadastroCartao open={openModalCadastroCartao} setOpen={setOpenModalCadastroCartao} userRegister={userCadastro}/>
+
     </>
   )
 }

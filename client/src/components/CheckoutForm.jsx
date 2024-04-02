@@ -113,16 +113,16 @@ function CheckoutForm({ newCardForm, setNewCardForm, newAddressForm, setNewAddre
                                 <Grid item xs={6} md={2}>
                                     <TextField
                                         required
-                                        id="cartaoCvv"
-                                        label="CVV"
+                                        id="cartaoCvc"
+                                        label="CVC"
                                         sx={{ width: '100%' }}
                                     />
                                 </Grid>
                                 <Grid item xs={6} md={3}>
                                     <TextField
                                         required
-                                        id="dataValidade"
-                                        label="Data de validade"
+                                        id="bandeiraCartao"
+                                        label="Bandeira"
                                         sx={{ width: '100%' }}
                                     />
                                 </Grid>

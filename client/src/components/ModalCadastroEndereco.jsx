@@ -1,14 +1,25 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import ClienteService from "../services/ClienteService";
-import moment from "moment";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 
-function ModalCadastroEndereco({ open, setOpen }) {
-    const [loginFields, setLoginFields] = useState({ nome: '', email: '', senha: '', cpf: '', dataNascimento: '' });
+function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, userRegister, setUserRegister }) {
+    const [fieldsError, setFieldsError] = useState(undefined);
+    const [cadastroEnderecoFields, setCadastroEnderecoFields] = useState({ cep: '', rua: '', numero: '', bairro: '', cidade: '', estado: '', pais: '', tipoResidencia: '', tipoLogradouro: '' });
+    const [cadastroEnderecoObs, setCadastroEnderecoObs] = useState({ observacoes: '' });
+
+    const handleSubmit = () => {
+        if (Object.values(cadastroEnderecoFields).some(field => field.trim() === '')) {
+            setFieldsError('Por favor, preencha todos os campos obrigatórios.');
+            return;
+        }
+        const enderecoCompleto = { ...cadastroEnderecoFields, ...cadastroEnderecoObs };
+        setUserRegister({...userRegister, endereco: enderecoCompleto});
+        setOpenModalCartao(true);
+        handleClose();
+    }
 
     const handleClose = () => {
         setOpen(false);
-    };
+    }
 
     return (
         <>
@@ -28,6 +39,12 @@ function ModalCadastroEndereco({ open, setOpen }) {
                 </DialogTitle>
                 <DialogContent>
                     <Grid container spacing={1}>
+                        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                            <Typography color="grey" variant="subtitle">
+                                Este primeiro endereço será cadastrado para cobrança e para entrega.
+                            </Typography>
+                        </Grid>
+
                         <Grid item xs={4}>
                             <TextField
                                 autoFocus
@@ -39,8 +56,8 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                value={loginFields.dataNascimento}
-                                onChange={(event) => setLoginFields({ ...loginFields, dataNascimento: event.target.value })}
+                                value={cadastroEnderecoFields.cep}
+                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, cep: event.target.value })}
                             />
                         </Grid>
                         <Grid item xs={8}>
@@ -54,8 +71,8 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                value={loginFields.dataNascimento}
-                                onChange={(event) => setLoginFields({ ...loginFields, dataNascimento: event.target.value })}
+                                value={cadastroEnderecoFields.rua}
+                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, rua: event.target.value })}
                             />
                         </Grid>
 
@@ -70,8 +87,8 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                value={loginFields.dataNascimento}
-                                onChange={(event) => setLoginFields({ ...loginFields, dataNascimento: event.target.value })}
+                                value={cadastroEnderecoFields.numero}
+                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, numero: event.target.value })}
                             />
                         </Grid>
                         <Grid item xs={8}>
@@ -85,8 +102,8 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                value={loginFields.dataNascimento}
-                                onChange={(event) => setLoginFields({ ...loginFields, dataNascimento: event.target.value })}
+                                value={cadastroEnderecoFields.bairro}
+                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, bairro: event.target.value })}
                             />
                         </Grid>
 
@@ -101,19 +118,19 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                value={loginFields.dataNascimento}
-                                onChange={(event) => setLoginFields({ ...loginFields, dataNascimento: event.target.value })}
+                                value={cadastroEnderecoFields.cidade}
+                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, cidade: event.target.value })}
                             />
                         </Grid>
                         <Grid item xs={3}>
                             <Grid item xs={3}>
                                 <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                                    <InputLabel id="labelEstado">Estado</InputLabel>
+                                    <InputLabel id="labelEstado">Estado *</InputLabel>
                                     <Select
                                         labelId="labelEstado"
                                         id="estadoCadastro"
-                                        value={loginFields.nome}
-                                        onChange={(event) => setLoginFields({ ...loginFields, nome: event.target.value })}
+                                        value={cadastroEnderecoFields.estado}
+                                        onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, estado: event.target.value })}
                                         MenuProps={{
                                             PaperProps: {
                                                 style: {
@@ -165,8 +182,8 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                value={loginFields.dataNascimento}
-                                onChange={(event) => setLoginFields({ ...loginFields, dataNascimento: event.target.value })}
+                                value={cadastroEnderecoFields.pais}
+                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, pais: event.target.value })}
                             />
                         </Grid>
 
@@ -181,8 +198,8 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                value={loginFields.nome}
-                                onChange={(event) => setLoginFields({ ...loginFields, nome: event.target.value })}
+                                value={cadastroEnderecoFields.tipoResidencia}
+                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, tipoResidencia: event.target.value })}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -196,15 +213,14 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                value={loginFields.nome}
-                                onChange={(event) => setLoginFields({ ...loginFields, nome: event.target.value })}
+                                value={cadastroEnderecoFields.tipoLogradouro}
+                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, tipoLogradouro: event.target.value })}
                             />
                         </Grid>
 
                         <Grid item xs={12}>
                             <TextField
                                 autoFocus
-                                required
                                 margin="dense"
                                 id="observacoes"
                                 name="observacoes"
@@ -214,25 +230,27 @@ function ModalCadastroEndereco({ open, setOpen }) {
                                 maxRows={4}
                                 multiline
                                 variant="standard"
-                                value={loginFields.dataNascimento}
-                                onChange={(event) => setLoginFields({ ...loginFields, dataNascimento: event.target.value })}
+                                value={cadastroEnderecoObs.observacoes}
+                                onChange={(event) => setCadastroEnderecoObs({ ...cadastroEnderecoObs, observacoes: event.target.value })}
                             />
                         </Grid>
-                        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start', mt: 3 }}>
-                            <Typography color="grey" variant="subtitle">
-                                Este primeiro endereço será cadastrado para cobrança e para entrega.
-                            </Typography>
-                        </Grid>
+                        {fieldsError && (
+                            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start', mt: 3 }}>
+                                <Typography color="red" variant="subtitle">
+                                    {fieldsError}
+                                </Typography>
+                            </Grid>
+                        )}
                     </Grid>
                 </DialogContent>
                 <DialogActions>
                     <Grid container>
                         <Grid item xs={7}>
-                            <Button onClick={() => 1}>Voltar</Button>
+
                         </Grid>
 
                         <Grid item xs={5} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button onClick={() => 1}>Cadastrar endereco</Button>
+                            <Button onClick={handleSubmit}>Continuar Cadastro</Button>
                         </Grid>
                     </Grid>
                 </DialogActions>
