@@ -8,9 +8,8 @@ function ModalCadastroCartao({ open, setOpen, userRegister }) {
 
     const handleCadastrar = async () => {
         try {
-            // await ClienteService.salvar({...userRegister, cartao: cadastroCartaoFields});
-            // console.log("Cadastro realizado com sucesso!");
-            console.log({...userRegister, cartao: cadastroCartaoFields});
+            await ClienteService.salvar({...userRegister, cartao: [cadastroCartaoFields]});
+            console.log("Cadastro realizado com sucesso!");
         } catch (error) {
             console.error("Falha no cadastro:", error);
         }

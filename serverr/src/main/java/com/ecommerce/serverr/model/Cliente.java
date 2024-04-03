@@ -21,20 +21,22 @@ public class Cliente {
     private String email;
     private String senha;
     private String telefone;
+    private String genero;
     private LocalDate dataCadastro;
+    private LocalDate dataNascimento;
     @Builder.Default
     private boolean isAdmin = false;
 
-    @OneToMany
-    @JoinColumn(name="endereco")
-    private List<Endereco> endereco;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="cliente_id")
+    private List<Endereco> enderecos;
 
-    @OneToMany
-    @JoinColumn(name="cupom")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="cliente_id")
     private List<Cupom> cupons;
 
-    @OneToMany
-    @JoinColumn(name="cartao")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="cliente_id")
     private List<Cartao> cartoes;
 
 }

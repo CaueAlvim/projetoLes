@@ -27,9 +27,6 @@ public class ClienteService {
     }
 
     public Cliente login(ClienteForm form) throws Exception {
-        if (form.getEmail() == null || form.getSenha() == null) {
-            throw new Exception("Os campos não podem estar vazios");
-        }
         Cliente clienteLogin = ClienteValidator.validatePorEmail(form.getEmail());
         if (clienteLogin.getSenha().equals(form.getSenha())){
             return clienteLogin;
@@ -38,13 +35,6 @@ public class ClienteService {
     }
 
     public void salvar(ClienteForm form) throws Exception {
-        if (form.getNome() == null ||
-            form.getSenha() == null ||
-            form.getEmail() == null ||
-            form.getCpf() == null ||
-            form.getTelefone() == null) {
-                throw new Exception("Os campos não podem estar vazios");
-        }
         Cliente cliente = form.transform();
         cliente.setDataCadastro(LocalDate.now());
         repository.save(cliente);

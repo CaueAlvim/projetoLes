@@ -18,8 +18,8 @@ public class Cartao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nome;
-    private String numero;
-    private String cvv;
-    private LocalDate validade;
+    private String nomeCartao;
+    private String numeroCartao;
+    private String cvc;
+    private String bandeira;
 }

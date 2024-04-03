@@ -16,7 +16,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     Optional<Cliente> findByEmail (String email);
 
     @Query(value = "SELECT * FROM cliente c WHERE (?1 IS NULL OR c.nome LIKE CONCAT('%', ?1, '%')) " +
-                   "AND (c.data_cadastro BETWEEN ?2 AND ?3)", nativeQuery = true)
+                   "AND (c.data_cadastro BETWEEN ?2 AND ?3) AND c.is_admin = 0", nativeQuery = true)
     List<Cliente> pesquisar(String nome, LocalDate dataInicial, LocalDate dataFinal);
 
 }
