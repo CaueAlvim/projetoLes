@@ -21,16 +21,16 @@ const ProductCardCarrinho = ({ product }) => {
 
   return (
     <ProductCardCarrinhoContainer>
-      <Grid container>
+      <Grid container sx={{ display: 'flex', flexDirection: 'row' }}>
         <Grid item xs={2}>
-          <img src={product.image} alt={product.name} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+          <img src={product.image} alt={product.name} style={{ objectFit: 'cover' }} />
         </Grid>
-        <Grid item xs={10} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="h5">
-            {product.name}
-          </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '1rem' }}>
+        <Grid item xs={8} sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Box>
+            <Typography variant="h5" sx={{ ml: '1.3rem' }}>
+              {product.name}
+            </Typography>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Button variant="text" color="primary" onClick={() => 1}>
@@ -48,7 +48,9 @@ const ProductCardCarrinho = ({ product }) => {
               Valor: {product.price}
             </Typography>
           </Box>
+        </Grid>
 
+        <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
           <Button variant="outlined" color="primary" style={{ marginTop: '0.5rem' }}>
             <DeleteIcon />
           </Button>

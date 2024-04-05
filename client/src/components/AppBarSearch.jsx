@@ -11,6 +11,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from '../assets/logo.png';
+import CarrinhoDrawer from './CarrinhoDrawer';
 
 function AppBarSearch() {
 
@@ -61,6 +62,7 @@ function AppBarSearch() {
   const navigate = useNavigate();
   const [user, setUser] = useState(undefined);
   const [userCadastro, setUserCadastro] = useState(undefined);
+  const [openCarrinhoDrawer, setOpenCarrinhoDrawer] = useState(false);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
   const [openModalCadastroEndereco, setOpenModalCadastroEndereco] = useState(false);
@@ -106,17 +108,16 @@ function AppBarSearch() {
               </Button>
             )}
 
-          {user && (
-            <IconButton aria-label="cart" color="inherit" onClick={() => navigate('/carrinho')}>
+            <IconButton aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
               <StyledBadge badgeContent={4} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
-          )}
 
 
         </Toolbar>
       </AppBar>
+      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} />
       <ModalLogin open={openModalLogin} setOpen={setOpenModalLogin} setOpenModalCadastro={setOpenModalCadastro} />
       <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setUserRegister={setUserCadastro} />
       <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} userRegister={userCadastro} setUserRegister={setUserCadastro} />

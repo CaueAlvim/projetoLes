@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import Index from './pages'
 import DetalheProduto from './pages/DetalheProduto';
-import Carrinho from './pages/Carrinho';
 import Checkout from './pages/Checkout';
 import UserHome from './pages/UserHome';
 import FinalizacaoCompra from './pages/FinalizacaoCompra';
@@ -20,10 +19,6 @@ const router = createBrowserRouter([
   {
     path: "/detalhes-produto/:id",
     element: <DetalheProduto/>
-  },
-  {
-    path: "/carrinho",
-    element: <Carrinho/>
   },
   {
     path: "/checkout",
