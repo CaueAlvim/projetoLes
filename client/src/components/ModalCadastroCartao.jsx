@@ -8,7 +8,7 @@ function ModalCadastroCartao({ open, setOpen, userRegister }) {
 
     const handleCadastrar = async () => {
         try {
-            await ClienteService.salvar({...userRegister, cartao: [cadastroCartaoFields]});
+            await ClienteService.salvar({ ...userRegister, cartao: [cadastroCartaoFields] });
             console.log("Cadastro realizado com sucesso!");
         } catch (error) {
             console.error("Falha no cadastro:", error);
@@ -91,17 +91,28 @@ function ModalCadastroCartao({ open, setOpen, userRegister }) {
                             />
                         </Grid>
                         <Grid item xs={6} md={3}>
-                            <TextField
-                                autoFocus
-                                required
-                                variant="standard"
-                                id="bandeiraCartao"
-                                label="Bandeira"
-                                fullWidth
-                                type="text"
-                                value={cadastroCartaoFields.bandeira}
-                                onChange={(event) => setCadastroCartaoFields({ ...cadastroCartaoFields, bandeira: event.target.value })}
-                            />
+                            <FormControl variant="standard" sx={{ minWidth: '8rem' }}>
+                                <InputLabel id="labelBandeira">Bandeira *</InputLabel>
+                                <Select
+                                    labelId="labelEstado"
+                                    id="bandeiraCartao"
+                                    value={cadastroCartaoFields.bandeira}
+                                    onChange={(event) => setCadastroCartaoFields({ ...cadastroCartaoFields, bandeira: event.target.value })}
+                                    MenuProps={{
+                                        PaperProps: {
+                                            style: {
+                                                maxHeight: '250px',
+                                                overflow: 'auto',
+                                            },
+                                        },
+                                    }}
+                                >
+                                    <MenuItem value={'Visa'}>Visa</MenuItem>
+                                    <MenuItem value={'Mastercard'}>Mastercard</MenuItem>
+                                    <MenuItem value={'AmericanExpress'}>American Express</MenuItem>
+                                    <MenuItem value={'Elo'}>Elo</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
                         {fieldsError && (
                             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start', mt: 3 }}>

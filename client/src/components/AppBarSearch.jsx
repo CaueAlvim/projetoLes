@@ -106,19 +106,21 @@ function AppBarSearch() {
               </Button>
             )}
 
+          {user && (
+            <IconButton aria-label="cart" color="inherit" onClick={() => navigate('/carrinho')}>
+              <StyledBadge badgeContent={4} color="secondary">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </IconButton>
+          )}
 
-          <IconButton aria-label="cart" color="inherit" onClick={() => navigate('/carrinho')}>
-            <StyledBadge badgeContent={4} color="secondary">
-              <ShoppingCartIcon />
-            </StyledBadge>
-          </IconButton>
 
         </Toolbar>
       </AppBar>
       <ModalLogin open={openModalLogin} setOpen={setOpenModalLogin} setOpenModalCadastro={setOpenModalCadastro} />
-      <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setUserRegister={setUserCadastro}/>
-      <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} userRegister={userCadastro} setUserRegister={setUserCadastro}/>
-      <ModalCadastroCartao open={openModalCadastroCartao} setOpen={setOpenModalCadastroCartao} userRegister={userCadastro}/>
+      <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setUserRegister={setUserCadastro} />
+      <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} userRegister={userCadastro} setUserRegister={setUserCadastro} />
+      <ModalCadastroCartao open={openModalCadastroCartao} setOpen={setOpenModalCadastroCartao} userRegister={userCadastro} />
 
     </>
   )
