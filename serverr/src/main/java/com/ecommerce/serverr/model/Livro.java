@@ -28,6 +28,7 @@ public class Livro {
     private String largura;
     private String peso;
     private String profundidade;
+    private Double valor;
 
     @Builder.Default
     private boolean isAtivo = true;
@@ -37,4 +38,6 @@ public class Livro {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="livro_id")
     private List<LivroCategoria> categorias;
+
+    private String caminhoImagem;
 }

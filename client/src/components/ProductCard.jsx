@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { styled } from '@mui/system';
 import { Paper, Typography, Button } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -18,21 +18,20 @@ const ProductCardContainer = styled(Paper)(({ theme }) => ({
 const ProductCard = ({ product }) => {
   const [openModalDetalheProduto, setOpenModalDetalheProduto] = useState(false);
 
-
   return (
     <>
       <ProductCardContainer onClick={() => setOpenModalDetalheProduto(true)}>
-        <img src={product?.imagem} alt={product?.nome} style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+        <img src={`/capas/${product?.caminhoImagem}`} alt={product?.titulo} style={{ width: '100px', height: '150px', objectFit: 'cover' }} />
         <Typography variant="h6" component="div">
-          {product?.nome}
+          {product?.titulo}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {product?.preco}
+          R$ {product?.valor}
         </Typography>
         <Button
           variant="contained"
           color="primary"
-          style={{ marginTop: '0.5rem' }}
+          sx={{ marginTop: '0.5rem' }}
           onClick={(event) => {
             event.stopPropagation();
           }}

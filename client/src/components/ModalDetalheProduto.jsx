@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
-import { Dialog, Typography, Grid, AppBar, Toolbar, IconButton, Slide, Card, CardMedia, Box } from '@mui/material';
+import { Dialog, Typography, Grid, AppBar, Toolbar, IconButton, Slide, Card, CardMedia, Box, Divider, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -8,6 +9,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 function ModalDetalheProduto({ open, setOpen, product }) {
 
+    console.log(product);
     return (
         <>
             <Dialog
@@ -45,31 +47,96 @@ function ModalDetalheProduto({ open, setOpen, product }) {
                             <Card sx={{ width: 'auto', height: 'auto' }}>
                                 <CardMedia
                                     component="img"
-                                    image={product.imagem}
-                                    alt={product.nome}
+                                    image={`/capas/${product?.caminhoImagem}`}
+                                    alt={product.titulo}
+                                    sx={{
+                                        height: '30rem',
+                                        objectFit: 'cover',
+                                    }}
                                 />
                             </Card>
                         </Grid>
 
                         <Grid item xs={12} md={5} sx={{
                             display: 'flex', flexDirection: 'column',
-                            alignItems: 'flex-start', justifyContent: 'center',
+                            alignItems: 'flex-start', justifyContent: 'flex-start',
                             width: '100%', backgroundColor: 'white',
                             borderRadius: '0 10px 10px 0', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)'
                         }}>
-                            <Typography variant="h4" sx={{ ml: '1.25rem', fontWeight: 'bold' }}>
-                                {product.nome}
+                            <Typography variant="h4" sx={{ ml: '1.25rem', mt: '1.25rem', fontWeight: 'bold' }}>
+                                {product.titulo}
                             </Typography>
+
+                            <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '1rem' }} />
 
                             <Typography variant="h6" sx={{ margin: '1.25rem' }}>
-                                {product.descricao}
+                                {product.sinopse}
                             </Typography>
 
-                            <Typography variant="h5" sx={{ mb: 2, mt: 2, ml: '1.25rem', fontWeight: 'bold' }}>
-                                {product.preco}
+                            <Typography variant="h4" sx={{ mb: 2, mt: 2.5, ml: '1.25rem', fontWeight: 'bold' }}>
+                                R$ {product.valor}
                             </Typography>
+
+                            <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '1rem' }} />
+
+                            <Typography variant="h5" sx={{ margin: '1.25rem' }}>
+                                Detalhes do produto:
+                            </Typography>
+
+                            <Grid container sx={{ height: 'auto', mb: '2.5rem' }}>
+                                <Grid item xs={6}>
+                                    <Box sx={{ margin: '1.25rem' }}>
+                                        <Typography variant="body1">
+                                            - Ano: {product.ano}
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            - Autor: {product.autor}
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            - Edição: {product.edicao}
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            - Editora: {product.editora}
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            - Número de páginas: {product.numeroPaginas}
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Box sx={{ margin: '1.25rem' }}>
+                                        <Typography variant="body1">
+                                            - Largura: {product.largura}
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            - Altura: {product.altura}
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            - Peso: {product.peso}
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            - Profundidade: {product.profundidade}
+                                        </Typography>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+
+                            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    sx={{ marginTop: '0.5rem', height: '3rem' }}
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                    }}
+                                >
+                                    <AddShoppingCartIcon sx={{ mr: '8px' }} />
+                                    ADICIONAR AO CARRINHO
+                                </Button>
+                            </Box>
 
                         </Grid>
+
                     </Grid>
                 </Box>
 

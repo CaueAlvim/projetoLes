@@ -19,7 +19,7 @@ public class ClienteController {
     public ClienteController(ClienteService service ) {
         this.service = service;
     }
-
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<Object> carregar(@PathVariable("id") Integer id) {
         try {
@@ -28,7 +28,7 @@ public class ClienteController {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    @CrossOrigin
     @PostMapping("/")
     public ResponseEntity<Object> salvar(@RequestBody ClienteForm form) {
         try {
@@ -38,7 +38,7 @@ public class ClienteController {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    @CrossOrigin
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody ClienteForm form) {
         try {
@@ -52,7 +52,7 @@ public class ClienteController {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    @CrossOrigin
     @PatchMapping("/")
     public ResponseEntity<Object> editar(@RequestBody ClienteForm form) {
         try {
@@ -62,7 +62,7 @@ public class ClienteController {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    @CrossOrigin
     @PostMapping("/pesquisar")
     public ResponseEntity<Object> pesquisar(@RequestBody ClienteFilter form) {
         try {
@@ -71,7 +71,7 @@ public class ClienteController {
             return ResponseEntity.badRequest().build();
         }
     }
-
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> excluir(@PathVariable("id") Integer id){
         try{
