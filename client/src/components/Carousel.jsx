@@ -9,7 +9,7 @@ import 'swiper/css/navigation';
 
 function Carousel({ setBgColor }) {
 
-    const banners = [carousel1, carousel2, {}];
+    const banners = [carousel1, carousel2].filter(Boolean);
 
     const colors = ['#22272E', '#4F6FD8', '#bc7655']
 

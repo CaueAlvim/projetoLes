@@ -14,7 +14,7 @@ function UserDrawer({ isAdmin, setPage }) {
                             <ListItemIcon>
                                 <AccountCircleIcon />
                             </ListItemIcon>
-                            <ListItemText primary={'Minha conta'} />
+                            <ListItemText id='cypress-minhacontaedit' primary={'Minha conta'} />
                         </ListItemButton>
                     </ListItem>
                     {isAdmin && (
@@ -33,7 +33,7 @@ function UserDrawer({ isAdmin, setPage }) {
                                 <ListItemIcon>
                                     <SupervisorAccountIcon />
                                 </ListItemIcon>
-                                <ListItemText primary={'Usuários cadastrados'} />
+                                <ListItemText id='cypress-usuarioscadastrados' primary={'Usuários cadastrados'} />
                             </ListItemButton>
                         </ListItem>
                     )}

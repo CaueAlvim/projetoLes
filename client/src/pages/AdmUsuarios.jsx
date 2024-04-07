@@ -8,7 +8,7 @@ function AdmUsuarios() {
     const [filter, setFilter] = useState({ nome: '', dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
     const [listaUsuarios, setListaUsuarios] = useState([]);
     const [userSelecionadoCodigo, setUserSelecionadoCodigo] = useState();
-    
+
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
 
@@ -74,14 +74,14 @@ function AdmUsuarios() {
                 </Container>
 
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
-                    <Button onClick={fetchUsuarios} sx={{ mb: 2, mr: 5 }}> Pesquisar</Button>
+                    <Button id='cypress-admusersearch' onClick={fetchUsuarios} sx={{ mb: 2, mr: 5 }}> Pesquisar</Button>
                 </Box>
 
                 <Divider variant='fullWidth' sx={{ width: '97%', margin: ' auto' }} />
 
                 {listaUsuarios.length > 0 && (
                     <Container fixed sx={{ my: 5 }}>
-                        <TableContainer component={Paper} sx={{ width: '100%' }}>
+                        <TableContainer id='cypress-admusertablecontainer' component={Paper} sx={{ width: '100%' }}>
                             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                                 <TableHead sx={{ bgcolor: '#e0e0e0' }}>
                                     <TableRow>
@@ -95,36 +95,36 @@ function AdmUsuarios() {
                                 </TableHead>
                                 <TableBody>
                                     {listaUsuarios.map((row) => (
-                                    <TableRow key={row.cpf}>
-                                        <TableCell component="th" scope="row">
-                                            {row.nome}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.email}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.cpf}
-                                        </TableCell>
-                                        <TableCell component="th" scope="row">
-                                            {row.telefone}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {moment(row.dataCadastro).format('DD/MM/YYYY')}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            <Button onClick={(e) => handleClickMoreOptions(e, row)} sx={{ height: '.5rem' }}>
-                                                <MoreHorizIcon />
-                                            </Button>
-                                            <Menu
-                                                anchorEl={anchorEl}
-                                                open={openMenu}
-                                                onClose={() => setOpenMenu(false)}
-                                            >
-                                                <MenuItem onClick={handleDeleteUser}>Excluir Usuário</MenuItem>
-                                            </Menu>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                        <TableRow key={row.cpf}>
+                                            <TableCell component="th" scope="row">
+                                                {row.nome}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.email}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.cpf}
+                                            </TableCell>
+                                            <TableCell component="th" scope="row">
+                                                {row.telefone}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {moment(row.dataCadastro).format('DD/MM/YYYY')}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Button id='cypress-moreoptionsusers' onClick={(e) => handleClickMoreOptions(e, row)} sx={{ height: '.5rem' }}>
+                                                    <MoreHorizIcon />
+                                                </Button>
+                                                <Menu
+                                                    anchorEl={anchorEl}
+                                                    open={openMenu}
+                                                    onClose={() => setOpenMenu(false)}
+                                                >
+                                                    <MenuItem id='cypress-moreoptionsusersdelete' onClick={handleDeleteUser}>Excluir Usuário</MenuItem>
+                                                </Menu>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
                         </TableContainer>

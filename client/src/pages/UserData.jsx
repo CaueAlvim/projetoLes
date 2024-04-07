@@ -148,12 +148,12 @@ function UserData() {
                                     onChange={(event) => setUserData({ ...userData, senha: event.target.value })}
                                 />
                             </Grid>
-                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
-                                <Button variant='contained' onClick={handleAlterarUsuario}>
-                                    alterar
-                                </Button>
-                            </Box>
                         </Grid>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
+                            <Button id='cypress-editarcliente' variant='contained' onClick={handleAlterarUsuario}>
+                                alterar
+                            </Button>
+                        </Box>
 
                     </Container>
                 )}
@@ -186,6 +186,11 @@ function UserData() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
+                            <Button variant='contained' onClick={() => 1}>
+                                adicionar
+                            </Button>
+                        </Box>
                     </Container>
                 )}
 
@@ -218,6 +223,11 @@ function UserData() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
+                            <Button variant='contained' onClick={() => 1}>
+                                adicionar
+                            </Button>
+                        </Box>
                     </Container>
                 )}
 

@@ -83,7 +83,7 @@ function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
 
                         <Grid item xs={5} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <Button onClick={handleClose}>Cancelar</Button>
-                            <Button onClick={handleLogin}>Login</Button>
+                            <Button id="cypress-login" onClick={handleLogin}>Login</Button>
                         </Grid>
                     </Grid>
                 </DialogActions>

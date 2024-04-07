@@ -39,7 +39,7 @@ function UserHome() {
                 <AppBar sx={{ backgroundColor: '#559bbc', position: 'relative', height: '4.2rem' }} >
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
-                        <Button color="inherit" onClick={() => {
+                        <Button id='cypress-logout' color="inherit" onClick={() => {
                             localStorage.clear();
                             navigate('/');
                         }}>

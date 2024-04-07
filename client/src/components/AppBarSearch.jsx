@@ -121,7 +121,7 @@ function AppBarSearch({ isCheckout }) {
           )
             :
             (
-              <Button color="inherit" onClick={() => navigate('/home')}>
+              <Button id="cypress-myaccount" color="inherit" onClick={() => navigate('/home')}>
                 <AccountCircleIcon />
               </Button>
             )}

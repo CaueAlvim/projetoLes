@@ -30,7 +30,7 @@ function Index() {
           <Carousel setBgColor={setBackgroundColor} />
 
           <Grid container item xs={12} sx={{ backgroundColor: '#f1f1f1', height: 'auto', width: '80vw', borderRadius: '10px', marginBottom: '1.5rem' }}>
-            {listaLivros.map((livro) => (
+            {listaLivros?.map((livro) => (
               <Grid item xs={4} key={livro.id}>
                 <ProductCard product={livro} />
               </Grid>
