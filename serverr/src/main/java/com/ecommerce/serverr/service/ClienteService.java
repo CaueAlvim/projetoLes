@@ -38,12 +38,12 @@ public class ClienteService {
         Cliente cliente = form.transform();
         cliente.setDataCadastro(LocalDate.now());
         repository.save(cliente);
-
     }
 
     public void editar(ClienteForm form) throws Exception{
-        ClienteValidator.validate(form.getId());
+        Cliente cliente = ClienteValidator.validate(form.getId());
         Cliente newCliente = form.transform();
+        newCliente.setAdmin(cliente.isAdmin());
         repository.save(newCliente);
     }
 

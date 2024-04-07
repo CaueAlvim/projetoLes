@@ -12,7 +12,7 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, userRegister
             return;
         }
         const enderecoCompleto = { ...cadastroEnderecoFields, ...cadastroEnderecoObs };
-        setUserRegister({ ...userRegister, endereco: [enderecoCompleto] });
+        setUserRegister({ ...userRegister, enderecos: [enderecoCompleto] });
         setOpenModalCartao(true);
         handleClose();
     }

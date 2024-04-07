@@ -1,4 +1,4 @@
-import { AppBar, Box, Grid, Toolbar } from '@mui/material';
+import { AppBar, Box, Grid, Toolbar, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import UserDrawer from '../components/UserDrawer';
@@ -11,7 +11,7 @@ import AdmUsuarios from './AdmUsuarios';
 function UserHome() {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState('NONE');
-    const [user, setUser] = useState({ isAdmin: false});
+    const [user, setUser] = useState({ isAdmin: false });
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -37,8 +37,14 @@ function UserHome() {
         <>
             <Grid sx={{ overflow: 'scroll', height: '100vh' }}>
                 <AppBar sx={{ backgroundColor: '#559bbc', position: 'relative', height: '4.2rem' }} >
-                    <Toolbar>
+                    <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
+                        <Button color="inherit" onClick={() => {
+                            localStorage.clear();
+                            navigate('/');
+                        }}>
+                            Logout
+                        </Button>
                     </Toolbar>
                 </AppBar>
 

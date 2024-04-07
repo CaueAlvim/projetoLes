@@ -21,14 +21,15 @@ public class ClienteForm {
     private String telefone;
     private String genero;
     private LocalDate dataNascimento;
-    private List<EnderecoForm> endereco;
-    private List<CartaoForm> cartao;
+    private LocalDate dataCadastro;
+    private List<EnderecoForm> enderecos;
+    private List<CartaoForm> cartoes;
 
     public Cliente transform(){
         return Cliente.builder().id(id).nome(nome).senha(senha).email(email)
                                 .cpf(cpf).telefone(telefone).genero(genero)
-                                .dataNascimento(dataNascimento)
-                                .enderecos(endereco.stream().map(EnderecoForm::transform).collect(Collectors.toList()))
-                                .cartoes(cartao.stream().map(CartaoForm::transform).collect(Collectors.toList())).build();
+                                .dataNascimento(dataNascimento).dataCadastro(dataCadastro)
+                                .enderecos(enderecos.stream().map(EnderecoForm::transform).collect(Collectors.toList()))
+                                .cartoes(cartoes.stream().map(CartaoForm::transform).collect(Collectors.toList())).build();
     }
 }

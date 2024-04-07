@@ -8,8 +8,9 @@ function ModalCadastroCartao({ open, setOpen, userRegister }) {
 
     const handleCadastrar = async () => {
         try {
-            await ClienteService.salvar({ ...userRegister, cartao: [cadastroCartaoFields] });
+            await ClienteService.salvar({ ...userRegister, cartoes: [cadastroCartaoFields] });
             console.log("Cadastro realizado com sucesso!");
+            window.location.reload();
         } catch (error) {
             console.error("Falha no cadastro:", error);
         }

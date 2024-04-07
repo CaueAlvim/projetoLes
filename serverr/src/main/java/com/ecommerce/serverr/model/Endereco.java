@@ -24,4 +24,8 @@ public class Endereco {
     private String tipoLogradouro;
     private String tipoResidencia;
 
+    @Builder.Default
+    private boolean isEntrega = true;
+    @Builder.Default
+    private boolean isCobranca = true;
 }

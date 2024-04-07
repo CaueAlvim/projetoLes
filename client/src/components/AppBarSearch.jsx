@@ -126,7 +126,7 @@ function AppBarSearch({ isCheckout }) {
               </Button>
             )}
 
-          {!isCheckout && (
+          {!isCheckout && user !== undefined && (
             <IconButton aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
               <StyledBadge badgeContent={products?.length} color="secondary">
                 <ShoppingCartIcon />
