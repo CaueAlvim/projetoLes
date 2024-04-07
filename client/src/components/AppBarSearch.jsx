@@ -13,7 +13,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from '../assets/logo.png';
 import CarrinhoDrawer from './CarrinhoDrawer';
 
-function AppBarSearch({ cart, setCart }) {
+function AppBarSearch({ cart, setCart, isCheckout }) {
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -115,11 +115,13 @@ function AppBarSearch({ cart, setCart }) {
               </Button>
             )}
 
-          <IconButton aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
-            <StyledBadge badgeContent={cart?.length} color="secondary">
-              <ShoppingCartIcon />
-            </StyledBadge>
-          </IconButton>
+          {!isCheckout && (
+            <IconButton aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
+              <StyledBadge badgeContent={cart?.length} color="secondary">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </IconButton>
+          )}
 
 
         </Toolbar>

@@ -29,7 +29,7 @@ function Checkout() {
     return (
         <>
             <Grid container sx={{ overflow: 'hidden' }}>
-                <AppBarSearch cart={carrinho} setCart={setCarrinho} />
+                <AppBarSearch cart={carrinho} setCart={setCarrinho} isCheckout={true}/>
                 
                 <Grid container item sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
