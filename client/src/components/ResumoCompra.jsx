@@ -23,6 +23,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
 
             <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: ' auto' }} />
 
+
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 2 }}>
                 <Typography variant={isCheckout ? "h6" : "body1"} sx={{ ml: 2.25 }}>
                     Valor total
@@ -41,26 +42,46 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
                 </Typography>
             </Box>
 
-            {isCheckout && (
-                <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', gap: 1, flexDirection: 'row' }}>
-                    <Typography variant="h6">
-                        Cupom promocional:
-                    </Typography>
+            <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: ' auto' }} />
+
+            <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', flexDirection: 'row', my: isCheckout ? 2 : 2 }}>
+                <Typography variant={isCheckout ? "h6" : "body1"}>
+                    Calcule o frete:
+                </Typography>
 
 
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: '1rem', width: '100%', mt: .5 }}>
-                        <TextField size="small" variant="outlined" sx={{ width: '90%' }} />
-                        <Button variant="contained" color="primary" size="small">
-                            OK
-                        </Button>
-                    </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: '1rem', width: '100%', mt: .5 }}>
+                    <TextField size="small" variant="outlined" sx={{ width: '90%' }} />
+                    <Button variant="contained" color="primary" size="small">
+                        OK
+                    </Button>
                 </Box>
+            </Box>
+
+            {isCheckout && (
+                <>
+                    <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: ' auto' }} />
+
+                    <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', flexDirection: 'row', my: isCheckout ? 2 : 2 }}>
+                        <Typography variant="h6">
+                            Cupom promocional:
+                        </Typography>
+
+
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: '1rem', width: '100%', mt: .5 }}>
+                            <TextField size="small" variant="outlined" sx={{ width: '90%' }} />
+                            <Button variant="contained" color="primary" size="small">
+                                OK
+                            </Button>
+                        </Box>
+                    </Box>
+                </>
             )}
 
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: .9, mb: '1rem' }}>
-                <Button variant="contained" color="primary" 
-                        onClick={() => isCheckout ? navigate('/finalizacao') : navigate('/checkout')} 
-                        sx={{ height: '3.7rem', width: '90%', fontSize: '.9rem' }}>
+                <Button variant="contained" color="primary"
+                    onClick={() => isCheckout ? navigate('/finalizacao') : navigate('/checkout')}
+                    sx={{ height: '3.7rem', width: '90%', fontSize: '.9rem' }}>
                     Finalizar Compra
                 </Button>
             </Box>

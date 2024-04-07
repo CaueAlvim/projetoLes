@@ -6,7 +6,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Index from './pages'
-import DetalheProduto from './pages/DetalheProduto';
 import Checkout from './pages/Checkout';
 import UserHome from './pages/UserHome';
 import FinalizacaoCompra from './pages/FinalizacaoCompra';
@@ -14,24 +13,24 @@ import FinalizacaoCompra from './pages/FinalizacaoCompra';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Index/>
-  },
-  {
-    path: "/detalhes-produto/:id",
-    element: <DetalheProduto/>
+    element: <Index />
   },
   {
     path: "/checkout",
-    element: <Checkout/>
+    element: <Checkout />
   },
   {
     path: "/home",
-    element: <UserHome/>
+    element: <UserHome />
   },
   {
     path: "/finalizacao",
-    element: <FinalizacaoCompra/>
+    element: <FinalizacaoCompra />
   },
+  // {
+  //   path: "/detalhes-produto/:id",
+  //   element: <DetalheProduto/>
+  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Grid, Button, Typography, Box, TextField, CardMedia, Card, Divider } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
@@ -5,13 +6,13 @@ import AppBarSearch from '../components/AppBarSearch';
 import Footer from '../components/Footer';
 
 function DetalheProduto() {
-
+    const [carrinho, setCarrinho] = useState(JSON.parse(localStorage.getItem('carrinho')) || []);
     const product = { id: 1, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100', description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi ullam maiores rerum. Est, atque? Doloribus cupiditate voluptatibus facere corporis, illo sit? Consequuntur blanditiis ratione voluptatem molestiae consectetur, rerum quas quam.' };
 
     return (
         <>
             <Grid container sx={{ overflow: 'hidden' }}>
-                <AppBarSearch />
+                <AppBarSearch cart={carrinho} setCart={setCarrinho}/>
 
                 <Grid container item sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
@@ -47,7 +48,7 @@ function DetalheProduto() {
                             </Typography>
 
                             <Typography variant="h5" sx={{ mb: 2, mt: 2, ml: '1.25rem', fontWeight: 'bold' }}>
-                                R$ 2.470,58
+                            {product.price}
                             </Typography>
                             <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '2rem auto' }} />
 

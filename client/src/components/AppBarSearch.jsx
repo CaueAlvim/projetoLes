@@ -13,7 +13,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from '../assets/logo.png';
 import CarrinhoDrawer from './CarrinhoDrawer';
 
-function AppBarSearch() {
+function AppBarSearch({ cart, setCart }) {
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -68,13 +68,20 @@ function AppBarSearch() {
   const [openModalCadastroEndereco, setOpenModalCadastroEndereco] = useState(false);
   const [openModalCadastroCartao, setOpenModalCadastroCartao] = useState(false);
 
+  useEffect(() => {
+    fetchLocalStorage();
+  }, []);
 
   useEffect(() => {
+    localStorage.setItem('carrinho', JSON.stringify(cart));
+  }, [cart]);
+
+  const fetchLocalStorage = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-  }, []);
+  }
 
   return (
     <>
@@ -108,16 +115,16 @@ function AppBarSearch() {
               </Button>
             )}
 
-            <IconButton aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
-              <StyledBadge badgeContent={4} color="secondary">
-                <ShoppingCartIcon />
-              </StyledBadge>
-            </IconButton>
+          <IconButton aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
+            <StyledBadge badgeContent={cart?.length} color="secondary">
+              <ShoppingCartIcon />
+            </StyledBadge>
+          </IconButton>
 
 
         </Toolbar>
       </AppBar>
-      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} />
+      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} products={cart} setProducts={setCart} />
       <ModalLogin open={openModalLogin} setOpen={setOpenModalLogin} setOpenModalCadastro={setOpenModalCadastro} />
       <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setUserRegister={setUserCadastro} />
       <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} userRegister={userCadastro} setUserRegister={setUserCadastro} />

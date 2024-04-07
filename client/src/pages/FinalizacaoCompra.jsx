@@ -1,15 +1,16 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import AppBarSearch from "../components/AppBarSearch";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
 
 function FinalizacaoCompra() {
     const navigate = useNavigate();
-
+    const [carrinho, setCarrinho] = useState(JSON.parse(localStorage.getItem('carrinho')) || []);
     return (
         <>
             <Grid container sx={{ overflow: 'hidden' }}>
-                <AppBarSearch />
+                <AppBarSearch cart={carrinho} setCart={setCarrinho}/>
 
                 <Grid container item sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
