@@ -2,7 +2,6 @@ package com.ecommerce.serverr.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ManyToAny;
 
 import java.util.List;
 
@@ -12,15 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class CarrinhoItem {
+public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "carrinho_id")
-    private Carrinho carrinho;
+    private String nomeCategoria;
 
-    @ManyToOne
-    @JoinColumn(name = "livro_id")
-    private Livro livro;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="categoria_id")
+    private List<LivroCategoria> categorias;
 }
