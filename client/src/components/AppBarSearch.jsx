@@ -13,7 +13,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from '../assets/logo.png';
 import CarrinhoDrawer from './CarrinhoDrawer';
 
-function AppBarSearch({ cart, setCart, isCheckout }) {
+function AppBarSearch({ isCheckout }) {
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -72,16 +72,27 @@ function AppBarSearch({ cart, setCart, isCheckout }) {
     fetchLocalStorage();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('carrinho', JSON.stringify(cart));
-  }, [cart]);
-
   const fetchLocalStorage = () => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }
+
+  const products = [
+    { id: 1, nome: 'Livro 1', imagem: 'https://via.placeholder.com/100', preco: 'R$100', descricao: 'Descricao Teste 1', quantidade: 1 },
+    { id: 2, nome: 'Livro 2', imagem: 'https://via.placeholder.com/100', preco: 'R$200', descricao: 'Descricao Teste 2', quantidade: 1 },
+    { id: 3, nome: 'Livro 3', imagem: 'https://via.placeholder.com/100', preco: 'R$300', descricao: 'Descricao Teste 3', quantidade: 1 },
+    { id: 4, nome: 'Livro 4', imagem: 'https://via.placeholder.com/100', preco: 'R$400', descricao: 'Descricao Teste 4', quantidade: 1 },
+    { id: 5, nome: 'Livro 5', imagem: 'https://via.placeholder.com/100', preco: 'R$500', descricao: 'Descricao Teste 5', quantidade: 1 },
+    { id: 6, nome: 'Livro 6', imagem: 'https://via.placeholder.com/100', preco: 'R$600', descricao: 'Descricao Teste 6', quantidade: 1 },
+    { id: 7, nome: 'Livro 7', imagem: 'https://via.placeholder.com/100', preco: 'R$700', descricao: 'Descricao Teste 7', quantidade: 1 },
+    { id: 8, nome: 'Livro 8', imagem: 'https://via.placeholder.com/100', preco: 'R$800', descricao: 'Descricao Teste 8', quantidade: 1 },
+    { id: 9, nome: 'Livro 9', imagem: 'https://via.placeholder.com/100', preco: 'R$900', descricao: 'Descricao Teste 9', quantidade: 1 },
+    { id: 10, nome: 'Livro 10', imagem: 'https://via.placeholder.com/100', preco: 'R$1000', descricao: 'Descricao Teste 10', quantidade: 1 },
+    { id: 11, nome: 'Livro 11', imagem: 'https://via.placeholder.com/100', preco: 'R$2000', descricao: 'Descricao Teste 11', quantidade: 1 },
+    { id: 12, nome: 'Livro 12', imagem: 'https://via.placeholder.com/100', preco: 'R$3000', descricao: 'Descricao Teste 12', quantidade: 1 },
+  ];
 
   return (
     <>
@@ -117,7 +128,7 @@ function AppBarSearch({ cart, setCart, isCheckout }) {
 
           {!isCheckout && (
             <IconButton aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
-              <StyledBadge badgeContent={cart?.length} color="secondary">
+              <StyledBadge badgeContent={products?.length} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
@@ -126,7 +137,7 @@ function AppBarSearch({ cart, setCart, isCheckout }) {
 
         </Toolbar>
       </AppBar>
-      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} products={cart} setProducts={setCart} />
+      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} products={products} />
       <ModalLogin open={openModalLogin} setOpen={setOpenModalLogin} setOpenModalCadastro={setOpenModalCadastro} />
       <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setUserRegister={setUserCadastro} />
       <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} userRegister={userCadastro} setUserRegister={setUserCadastro} />

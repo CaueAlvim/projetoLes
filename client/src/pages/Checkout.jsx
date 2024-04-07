@@ -17,7 +17,6 @@ function Checkout() {
         { id: 8, name: 'Livro 8', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1 },
         { id: 9, name: 'Livro 9', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1 },
     ];
-    const [carrinho, setCarrinho] = useState(JSON.parse(localStorage.getItem('carrinho')) || []);
     const [showNewAddressForm, setShowNewAddressForm] = useState(false);
     const [showNewCardForm, setShowNewCardForm] = useState(false);
 
@@ -29,7 +28,7 @@ function Checkout() {
     return (
         <>
             <Grid container sx={{ overflow: 'hidden' }}>
-                <AppBarSearch cart={carrinho} setCart={setCarrinho} isCheckout={true}/>
+                <AppBarSearch isCheckout={true}/>
                 
                 <Grid container item sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 

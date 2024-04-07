@@ -15,31 +15,9 @@ const ProductCardContainer = styled(Paper)(({ theme }) => ({
   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
 }));
 
-const ProductCard = ({ product, carrinho, setCarrinho }) => {
+const ProductCard = ({ product }) => {
   const [openModalDetalheProduto, setOpenModalDetalheProduto] = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
-  }, [carrinho]);
-
-  const adicionarCarrinho = () => {
-    let cart = JSON.parse(localStorage.getItem('carrinho'));
-    let productExists = cart.find(item => item.id === product.id);
-
-    if (productExists) {
-      productExists.quantidade += 1;
-    } else {
-      cart.push({
-        id: product.id,
-        nome: product.nome,
-        imagem: product.imagem,
-        preco: product.preco.replace('R$', ''),
-        quantidade: 1
-      });
-    }
-
-    setCarrinho(cart);
-  }
 
   return (
     <>
@@ -57,7 +35,6 @@ const ProductCard = ({ product, carrinho, setCarrinho }) => {
           style={{ marginTop: '0.5rem' }}
           onClick={(event) => {
             event.stopPropagation();
-            adicionarCarrinho();
           }}
         >
           <AddShoppingCartIcon sx={{ mr: '8px' }} />

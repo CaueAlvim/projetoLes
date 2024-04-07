@@ -18,7 +18,7 @@ const ProductCardCarrinhoContainer = styled(Paper)(({ theme }) => ({
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
 }));
 
-function CarrinhoDrawer({ open, setOpen, products, setProducts }) {
+function CarrinhoDrawer({ open, setOpen, products }) {
     const [valorTotal, setValorTotal] = useState();
     const [quantidadeTotal, setQuantidadeTotal] = useState();
 
@@ -28,30 +28,30 @@ function CarrinhoDrawer({ open, setOpen, products, setProducts }) {
 
     const calcularTotais = () => {
         setQuantidadeTotal(products?.reduce((somador, product) => somador + product.quantidade, 0));
-        setValorTotal(products?.reduce((somador, produto) => somador + parseFloat(produto?.preco * produto?.quantidade), 0)); //,0 valor inicial do somador
+        setValorTotal(products?.reduce((somador, produto) => somador + parseFloat(produto?.preco.replace('R$', '') * produto?.quantidade), 0)); //,0 valor inicial do somador
     }
 
-    const handleAlterarQtd = (productId, aumento) => {
-        const updatedProducts = products.map(product => {
-            if (product.id === productId) {
-                if (aumento || product.quantidade > 1) {
-                    return {
-                        ...product,
-                        quantidade: aumento ? product.quantidade + 1 : product.quantidade - 1
-                    };
-                }
-            }
-            return product;
-        });
+    // const handleAlterarQtd = (productId, aumento) => {
+    //     const updatedProducts = products.map(product => {
+    //         if (product.id === productId) {
+    //             if (aumento || product.quantidade > 1) {
+    //                 return {
+    //                     ...product,
+    //                     quantidade: aumento ? product.quantidade + 1 : product.quantidade - 1
+    //                 };
+    //             }
+    //         }
+    //         return product;
+    //     });
 
-        setProducts(updatedProducts);
+    //     setProducts(updatedProducts);
 
-        calcularTotais();
-    };
+    //     calcularTotais();
+    // };
 
-    const handleRemoveItem = (productId) => {
-        setProducts(products.filter(product => product.id !== productId));
-    };
+    // const handleRemoveItem = (productId) => {
+    //     setProducts(products.filter(product => product.id !== productId));
+    // };
 
     return (
         <>
