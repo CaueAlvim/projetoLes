@@ -82,7 +82,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
                 <Button variant="contained" color="primary"
                     onClick={() => isCheckout ? navigate('/finalizacao') : navigate('/checkout')}
                     sx={{ height: '3.7rem', width: '90%', fontSize: '.9rem' }}>
-                    Finalizar Compra
+                    {isCheckout ? 'Finalizar Compra' : 'Ir para checkout'}
                 </Button>
             </Box>
         </Box>

@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel } from '@mui/material';
 import moment from 'moment';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ProductCardDevolucao from '../components/ProductCardDevolucao';
 
-function UserPedidos() {
+function UserPedidos({ isAdmin }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
     const [openDevolucaoDialog, setOpenDevolucaoDialog] = useState(false);
     const [openStatusDialog, setOpenStatusDialog] = useState(false);
     const [produtoSelecionado, setProdutoSelecionado] = useState({ status: '' });
+    const [selectTrocaDevolucao, setSelectTrocaDevolucao] = useState({ operacao: 'Troca' });
 
     const pedidosTable = [
         { numero: '123', usuario: 'NOMEUSUARIO1', status: 'ENCAMINHADO', dataPedido: '2023-12-02' },
@@ -54,6 +55,18 @@ function UserPedidos() {
             >
                 <DialogTitle>{"Deseja solicitar a troca/devolução deste item?"}</DialogTitle>
                 <DialogContent>
+                    <FormControl variant="standard" fullWidth sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="label-troca-devolucao">Operação</InputLabel>
+                        <Select
+                            labelId="label-troca-devolucao"
+                            id="operacao-troca-devolucao"
+                            value={selectTrocaDevolucao.operacao}
+                            onChange={(event) => setSelectTrocaDevolucao({ ...selectTrocaDevolucao, operacao: event.target.value })}
+                        >
+                            <MenuItem value={'Troca'}>Troca</MenuItem>
+                            <MenuItem value={'Devolucao'}>Devolucao</MenuItem>
+                        </Select>
+                    </FormControl>
                     <Typography variant="body1" sx={{ mt: 3 }}>
                         Dados do pedido
                     </Typography>
@@ -101,23 +114,25 @@ function UserPedidos() {
                 </Typography>
 
                 <Divider variant='fullWidth' sx={{ width: '100%', margin: ' auto', bgcolor: 'black' }} />
-                <Container fixed sx={{ mt: 3, mb: 5 }}>
-                    <Typography variant="h6">Pesquisar:</Typography>
-                    <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: .3 }}>
-                        <Grid item xs={6}>
-                            <TextField id="filled-basic" label="Nº Pedido" variant="filled" fullWidth />
+                {isAdmin && (
+                    <Container fixed sx={{ mt: 3, mb: 5 }}>
+                        <Typography variant="h6">Pesquisar:</Typography>
+                        <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: .3 }}>
+                            <Grid item xs={6}>
+                                <TextField id="filled-basic" label="Nº Pedido" variant="filled" fullWidth />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <TextField id="filled-basic" label="Data Inicial" variant="filled" fullWidth />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <TextField id="filled-basic" label="Data Final" variant="filled" fullWidth />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField id="filled-basic" label="Feito Por" variant="filled" fullWidth />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={3}>
-                            <TextField id="filled-basic" label="Data Inicial" variant="filled" fullWidth />
-                        </Grid>
-                        <Grid item xs={3}>
-                            <TextField id="filled-basic" label="Data Final" variant="filled" fullWidth />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField id="filled-basic" label="Feito Por" variant="filled" fullWidth />
-                        </Grid>
-                    </Grid>
-                </Container>
+                    </Container>
+                )}
 
                 <Divider variant='fullWidth' sx={{ width: '97%', margin: ' auto' }} />
 
@@ -127,7 +142,7 @@ function UserPedidos() {
                             <TableHead sx={{ bgcolor: '#e0e0e0' }}>
                                 <TableRow>
                                     <TableCell>Nº do pedido</TableCell>
-                                    <TableCell align="center">Feito por</TableCell>
+                                    {isAdmin && (<TableCell align="center">Feito por</TableCell>)}
                                     <TableCell align="center">Status</TableCell>
                                     <TableCell align="right">Data do pedido</TableCell>
                                     <TableCell align="right"></TableCell>
@@ -139,9 +154,11 @@ function UserPedidos() {
                                         <TableCell component="th" scope="row">
                                             {row.numero}
                                         </TableCell>
-                                        <TableCell align="center" component="th" scope="row">
-                                            {row.usuario}
-                                        </TableCell>
+                                        {isAdmin && (
+                                            <TableCell align="center" component="th" scope="row">
+                                                {row.usuario}
+                                            </TableCell>
+                                        )}
                                         <TableCell align="center" component="th" scope="row">
                                             {row.status}
                                         </TableCell>
@@ -149,7 +166,7 @@ function UserPedidos() {
                                             {moment(row.dataPedido).format('DD/MM/YYYY')}
                                         </TableCell>
                                         <TableCell align="right">
-                                            <Button onClick={(e) => handleClickMoreOptions(e, row)} sx={{ height: '.5rem' }}>
+                                            <Button id='cypress-moreoptionpedidos' onClick={(e) => handleClickMoreOptions(e, row)} sx={{ height: '.5rem' }}>
                                                 <MoreHorizIcon />
                                             </Button>
                                             <Menu
@@ -157,8 +174,8 @@ function UserPedidos() {
                                                 open={openMenu}
                                                 onClose={() => setOpenMenu(false)}
                                             >
-                                                <MenuItem onClick={handleOpenDialogStatus}>Alterar Status</MenuItem>
-                                                <MenuItem onClick={handleOpenDialogDevolucao}>Solicitar Troca/Devolução</MenuItem>
+                                                {isAdmin && (<MenuItem id='cypress-adm-alterar-status-pedido' onClick={handleOpenDialogStatus}>Alterar Status</MenuItem>)}
+                                                <MenuItem id='cypress-solicitartroca' onClick={handleOpenDialogDevolucao}>Solicitar Troca/Devolução</MenuItem>
                                             </Menu>
                                         </TableCell>
                                     </TableRow>

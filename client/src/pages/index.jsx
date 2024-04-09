@@ -19,8 +19,6 @@ function Index() {
     setListaLivros(lista);
   }
 
-  console.log(listaLivros);
-
   return (
     <>
       <Grid sx={{ overflow: 'hidden' }}>

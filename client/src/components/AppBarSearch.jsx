@@ -127,7 +127,7 @@ function AppBarSearch({ isCheckout }) {
             )}
 
           {!isCheckout && user !== undefined && (
-            <IconButton aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
+            <IconButton id='cypress-shoppingcart' aria-label="cart" color="inherit" onClick={() => setOpenCarrinhoDrawer(true)}>
               <StyledBadge badgeContent={products?.length} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>

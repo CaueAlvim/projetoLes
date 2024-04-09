@@ -17,16 +17,14 @@ function UserDrawer({ isAdmin, setPage }) {
                             <ListItemText id='cypress-minhacontaedit' primary={'Minha conta'} />
                         </ListItemButton>
                     </ListItem>
-                    {isAdmin && (
-                        <ListItem disablePadding>
-                            <ListItemButton onClick={() => setPage('PEDIDOS')}>
-                                <ListItemIcon>
-                                    <ReceiptLongIcon />
-                                </ListItemIcon>
-                                <ListItemText primary={isAdmin ? 'Detalhes dos pedidos' : 'Meus pedidos'} />
-                            </ListItemButton>
-                        </ListItem>
-                    )}
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => setPage('PEDIDOS')}>
+                            <ListItemIcon>
+                                <ReceiptLongIcon />
+                            </ListItemIcon>
+                            <ListItemText id='cypress-usuaripedidos' primary={isAdmin ? 'Detalhes dos pedidos' : 'Meus pedidos'} />
+                        </ListItemButton>
+                    </ListItem>
                     {isAdmin && (
                         <ListItem disablePadding>
                             <ListItemButton onClick={() => setPage('USUARIOS')}>

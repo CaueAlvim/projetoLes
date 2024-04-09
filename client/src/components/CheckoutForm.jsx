@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 function CheckoutForm({ newCardForm, setNewCardForm, newAddressForm, setNewAddressForm, handleClickGoBack }) {
     const [chosePaymentMethod, setChosePaymentMethod] = useState(true);
+    const [checkoutFiels, setCheckoutFields] = useState({ cartao: '', endereco: '' });
 
     
     return (
@@ -49,15 +50,15 @@ function CheckoutForm({ newCardForm, setNewCardForm, newAddressForm, setNewAddre
                 <Grid container sx={{ width: 'auto', alignItems: 'center' }}>
                     <Grid item xs={11}>
                         <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
-                            <InputLabel id="demo-simple-select-filled-label">Selecionar cartão cadastrado</InputLabel>
+                            <InputLabel id="label-select-card">Selecionar cartão cadastrado</InputLabel>
                             <Select
-                                labelId="demo-simple-select-filled-label"
-                                id="demo-simple-select-filled"
-                                value={''}
-                                onChange={() => 1}
+                                labelId="label-select-card"
+                                id="select-cart-checkout"
+                                value={checkoutFiels.cartao}
+                                onChange={(event) => setCheckoutFields({ ...checkoutFiels, cartao: event.target.value })}
                             >
-                                <MenuItem value={10}>CARTÃO 1</MenuItem>
-                                <MenuItem value={20}>CARTÃO 2</MenuItem>
+                                <MenuItem value={'1'}>CARTÃO 1</MenuItem>
+                                <MenuItem value={'2'}>CARTÃO 2</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -69,15 +70,15 @@ function CheckoutForm({ newCardForm, setNewCardForm, newAddressForm, setNewAddre
 
                     <Grid item xs={11}>
                         <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
-                            <InputLabel id="demo-simple-select-filled-label">Selecionar endereço cadastrado</InputLabel>
+                            <InputLabel id="label-select-address">Selecionar endereço cadastrado</InputLabel>
                             <Select
-                                labelId="demo-simple-select-filled-label"
-                                id="demo-simple-select-filled"
-                                value={''}
-                                onChange={() => 1}
+                                labelId="label-select-address"
+                                id="select-address-checkout"
+                                value={checkoutFiels.endereco}
+                                onChange={(event) => setCheckoutFields({ ...checkoutFiels, endereco: event.target.value })}
                             >
-                                <MenuItem value={10}>ENDEREÇO 1</MenuItem>
-                                <MenuItem value={20}>ENDEREÇO 2</MenuItem>
+                                <MenuItem value={'10'}>ENDEREÇO 1</MenuItem>
+                                <MenuItem value={'20'}>ENDEREÇO 2</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>

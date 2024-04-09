@@ -25,7 +25,7 @@ function UserHome() {
             case 'MINHACONTA':
                 return <UserData />;
             case 'PEDIDOS':
-                return <UserPedidos />;
+                return <UserPedidos isAdmin={user?.isAdmin} />;
             case 'USUARIOS':
                 return <AdmUsuarios />;
             default:

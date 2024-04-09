@@ -9,9 +9,9 @@ import 'swiper/css/navigation';
 
 function Carousel({ setBgColor }) {
 
-    const banners = [carousel1, carousel2].filter(Boolean);
+    const banners = [carousel1, carousel2];
 
-    const colors = ['#22272E', '#4F6FD8', '#bc7655']
+    const colors = ['#22272E', '#4F6FD8']
 
     const handleSlideChange = (swiper) => {
         setBgColor(colors[swiper.realIndex]);
@@ -23,7 +23,6 @@ function Carousel({ setBgColor }) {
             centeredSlides={true}
             autoplay={{
                 delay: 4000,
-                disableOnInteraction: false,
             }}
             pagination={{
                 clickable: true,

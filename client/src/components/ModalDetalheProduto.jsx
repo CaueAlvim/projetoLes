@@ -9,7 +9,6 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 function ModalDetalheProduto({ open, setOpen, product }) {
 
-    console.log(product);
     return (
         <>
             <Dialog
