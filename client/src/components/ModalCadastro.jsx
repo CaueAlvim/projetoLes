@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import moment from "moment";
+import ClienteService from "../services/ClienteService";
 
-function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndereco, setUserRegister }) {
+function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndereco, setNewUserId }) {
     const [fieldsError, setFieldsError] = useState(undefined);
     const [registerFields, setRegisterFields] = useState({ nome: '', email: '', senha: '', cpf: '', dataNascimento: moment().format('YYYY-MM-DD'), genero: '', telefone: '' });
+
+    const handleCadastrar = async () => {
+        try {
+            setNewUserId(await ClienteService.salvar({ ...registerFields }));
+            console.log("Cliente cadastrado com sucesso!");
+        } catch (error) {
+            console.error("Falha no cadastro:", error);
+        }
+    }
 
     const handleSubmit = () => {
         if (Object.values(registerFields).some(field => field.trim() === '')) {
@@ -12,9 +22,10 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
             return;
         }
         
-        setUserRegister(registerFields);
-        handleClose();
-        setOpenCadastroEndereco(true);
+        handleCadastrar().then(() => {
+            handleClose();
+            setOpenCadastroEndereco(true);
+        });
     }
 
     const handleClose = () => {

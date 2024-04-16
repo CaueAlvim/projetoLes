@@ -28,4 +28,8 @@ public class Endereco {
     private boolean isEntrega = true;
     @Builder.Default
     private boolean isCobranca = true;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 }

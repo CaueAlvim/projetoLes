@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 public class CartaoForm {
     private Integer id;
+    private Integer clienteId;
     private String nomeCartao;
     private String numeroCartao;
     private String cvc;

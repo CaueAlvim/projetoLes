@@ -14,7 +14,7 @@ function Carousel({ setBgColor }) {
     const colors = ['#22272E', '#4F6FD8']
 
     const handleSlideChange = (swiper) => {
-        setBgColor(colors[swiper.realIndex]);
+        setBgColor(colors[swiper?.realIndex]);
     };
 
     return (

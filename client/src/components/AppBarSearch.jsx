@@ -61,7 +61,7 @@ function AppBarSearch({ isCheckout }) {
 
   const navigate = useNavigate();
   const [user, setUser] = useState(undefined);
-  const [userCadastro, setUserCadastro] = useState(undefined);
+  const [newUserId, setNewUserId] = useState();
   const [openCarrinhoDrawer, setOpenCarrinhoDrawer] = useState(false);
   const [openModalLogin, setOpenModalLogin] = useState(false);
   const [openModalCadastro, setOpenModalCadastro] = useState(false);
@@ -139,9 +139,9 @@ function AppBarSearch({ isCheckout }) {
       </AppBar>
       <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} products={products} />
       <ModalLogin open={openModalLogin} setOpen={setOpenModalLogin} setOpenModalCadastro={setOpenModalCadastro} />
-      <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setUserRegister={setUserCadastro} />
-      <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} userRegister={userCadastro} setUserRegister={setUserCadastro} />
-      <ModalCadastroCartao open={openModalCadastroCartao} setOpen={setOpenModalCadastroCartao} userRegister={userCadastro} />
+      <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setNewUserId={setNewUserId} />
+      <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} newUserId={newUserId} />
+      <ModalCadastroCartao open={openModalCadastroCartao} setOpen={setOpenModalCadastroCartao} newUserId={newUserId} />
 
     </>
   )

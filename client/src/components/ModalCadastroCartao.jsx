@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
-import ClienteService from "../services/ClienteService";
+import CartaoService from "../services/CartaoService";
 
-function ModalCadastroCartao({ open, setOpen, userRegister }) {
+function ModalCadastroCartao({ open, setOpen, newUserId }) {
     const [fieldsError, setFieldsError] = useState(undefined);
     const [cadastroCartaoFields, setCadastroCartaoFields] = useState({ nomeCartao: '', numeroCartao: '', cvc: '', bandeira: '' });
 
     const handleCadastrar = async () => {
         try {
-            await ClienteService.salvar({ ...userRegister, cartoes: [cadastroCartaoFields] });
-            console.log("Cadastro realizado com sucesso!");
+            await CartaoService.salvar({ ...cadastroCartaoFields, clienteId: newUserId });
+            console.log("Cartão cadastrado com sucesso!");
             window.location.reload();
         } catch (error) {
             console.error("Falha no cadastro:", error);
@@ -21,8 +21,9 @@ function ModalCadastroCartao({ open, setOpen, userRegister }) {
             setFieldsError('Por favor, preencha todos os campos obrigatórios.');
             return;
         }
-        handleCadastrar();
-        handleClose();
+        handleCadastrar().then(() => {
+            handleClose();
+        });
     }
 
     const handleClose = () => {

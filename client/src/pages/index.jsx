@@ -15,8 +15,12 @@ function Index() {
   }, []);
 
   const fetchLivros = async () => {
-    const lista = await LivroService.searchAll();
-    setListaLivros(lista);
+    try {
+      const lista = await LivroService.searchAll();
+      setListaLivros(lista);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

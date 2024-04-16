@@ -13,8 +13,12 @@ function AdmUsuarios() {
     const [openMenu, setOpenMenu] = useState(false);
 
     const fetchUsuarios = async () => {
-        const lista = await ClienteService.search(filter);
-        setListaUsuarios(lista);
+        try {
+            const lista = await ClienteService.search(filter);
+            setListaUsuarios(lista);
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     const handleClickMoreOptions = (event, itemSelecinado) => {

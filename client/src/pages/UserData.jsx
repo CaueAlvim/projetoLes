@@ -22,8 +22,12 @@ function UserData() {
     }, [currentTab === 'DADOS']);
 
     const fetchUser = async (userToFetch) => {
-        const fetchedUser = await ClienteService.carregar(userToFetch.id);
-        setUserData(fetchedUser);
+        try {
+            const fetchedUser = await ClienteService.carregar(userToFetch.id);
+            setUserData(fetchedUser);
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     const handleAlterarUsuario = async () => {

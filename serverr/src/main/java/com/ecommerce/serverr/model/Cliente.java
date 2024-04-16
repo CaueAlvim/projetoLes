@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,16 +28,16 @@ public class Cliente {
     @Builder.Default
     private boolean isAdmin = false;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="cliente_id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
     private List<Endereco> enderecos;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="cliente_id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
     private List<Cupom> cupons;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="cliente_id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
     private List<Cartao> cartoes;
 
 }

@@ -23,7 +23,8 @@ public class ClienteService {
     }
 
     public Cliente findById(Integer id) throws Exception{
-        return ClienteValidator.validate(id);
+        Cliente cliente = ClienteValidator.validate(id);
+        return cliente;
     }
 
     public Cliente login(ClienteForm form) throws Exception {
@@ -34,10 +35,11 @@ public class ClienteService {
         return null;
     }
 
-    public void salvar(ClienteForm form) throws Exception {
+    public Integer salvar(ClienteForm form) throws Exception {
         Cliente cliente = form.transform();
         cliente.setDataCadastro(LocalDate.now());
-        repository.save(cliente);
+        Cliente clienteSalvo = repository.save(cliente);
+        return clienteSalvo.getId();
     }
 
     public void editar(ClienteForm form) throws Exception{

@@ -6,14 +6,18 @@ function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
     const [loginFields, setLoginFields] = useState({ email: '', senha: '' });
 
     const handleLogin = async () => {
-        const user = await ClienteService.login(loginFields);
-        if (user) {
-            localStorage.setItem('user', JSON.stringify({ id: user?.id, nome: user?.nome, email: user?.email, isAdmin: user?.admin }));
-            window.location.reload();
-            console.log("Logado com sucesso!");
-            return;
+        try {
+            const user = await ClienteService.login(loginFields);
+            if (user) {
+                localStorage.setItem('user', JSON.stringify({ id: user?.id, nome: user?.nome, email: user?.email, isAdmin: user?.admin }));
+                window.location.reload();
+                console.log("Logado com sucesso!");
+                return;
+            }
+            console.log(); ("Falha no login!");
+        } catch (error) {
+            console.error(error);
         }
-        console.log(); ("Falha no login!");
     }
 
     const handleClose = () => {

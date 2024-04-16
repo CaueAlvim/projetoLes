@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import EnderecoService from "../services/EnderecoService";
 
-function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, userRegister, setUserRegister }) {
+function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId }) {
     const [fieldsError, setFieldsError] = useState(undefined);
     const [cadastroEnderecoFields, setCadastroEnderecoFields] = useState({ cep: '', rua: '', numero: '', bairro: '', cidade: '', estado: '', pais: '', tipoResidencia: '', tipoLogradouro: '' });
     const [cadastroEnderecoObs, setCadastroEnderecoObs] = useState({ observacoes: '' });
+
+    const handleCadastrar = async (endereco) => {
+        try {
+            await EnderecoService.salvar({ ...endereco, clienteId: newUserId });
+            console.log("Endereco cadastrado com sucesso!");
+        } catch (error) {
+            console.error("Falha no cadastro:", error);
+        }
+    }
 
     const handleSubmit = () => {
         if (Object.values(cadastroEnderecoFields).some(field => field.trim() === '')) {
@@ -12,9 +22,11 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, userRegister
             return;
         }
         const enderecoCompleto = { ...cadastroEnderecoFields, ...cadastroEnderecoObs };
-        setUserRegister({ ...userRegister, enderecos: [enderecoCompleto] });
-        setOpenModalCartao(true);
-        handleClose();
+
+        handleCadastrar(enderecoCompleto).then(() => {
+            setOpenModalCartao(true);
+            handleClose();
+        });
     }
 
     const handleClose = () => {

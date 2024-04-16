@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 public class EnderecoForm {
     private Integer id;
+    private Integer clienteId;
     private String bairro;
     private String cidade;
     private String rua;
