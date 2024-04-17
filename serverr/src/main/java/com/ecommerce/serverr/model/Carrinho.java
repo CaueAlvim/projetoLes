@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,10 +17,12 @@ public class Carrinho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="carrinho_id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "carrinho", cascade = CascadeType.REMOVE)
     private List<CarrinhoItem> itensCarrinho;
 }

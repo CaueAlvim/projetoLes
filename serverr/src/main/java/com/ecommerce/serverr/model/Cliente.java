@@ -29,6 +29,10 @@ public class Cliente {
     private boolean isAdmin = false;
 
     @JsonIgnore
+    @OneToOne(mappedBy = "cliente")
+    private Carrinho carrinho;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
     private List<Endereco> enderecos;
 

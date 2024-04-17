@@ -17,7 +17,6 @@ public class Categoria {
     private Integer id;
     private String nomeCategoria;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="categoria_id")
-    private List<LivroCategoria> categorias;
+    @ManyToMany(mappedBy = "categorias")
+    private List<Livro> livros;
 }

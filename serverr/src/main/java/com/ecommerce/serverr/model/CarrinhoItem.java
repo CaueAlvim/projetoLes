@@ -2,9 +2,6 @@ package com.ecommerce.serverr.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ManyToAny;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,11 +13,15 @@ public class CarrinhoItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "carrinho_id")
     private Carrinho carrinho;
 
     @ManyToOne
-    @JoinColumn(name = "livro_id")
-    private Livro livro;
+    @JoinColumn(name = "estoque_livro_id")
+    private EstoqueLivro estoqueLivro;
+
+    private Integer quantidade;
+
 }

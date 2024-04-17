@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,9 +36,16 @@ public class Livro {
     private String justificativaInativacao;
     private String justificativaAtivacao;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="livro_id")
-    private List<LivroCategoria> categorias;
+    @ManyToMany
+    @JoinTable(
+            name = "livro_categoria",
+            joinColumns = @JoinColumn(name = "livro_id"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    private List<Categoria> categorias;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "livro")
+    private EstoqueLivro estoque;
 
     private String caminhoImagem;
 }
