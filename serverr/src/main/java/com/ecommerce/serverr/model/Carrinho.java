@@ -22,7 +22,6 @@ public class Carrinho {
     @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "carrinho", cascade = CascadeType.REMOVE)
     private List<CarrinhoItem> itensCarrinho;
 }

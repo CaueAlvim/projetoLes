@@ -11,7 +11,7 @@ const ProductCardContainerDevolucao = styled(Paper)(({ theme }) => ({
   borderRadius: '10px',
 }));
 
-const ProductCardDevolucao = ({ product }) => {
+function ProductCardDevolucao ({ product }) {
 
   return (
     <ProductCardContainerDevolucao >

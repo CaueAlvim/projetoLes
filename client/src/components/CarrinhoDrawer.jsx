@@ -18,40 +18,7 @@ const ProductCardCarrinhoContainer = styled(Paper)(({ theme }) => ({
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
 }));
 
-function CarrinhoDrawer({ open, setOpen, products }) {
-    const [valorTotal, setValorTotal] = useState();
-    const [quantidadeTotal, setQuantidadeTotal] = useState();
-
-    useEffect(() => {
-        calcularTotais();
-    }, [products]);
-
-    const calcularTotais = () => {
-        setQuantidadeTotal(products?.reduce((somador, product) => somador + product.quantidade, 0));
-        setValorTotal(products?.reduce((somador, produto) => somador + parseFloat(produto?.preco.replace('R$', '') * produto?.quantidade), 0)); //,0 valor inicial do somador
-    }
-
-    // const handleAlterarQtd = (productId, aumento) => {
-    //     const updatedProducts = products.map(product => {
-    //         if (product.id === productId) {
-    //             if (aumento || product.quantidade > 1) {
-    //                 return {
-    //                     ...product,
-    //                     quantidade: aumento ? product.quantidade + 1 : product.quantidade - 1
-    //                 };
-    //             }
-    //         }
-    //         return product;
-    //     });
-
-    //     setProducts(updatedProducts);
-
-    //     calcularTotais();
-    // };
-
-    // const handleRemoveItem = (productId) => {
-    //     setProducts(products.filter(product => product.id !== productId));
-    // };
+function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal }) {
 
     return (
         <>
@@ -61,20 +28,20 @@ function CarrinhoDrawer({ open, setOpen, products }) {
                 onClose={() => setOpen(false)}
             >
                 {products?.length > 0 ? (
-                    <Grid container item spacing={2} xs={12} md={12} sx={{ height: 'auto', width: '28vw', marginTop: '1.5rem' }}>
+                    <Grid container item spacing={2} xs={12} md={12} sx={{ height: 'auto', width: '30rem', marginTop: '1.5rem' }}>
                         <Grid item xs={12} sx={{ height: '55vh', overflow: 'scroll' }}>
                             {products.map((product) => (
-                                <Grid item xs={12} key={product.id} sx={{}}>
+                                <Grid item xs={12} key={product?.livroId} sx={{}}>
                                     <ProductCardCarrinhoContainer>
                                         <Grid container sx={{ display: 'flex', flexDirection: 'row' }}>
-                                            <Grid item xs={2}>
-                                                <img src={product.imagem} alt={product.nome} style={{ objectFit: 'cover' }} />
+                                            <Grid item xs={3} >
+                                                <img src={`/capas/${product?.caminhoImagem}`} alt={product?.livroNome} style={{ width: '100px', height: '150px', objectFit: 'cover' }} />
                                             </Grid>
 
-                                            <Grid item xs={8} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                            <Grid item xs={7} >
                                                 <Box>
-                                                    <Typography variant="h5" sx={{ ml: '1.3rem' }}>
-                                                        {product.nome}
+                                                    <Typography variant="h5" sx={{ ml: '1rem' }}>
+                                                        {product?.livroNome}
                                                     </Typography>
 
                                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -82,21 +49,21 @@ function CarrinhoDrawer({ open, setOpen, products }) {
                                                             <RemoveIcon />
                                                         </Button>
                                                         <Typography variant="h6" style={{ margin: '0 10px' }}>
-                                                            {product.quantidade}
+                                                            {product?.quantidade}
                                                         </Typography>
                                                         <Button variant="text" color="primary" onClick={() => handleAlterarQtd(product.id, true)}>
                                                             <AddIcon />
                                                         </Button>
                                                     </Box>
 
-                                                    <Typography variant="h6" sx={{ ml: '1.3rem', mt: '.6rem' }}>
-                                                        Valor: {product.preco * product.quantidade}
+                                                    <Typography variant="h6" sx={{ ml: '1rem', mt: '.6rem' }}>
+                                                        Valor: {product?.valor * product?.quantidade}
                                                     </Typography>
                                                 </Box>
                                             </Grid>
 
                                             <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                                                <Button variant="outlined" color="primary" onClick={() => handleRemoveItem(product.id)} style={{ marginTop: '0.5rem' }}>
+                                                <Button variant="outlined" color="primary" onClick={() => 1} style={{ marginTop: '0.5rem' }}>
                                                     <DeleteIcon />
                                                 </Button>
                                             </Grid>
@@ -118,7 +85,7 @@ function CarrinhoDrawer({ open, setOpen, products }) {
                         </Grid>
                     </Grid>
                 ) : (
-                    <Box sx={{ height: '100vh', width: '28vw', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Box sx={{ height: '100vh', width: '30rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Typography variant="h6" sx={{ ml: 2.25 }}>
                             Carrinho vazio <RemoveShoppingCartIcon />
                         </Typography>

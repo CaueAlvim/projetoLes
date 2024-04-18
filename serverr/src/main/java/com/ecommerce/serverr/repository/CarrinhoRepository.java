@@ -12,6 +12,5 @@ import java.util.List;
 public interface CarrinhoRepository extends JpaRepository<Carrinho, Integer> {
 
     Carrinho findFirstByCliente_Id(Integer id);
-    @Query(value = "SELECT c.* FROM carrinho_item ci LEFT JOIN carrinho c ON c.id = ci.carrinho_id WHERE c.cliente_id = ?1", nativeQuery = true)
-    List<CarrinhoItem> findAllItems(Integer id);
+
 }

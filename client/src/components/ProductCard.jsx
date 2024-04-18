@@ -3,6 +3,10 @@ import { styled } from '@mui/system';
 import { Paper, Typography, Button } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ModalDetalheProduto from './ModalDetalheProduto';
+import CarrinhoService from '../services/CarrinhoService';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductCardContainer = styled(Paper)(({ theme }) => ({
   display: 'flex',
@@ -15,11 +19,34 @@ const ProductCardContainer = styled(Paper)(({ theme }) => ({
   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
 }));
 
-const ProductCard = ({ product }) => {
+function ProductCard({ product, setCarrinho }) {
   const [openModalDetalheProduto, setOpenModalDetalheProduto] = useState(false);
+
+  const handleAddCart = async () => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      if (storedUser) {
+        const response = await CarrinhoService.adicionarItemCarrinho({ livroId: product?.id, clienteId: storedUser?.id }).then(
+          setCarrinho(await CarrinhoService.carregarCarrinho(storedUser?.id))
+        );
+        toast("Item adicionado com sucesso!");
+      }
+    } catch (error) {
+      toast(error);
+    }
+  }
 
   return (
     <>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        theme="light"
+      />
+
       <ProductCardContainer onClick={() => setOpenModalDetalheProduto(true)}>
         <img src={`/capas/${product?.caminhoImagem}`} alt={product?.titulo} style={{ width: '100px', height: '150px', objectFit: 'cover' }} />
         <Typography variant="h6" component="div">
@@ -33,6 +60,7 @@ const ProductCard = ({ product }) => {
           color="primary"
           sx={{ marginTop: '0.5rem' }}
           onClick={(event) => {
+            handleAddCart();
             event.stopPropagation();
           }}
         >
@@ -41,7 +69,7 @@ const ProductCard = ({ product }) => {
         </Button>
       </ProductCardContainer>
 
-      <ModalDetalheProduto open={openModalDetalheProduto} setOpen={setOpenModalDetalheProduto} product={product} />
+      <ModalDetalheProduto open={openModalDetalheProduto} setOpen={setOpenModalDetalheProduto} product={product} handleAddCart={handleAddCart} />
     </>
   );
 };

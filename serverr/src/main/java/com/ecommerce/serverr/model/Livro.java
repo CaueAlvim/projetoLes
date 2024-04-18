@@ -29,7 +29,6 @@ public class Livro {
     private String largura;
     private String peso;
     private String profundidade;
-    private Double valor;
 
     @Builder.Default
     private boolean isAtivo = true;

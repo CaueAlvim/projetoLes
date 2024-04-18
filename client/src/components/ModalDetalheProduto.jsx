@@ -7,7 +7,7 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function ModalDetalheProduto({ open, setOpen, product }) {
+function ModalDetalheProduto({ open, setOpen, product, handleAddCart }) {
 
     return (
         <>
@@ -47,7 +47,7 @@ function ModalDetalheProduto({ open, setOpen, product }) {
                                 <CardMedia
                                     component="img"
                                     image={`/capas/${product?.caminhoImagem}`}
-                                    alt={product.titulo}
+                                    alt={product?.titulo}
                                     sx={{
                                         height: '30rem',
                                         objectFit: 'cover',
@@ -63,17 +63,17 @@ function ModalDetalheProduto({ open, setOpen, product }) {
                             borderRadius: '0 10px 10px 0', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)'
                         }}>
                             <Typography variant="h4" sx={{ ml: '1.25rem', mt: '1.25rem', fontWeight: 'bold' }}>
-                                {product.titulo}
+                                {product?.titulo}
                             </Typography>
 
                             <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '1rem' }} />
 
                             <Typography variant="h6" sx={{ margin: '1.25rem' }}>
-                                {product.sinopse}
+                                {product?.sinopse}
                             </Typography>
 
                             <Typography variant="h4" sx={{ mb: 2, mt: 2.5, ml: '1.25rem', fontWeight: 'bold' }}>
-                                R$ {product.valor}
+                                R$ {product?.valor}
                             </Typography>
 
                             <Divider sx={{ borderTop: '1px solid #e5e5e5', width: '95%', margin: '1rem' }} />
@@ -86,35 +86,35 @@ function ModalDetalheProduto({ open, setOpen, product }) {
                                 <Grid item xs={6}>
                                     <Box sx={{ margin: '1.25rem' }}>
                                         <Typography variant="body1">
-                                            - Ano: {product.ano}
+                                            - Ano: {product?.ano}
                                         </Typography>
                                         <Typography variant="body1">
-                                            - Autor: {product.autor}
+                                            - Autor: {product?.autor}
                                         </Typography>
                                         <Typography variant="body1">
-                                            - Edição: {product.edicao}
+                                            - Edição: {product?.edicao}
                                         </Typography>
                                         <Typography variant="body1">
-                                            - Editora: {product.editora}
+                                            - Editora: {product?.editora}
                                         </Typography>
                                         <Typography variant="body1">
-                                            - Número de páginas: {product.numeroPaginas}
+                                            - Número de páginas: {product?.numeroPaginas}
                                         </Typography>
                                     </Box>
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Box sx={{ margin: '1.25rem' }}>
                                         <Typography variant="body1">
-                                            - Largura: {product.largura}
+                                            - Largura: {product?.largura}
                                         </Typography>
                                         <Typography variant="body1">
-                                            - Altura: {product.altura}
+                                            - Altura: {product?.altura}
                                         </Typography>
                                         <Typography variant="body1">
-                                            - Peso: {product.peso}
+                                            - Peso: {product?.peso}
                                         </Typography>
                                         <Typography variant="body1">
-                                            - Profundidade: {product.profundidade}
+                                            - Profundidade: {product?.profundidade}
                                         </Typography>
                                     </Box>
                                 </Grid>
@@ -126,6 +126,7 @@ function ModalDetalheProduto({ open, setOpen, product }) {
                                     color="primary"
                                     sx={{ marginTop: '0.5rem', height: '3rem' }}
                                     onClick={(event) => {
+                                        handleAddCart();
                                         event.stopPropagation();
                                     }}
                                 >

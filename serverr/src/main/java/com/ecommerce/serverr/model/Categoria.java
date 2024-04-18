@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class Categoria {
     private Integer id;
     private String nomeCategoria;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "categorias")
     private List<Livro> livros;
 }

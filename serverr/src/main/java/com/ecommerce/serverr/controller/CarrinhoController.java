@@ -1,7 +1,7 @@
 package com.ecommerce.serverr.controller;
 
-import com.ecommerce.serverr.form.CartaoForm;
-import com.ecommerce.serverr.service.CartaoService;
+import com.ecommerce.serverr.form.CarrinhoForm;
+import com.ecommerce.serverr.service.CarrinhoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,57 +10,48 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/carrinho")
 public class CarrinhoController {
-    private final CartaoService service;
+    private final CarrinhoService service;
 
     @Autowired
-    public CarrinhoController(CartaoService service ) {
+    public CarrinhoController(CarrinhoService service ) {
         this.service = service;
     }
     @CrossOrigin
     @GetMapping("/{id}")
-    public ResponseEntity<Object> carregarItens(@PathVariable("id") Integer id) {
+    public ResponseEntity<Object> carregarCarrinho(@PathVariable("id") Integer id) {
         try {
-            return ResponseEntity.ok(service.carregar(id));
+            return ResponseEntity.ok(service.carregarCarrinho(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
     @CrossOrigin
-    @PostMapping("/")
-    public ResponseEntity<Object> salvar(@RequestBody CartaoForm form) {
+    @PostMapping("/adicionar")
+    public ResponseEntity<Object> adicionarItemCarrinho(@RequestBody CarrinhoForm form) {
         try {
-            service.salvar(form);
+            service.adicionarItemCarrinho(form);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
     @CrossOrigin
-    @PatchMapping("/")
-    public ResponseEntity<Object> editar(@RequestBody CartaoForm form) {
+    @PatchMapping("/remover")
+    public ResponseEntity<Object> removerItemCarrinho(@RequestBody CarrinhoForm form) {
         try {
-            service.editar(form);
+            service.removerItemCarrinho(form);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
     @CrossOrigin
-    @PostMapping("/pesquisar")
-    public ResponseEntity<Object> pesquisar(CartaoForm form) {
+    @PatchMapping("/quantidade")
+    public ResponseEntity<Object> alterarQuantidadeItem(CarrinhoForm form) {
         try {
-            return ResponseEntity.ok(service.pesquisar());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    @CrossOrigin
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> excluir(@PathVariable("id") Integer id){
-        try{
-            service.excluir(id);
+            service.gerenciarQtdItemCarrinho(form);
             return ResponseEntity.ok().build();
-        }catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
