@@ -5,7 +5,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ModalDetalheProduto from './ModalDetalheProduto';
 import CarrinhoService from '../services/CarrinhoService';
 
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ProductCardContainer = styled(Paper)(({ theme }) => ({
@@ -27,26 +27,21 @@ function ProductCard({ product, setCarrinho }) {
       const storedUser = JSON.parse(localStorage.getItem('user'));
       if (storedUser) {
         const response = await CarrinhoService.adicionarItemCarrinho({ livroId: product?.id, clienteId: storedUser?.id }).then(
-          setCarrinho(await CarrinhoService.carregarCarrinho(storedUser?.id))
+          async () => setCarrinho(await CarrinhoService.carregarCarrinho(storedUser?.id))
         );
-        toast("Item adicionado com sucesso!");
+        toast.success("Item adicionado com sucesso!", { 
+          toastId: 'item-add-cart-success',
+          autoClose: 1500,
+          position: toast.POSITION.BOTTOM_LEFT
+        });
       }
     } catch (error) {
-      toast(error);
+      console.error(error);
     }
   }
 
   return (
     <>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        theme="light"
-      />
-
       <ProductCardContainer onClick={() => setOpenModalDetalheProduto(true)}>
         <img src={`/capas/${product?.caminhoImagem}`} alt={product?.titulo} style={{ width: '100px', height: '150px', objectFit: 'cover' }} />
         <Typography variant="h6" component="div">

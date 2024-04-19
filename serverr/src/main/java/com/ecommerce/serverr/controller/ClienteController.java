@@ -42,14 +42,9 @@ public class ClienteController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody ClienteForm form) {
         try {
-            Cliente clienteLogin = service.login(form);
-            if (clienteLogin != null) {
-                return ResponseEntity.ok(clienteLogin);
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
+            return ResponseEntity.ok().body(service.login(form));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @CrossOrigin

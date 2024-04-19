@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CarrinhoService {
@@ -73,7 +72,7 @@ public class CarrinhoService {
         Carrinho carrinho = repository.findFirstByCliente_Id(form.getClienteId());
         CarrinhoItem itemParaRemover = encontrarItemCarrinho(carrinho, form.getLivroId());
         if(itemParaRemover != null){
-            repository.delete(carrinho);
+            itemRepository.delete(itemParaRemover);
         }
     }
 
@@ -85,6 +84,10 @@ public class CarrinhoService {
                 .filter(item -> item.getEstoqueLivro().getLivro().getId().equals(form.getLivroId()))
                 .findFirst()
                 .orElseThrow(() -> new Exception("Item não encontrado no carrinho"));
+
+        if(itemParaEditar.getQuantidade() == 1 && !form.getAumento()){
+            return;
+        }
 
         itemParaEditar.setQuantidade( itemParaEditar.getQuantidade() + (form.getAumento() ? 1 : -1) );
 

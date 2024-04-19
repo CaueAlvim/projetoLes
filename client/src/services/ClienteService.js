@@ -8,7 +8,8 @@ export default class ClienteService {
             body: JSON.stringify(form),
         });
         if (!response.ok) {
-            throw new Error('Erro');
+            const errorData = await response.json();
+            throw new Error(errorData.message);
         }
         const data = await response.json();
         return data;

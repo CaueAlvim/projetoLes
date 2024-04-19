@@ -27,7 +27,7 @@ function Index() {
   return (
     <>
       <Grid sx={{ overflow: 'hidden' }}>
-        <AppBarSearch carrinho={carrinho} />
+        <AppBarSearch carrinho={carrinho} setCarrinho={setCarrinho} />
 
         <Grid container sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: backgroundColor, alignItems: 'center' }}>
           <Carousel setBgColor={setBackgroundColor} />

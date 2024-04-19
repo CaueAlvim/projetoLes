@@ -15,6 +15,6 @@ public class ClienteValidator {
     }
 
     public static Cliente validatePorEmail(String email) throws Exception {
-        return repository.findByEmail(email).orElseThrow(() -> new Exception("Cliente inválido"));
+        return repository.findFirstByEmailIsLike(email).orElseThrow(() -> new Exception("Cliente inválido"));
     }
 }

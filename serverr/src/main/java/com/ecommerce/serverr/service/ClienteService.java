@@ -31,8 +31,9 @@ public class ClienteService {
         Cliente clienteLogin = ClienteValidator.validatePorEmail(form.getEmail());
         if (clienteLogin.getSenha().equals(form.getSenha())){
             return clienteLogin;
+        } else {
+            throw new Exception("Senha incorreta");
         }
-        return null;
     }
 
     public Integer salvar(ClienteForm form) throws Exception {

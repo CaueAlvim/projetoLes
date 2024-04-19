@@ -39,7 +39,7 @@ export default class CarrinhoService {
         return response.status;
     }
 
-    static async edit(form) {
+    static async alterarQtd(form) {
         const response = await fetch('http://localhost:5000/carrinho/quantidade', {
             method: 'PATCH',
             headers: {

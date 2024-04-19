@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import CarrinhoService from "../services/CarrinhoService";
 
 const ProductCardCarrinhoContainer = styled(Paper)(({ theme }) => ({
     display: 'flex',
@@ -18,7 +19,33 @@ const ProductCardCarrinhoContainer = styled(Paper)(({ theme }) => ({
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.4)',
 }));
 
-function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal }) {
+function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal, setCarrinho }) {
+
+    const handleRemoveItem = async (id) => {
+        try {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            if (storedUser) {
+                await CarrinhoService.removerItemCarrinho({ livroId: id, clienteId: storedUser?.id }).then(
+                    async () => setCarrinho(await CarrinhoService.carregarCarrinho(storedUser?.id))
+                );
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const handleAlterarQtd = async (id, boolAumento) => {
+        try {
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            if (storedUser) {
+                await CarrinhoService.alterarQtd({ livroId: id, clienteId: storedUser?.id, aumento: boolAumento }).then(
+                    async () => setCarrinho(await CarrinhoService.carregarCarrinho(storedUser?.id))
+                );
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <>
@@ -45,13 +72,13 @@ function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal }
                                                     </Typography>
 
                                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                        <Button variant="text" color="primary" onClick={() => handleAlterarQtd(product.id, false)}>
+                                                        <Button variant="text" color="primary" onClick={() => handleAlterarQtd(product?.livroId, false)}>
                                                             <RemoveIcon />
                                                         </Button>
                                                         <Typography variant="h6" style={{ margin: '0 10px' }}>
                                                             {product?.quantidade}
                                                         </Typography>
-                                                        <Button variant="text" color="primary" onClick={() => handleAlterarQtd(product.id, true)}>
+                                                        <Button variant="text" color="primary" onClick={() => handleAlterarQtd(product?.livroId, true)}>
                                                             <AddIcon />
                                                         </Button>
                                                     </Box>
@@ -63,7 +90,7 @@ function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal }
                                             </Grid>
 
                                             <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                                                <Button variant="outlined" color="primary" onClick={() => 1} style={{ marginTop: '0.5rem' }}>
+                                                <Button variant="outlined" color="primary" onClick={() => handleRemoveItem(product?.livroId)} style={{ marginTop: '0.5rem' }}>
                                                     <DeleteIcon />
                                                 </Button>
                                             </Grid>

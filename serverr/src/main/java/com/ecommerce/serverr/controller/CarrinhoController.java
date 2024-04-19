@@ -47,7 +47,7 @@ public class CarrinhoController {
     }
     @CrossOrigin
     @PatchMapping("/quantidade")
-    public ResponseEntity<Object> alterarQuantidadeItem(CarrinhoForm form) {
+    public ResponseEntity<Object> alterarQuantidadeItem(@RequestBody CarrinhoForm form) {
         try {
             service.gerenciarQtdItemCarrinho(form);
             return ResponseEntity.ok().build();

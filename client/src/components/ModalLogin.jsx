@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from "@mui/material";
 import ClienteService from "../services/ClienteService";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
     const [loginFields, setLoginFields] = useState({ email: '', senha: '' });
@@ -10,13 +12,17 @@ function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
             const user = await ClienteService.login(loginFields);
             if (user) {
                 localStorage.setItem('user', JSON.stringify({ id: user?.id, nome: user?.nome, email: user?.email, isAdmin: user?.admin }));
-                window.location.reload();
-                console.log("Logado com sucesso!");
-                return;
+                toast.success("Logado com sucesso!", {
+                    toastId: 'login-success',
+                    autoClose: 2000,
+                    position: toast.POSITION.BOTTOM_LEFT
+                });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2500);
             }
-            console.log(); ("Falha no login!");
         } catch (error) {
-            console.error(error);
+            toast.error("Falha no login", { toastId: "login-fail" });
         }
     }
 

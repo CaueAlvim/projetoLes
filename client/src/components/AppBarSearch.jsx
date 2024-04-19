@@ -12,8 +12,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import logo from '../assets/logo.png';
 import CarrinhoDrawer from './CarrinhoDrawer';
+import CarrinhoService from '../services/CarrinhoService';
 
-function AppBarSearch({ isCheckout, carrinho }) {
+function AppBarSearch({ isCheckout, carrinho, setCarrinho }) {
 
   const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -72,11 +73,16 @@ function AppBarSearch({ isCheckout, carrinho }) {
     fetchLocalStorage();
   }, []);
 
-  const fetchLocalStorage = () => {
-    const storedUser = localStorage.getItem('user');
+  const fetchLocalStorage = async () => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      setUser(storedUser);
+      fetchCarrinho(storedUser.id)
     }
+  }
+
+  const fetchCarrinho = async (id) => {
+    setCarrinho(await CarrinhoService.carregarCarrinho(id));
   }
 
   return (
@@ -122,7 +128,7 @@ function AppBarSearch({ isCheckout, carrinho }) {
 
         </Toolbar>
       </AppBar>
-      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} products={carrinho?.itens} quantidadeTotal={carrinho?.quantidadeTotalItens} valorTotal={carrinho?.valorTotalItens} />
+      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} products={carrinho?.itens} quantidadeTotal={carrinho?.quantidadeTotalItens} valorTotal={carrinho?.valorTotalItens} setCarrinho={setCarrinho}/>
       <ModalLogin open={openModalLogin} setOpen={setOpenModalLogin} setOpenModalCadastro={setOpenModalCadastro} />
       <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setNewUserId={setNewUserId} />
       <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} newUserId={newUserId} />
