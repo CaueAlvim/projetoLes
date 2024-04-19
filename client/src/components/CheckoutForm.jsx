@@ -107,7 +107,7 @@ function CheckoutForm() {
 
                     <Grid item xs={12} sx={{ display: 'flex', alignContent: 'center', mb: 1 }}>
                         <Button fullWidth onClick={handleAddCardField}>
-                            <AddIcon /> Selecionar um cartão adicional
+                             <AddIcon />
                         </Button>
                     </Grid>
 
