@@ -49,9 +49,11 @@ function ModalCadastroCartao({ open, setOpen, newUserId }) {
                 <DialogContent>
                     <Grid container spacing={1}>
                         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                            <Typography color="grey" variant="subtitle">
-                                Para finalizar vamos cadastrar seu primeiro cartão.
-                            </Typography>
+                            {newUserId && (
+                                <Typography color="grey" variant="subtitle">
+                                    Para finalizar vamos cadastrar seu primeiro cartão.
+                                </Typography>
+                            )}
                         </Grid>
                         <Grid item xs={12}>
                             <TextField

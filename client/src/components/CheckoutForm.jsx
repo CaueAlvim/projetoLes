@@ -1,204 +1,118 @@
-import { Grid, Button, FormControl, TextField, Select, InputLabel, MenuItem, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { useState } from 'react';
+import { createTheme } from '@mui/material/styles';
+import { Grid, Button, FormControl, Select, InputLabel, MenuItem, ThemeProvider } from '@mui/material';
+import ModalCadastroCartao from './ModalCadastroCartao';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
-import ArrowBackIosNewTwoToneIcon from '@mui/icons-material/ArrowBackIosNewTwoTone';
-import { useState } from 'react';
+import ModalCadastroEndereco from './ModalCadastroEndereco';
 
-function CheckoutForm({ newCardForm, setNewCardForm, newAddressForm, setNewAddressForm, handleClickGoBack }) {
-    const [chosePaymentMethod, setChosePaymentMethod] = useState(true);
-    const [checkoutFiels, setCheckoutFields] = useState({ cartao: '', endereco: '' });
 
-    
+const theme = createTheme({
+    palette: {
+        myred: {
+            main: '#e40024',
+            light: '#e5000f',
+            dark: '#b3000f',
+        },
+    },
+})
+
+function CheckoutForm() {
+    const [checkoutFields, setCheckoutFields] = useState({ cartao: '' });
+    const [cardFields, setCardFields] = useState([{ cardFieldId: 1 }]);
+    const [modalCartaoOpen, setModalCartaoOpen] = useState(false);
+    const [modalEnderecoOpen, setModalEnderecoOpen] = useState(false);
+    const [checkoutEndereco, setCheckoutEndereco] = useState(false);
+
+    const handleAddCardField = () => {
+        const newId = cardFields.length + 1;
+        setCardFields([...cardFields, { cardFieldId: newId }]);
+    };
+
+    const handleRemoveCardField = () => {
+        if (cardFields.length > 1) {
+            setCardFields(cardFields.slice(0, -1));
+        }
+    };
+
+    const handleCardChange = (id, value) => {
+        setCardFields(cardFields.map(field => field.cardFieldId === id ? { ...field, value } : field));
+    };
+
     return (
         <>
-            {chosePaymentMethod && (
-                <Grid container >
+            <ModalCadastroCartao open={modalCartaoOpen} setOpen={setModalCartaoOpen} />
+            <ModalCadastroEndereco open={modalEnderecoOpen} setOpen={setModalEnderecoOpen} />
 
-                    <Grid item xs={10}>
-                        <FormControl sx={{ m: 1 }}>
-                            <FormLabel id="demo-radio-buttons-group-label">Escolha o método de pagamento</FormLabel>
-                            <RadioGroup
-                                aria-labelledby="demo-radio-buttons-group-label"
-                                defaultValue="female"
-                                name="radio-buttons-group"
-                            >
-                                <FormControlLabel value="female" control={<Radio />} label="Cartão de crédito" />
-                                <FormControlLabel value="male" control={<Radio />} label="2 Cartões" />
-                                <FormControlLabel value="other" control={<Radio />} label="Cupom de troca" />
-                            </RadioGroup>
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item xs={2} sx={{ position: 'relative' }}>
-                        <Button
-                            variant='contained'
-                            sx={{ height: '2.5rem', position: 'absolute', right: 10, bottom: 10 }}
-                            onClick={() => setChosePaymentMethod(false)} >Salvar
-                        </Button>
-                    </Grid>
-
-                </Grid>
-            )}
-
-            {!chosePaymentMethod && (
-                <Button onClick={() => setChosePaymentMethod(true)} sx={{ my: 2 }}>
-                    <ArrowBackIosNewTwoToneIcon /> Selecionar método de pagamento
-                </Button>
-            )}
-
-            {!newCardForm && !newAddressForm && !chosePaymentMethod && (
-                <Grid container sx={{ width: 'auto', alignItems: 'center' }}>
-                    <Grid item xs={11}>
-                        <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
-                            <InputLabel id="label-select-card">Selecionar cartão cadastrado</InputLabel>
-                            <Select
-                                labelId="label-select-card"
-                                id="select-cart-checkout"
-                                value={checkoutFiels.cartao}
-                                onChange={(event) => setCheckoutFields({ ...checkoutFiels, cartao: event.target.value })}
-                            >
-                                <MenuItem value={'1'}>CARTÃO 1</MenuItem>
-                                <MenuItem value={'2'}>CARTÃO 2</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={1} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <Button onClick={() => setNewCardForm(true)} sx={{ ml: 1 }}>
-                            <AddCardIcon />
-                        </Button>
-                    </Grid>
-
-                    <Grid item xs={11}>
-                        <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
-                            <InputLabel id="label-select-address">Selecionar endereço cadastrado</InputLabel>
-                            <Select
-                                labelId="label-select-address"
-                                id="select-address-checkout"
-                                value={checkoutFiels.endereco}
-                                onChange={(event) => setCheckoutFields({ ...checkoutFiels, endereco: event.target.value })}
-                            >
-                                <MenuItem value={'10'}>ENDEREÇO 1</MenuItem>
-                                <MenuItem value={'20'}>ENDEREÇO 2</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={1} sx={{ display: 'flex', justifyContent: 'center' }} >
-                        <Button onClick={() => setNewAddressForm(true)} sx={{ ml: 1 }}>
-                            <AddLocationIcon />
-                        </Button>
-                    </Grid>
-                </Grid>
-            )}
-
-            {newCardForm && !newAddressForm && !chosePaymentMethod && (
-                <Grid container sx={{ width: 'auto', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
-                    <Grid item xs={10}>
-                        <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        id="nomeCartao"
-                                        label="Nome no cartão"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} md={7}>
-                                    <TextField
-                                        required
-                                        id="numCartao"
-                                        label="Nº do cartão"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} md={2}>
-                                    <TextField
-                                        required
-                                        id="cartaoCvc"
-                                        label="CVC"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} md={3}>
-                                    <TextField
-                                        required
-                                        id="bandeiraCartao"
-                                        label="Bandeira"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <Button size='medium' onClick={handleClickGoBack} sx={{ ml: 1, mt: 2 }}>
-                            <ArrowBackIosNewTwoToneIcon /> Voltar
-                        </Button>
-                    </Grid>
-                    <Button variant="contained" sx={{ margin: 2 }}>
-                        SALVAR
+            <Grid container sx={{ my: 2 }}>
+                <Grid item xs={6} sx={{ paddingLeft: 1 }} >
+                    <Button fullWidth variant='outlined' onClick={() => setModalEnderecoOpen(true)} >
+                        Novo endereço <AddLocationIcon />
                     </Button>
                 </Grid>
-            )}
-
-            {!newCardForm && newAddressForm && !chosePaymentMethod && (
-                <Grid container sx={{ width: 'auto', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
-                    <Grid item xs={10}>
-                        <FormControl variant="filled" sx={{ m: 1, width: '100%' }}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} md={8}>
-                                    <TextField
-                                        required
-                                        id="endRua"
-                                        label="Rua"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <TextField
-                                        required
-                                        id="endCep"
-                                        label="CEP"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} md={5}>
-                                    <TextField
-                                        required
-                                        id="endBairro"
-                                        label="Bairro"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} md={5}>
-                                    <TextField
-                                        required
-                                        id="endCidade"
-                                        label="Cidade"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} md={2}>
-                                    <TextField
-                                        required
-                                        id="endEstado"
-                                        label="UF"
-                                        sx={{ width: '100%' }}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <Button size='medium' onClick={handleClickGoBack} sx={{ ml: 1, mt: 2 }}>
-                            <ArrowBackIosNewTwoToneIcon /> Voltar
-                        </Button>
-                    </Grid>
-                    <Button variant="contained" sx={{ margin: 2 }}>
-                        SALVAR
+                <Grid item xs={6} sx={{ paddingLeft: 1, paddingRight: 1 }} >
+                    <Button fullWidth variant='outlined' onClick={() => setModalCartaoOpen(true)} >
+                        Novo cartão <AddCardIcon />
                     </Button>
                 </Grid>
-            )}
+            </Grid>
+
+            <Grid container >
+
+                <Grid container item xs={6}>
+                    <FormControl fullWidth sx={{ paddingLeft: 1 }}>
+                        <InputLabel id={'labelSelecionarEndereco'}>SELECIONAR ENDEREÇO</InputLabel>
+                        <Select
+                            labelId={'labelSelecionarEndereco'}
+                            id={'selecionarEnderecoCheckout'}
+                            value={checkoutFields.cartao}
+                            onChange={(event) => handleCardChange(field.cardFieldId, event.target.value)}
+                        >
+                            <MenuItem value={'1'}>CARTÃO 1</MenuItem>
+                            <MenuItem value={'2'}>CARTÃO 2</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Grid>
+
+                <Grid container item xs={6} sx={{ width: 'auto', alignItems: 'center' }}>
+                    {cardFields.map(field => (
+                        <Grid item xs={field.cardFieldId === 1 ? 12 : 10} key={field.cardFieldId}>
+                            <FormControl sx={{ width: '99%', paddingRight: 1.5, ml: 1, mb: 1 }}>
+                                <InputLabel id={'labelSelecionarCartao'}>SELECIONAR CARTÃO</InputLabel>
+                                <Select
+                                    labelId={'labelSelecionarCartao'}
+                                    id={'selecionarCartaoCheckout'}
+                                    value={checkoutFields.cartao}
+                                    onChange={(event) => handleCardChange(field.cardFieldId, event.target.value)}
+                                >
+                                    <MenuItem value={'1'}>CARTÃO 1</MenuItem>
+                                    <MenuItem value={'2'}>CARTÃO 2</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    ))}
+
+                    {cardFields.length > 1 && (
+                        <ThemeProvider theme={theme}>
+                            <Grid item xs={2} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                <Button variant='outlined' onClick={() => handleRemoveCardField()} color="myred">
+                                    <RemoveIcon />
+                                </Button>
+                            </Grid>
+                        </ThemeProvider>
+                    )}
+
+                    <Grid item xs={12} sx={{ display: 'flex', alignContent: 'center', mb: 1 }}>
+                        <Button fullWidth onClick={handleAddCardField}>
+                            <AddIcon /> Selecionar um cartão adicional
+                        </Button>
+                    </Grid>
+
+                </Grid>
+            </Grid>
         </>
     )
 }

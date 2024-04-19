@@ -17,13 +17,7 @@ function Checkout() {
         { id: 8, name: 'Livro 8', image: 'https://via.placeholder.com/100', price: 'R$200', quantity: 1 },
         { id: 9, name: 'Livro 9', image: 'https://via.placeholder.com/100', price: 'R$300', quantity: 1 },
     ];
-    const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-    const [showNewCardForm, setShowNewCardForm] = useState(false);
 
-    const handleClickGoBack = () => {
-        setShowNewCardForm(false);
-        setShowNewAddressForm(false);
-    }
 
     return (
         <>
@@ -42,11 +36,7 @@ function Checkout() {
                                     </Typography>
                                 </Box>
 
-                                <CheckoutForm newAddressForm={showNewAddressForm}
-                                    newCardForm={showNewCardForm}
-                                    setNewAddressForm={setShowNewAddressForm}
-                                    setNewCardForm={setShowNewCardForm}
-                                    handleClickGoBack={handleClickGoBack} />
+                                <CheckoutForm />
 
                             </Box>
                         </Grid>

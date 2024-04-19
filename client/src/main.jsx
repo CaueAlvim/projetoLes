@@ -28,10 +28,6 @@ const router = createBrowserRouter([
     path: "/finalizacao",
     element: <FinalizacaoCompra />
   },
-  // {
-  //   path: "/detalhes-produto/:id",
-  //   element: <DetalheProduto/>
-  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

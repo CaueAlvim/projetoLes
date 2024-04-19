@@ -51,11 +51,13 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId })
                 </DialogTitle>
                 <DialogContent>
                     <Grid container spacing={1}>
-                        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                            <Typography color="grey" variant="subtitle">
-                                Este primeiro endereço será cadastrado para cobrança e para entrega.
-                            </Typography>
-                        </Grid>
+                        {newUserId && (
+                            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                <Typography color="grey" variant="subtitle">
+                                    Este primeiro endereço será cadastrado para cobrança e para entrega.
+                                </Typography>
+                            </Grid>
+                        )}
 
                         <Grid item xs={4}>
                             <TextField
@@ -260,7 +262,7 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId })
                         </Grid>
 
                         <Grid item xs={5} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button onClick={handleSubmit}>Continuar Cadastro</Button>
+                            <Button onClick={handleSubmit}> {newUserId ? 'Continuar Cadastro' : 'Finalizar Cadastro'} </Button>
                         </Grid>
                     </Grid>
                 </DialogActions>
