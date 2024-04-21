@@ -8,7 +8,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
         <Box sx={{ display: 'flex', flexDirection: 'column', height: 'auto', bgcolor: 'white', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)' }}>
             <Box sx={{ borderBottom: '1px solid #000', paddingBottom: '10px', width: '100%' }}>
                 <Typography variant={isCheckout ? "h4" : "h5"} sx={{ ml: 1.8, mt: 1.8 }}>
-                    Resumo da compra
+                    {isCheckout ? 'Finalização' : 'Resumo da compra'}
                 </Typography>
             </Box>
 
@@ -29,7 +29,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
                     Valor total
                 </Typography>
                 <Typography variant={isCheckout ? "h6" : "body1"} sx={{ mr: 2.25 }}>
-                    R$ {valorTotal}
+                    R$ {(valorTotal).toFixed(2)}
                 </Typography>
             </Box>
 
@@ -38,7 +38,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
                     Total c/ frete
                 </Typography>
                 <Typography variant={isCheckout ? "h6" : "body1"} sx={{ mr: 2.25 }}>
-                    R$ {valorTotal + valorFrete}
+                    R$ {(valorTotal + valorFrete).toFixed(2)}
                 </Typography>
             </Box>
 

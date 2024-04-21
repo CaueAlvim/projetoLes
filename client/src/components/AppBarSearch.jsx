@@ -77,7 +77,9 @@ function AppBarSearch({ isCheckout, carrinho, setCarrinho }) {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
       setUser(storedUser);
-      fetchCarrinho(storedUser.id)
+      if (!isCheckout) {
+        fetchCarrinho(storedUser.id)
+      }
     }
   }
 
@@ -128,7 +130,7 @@ function AppBarSearch({ isCheckout, carrinho, setCarrinho }) {
 
         </Toolbar>
       </AppBar>
-      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} products={carrinho?.itens} quantidadeTotal={carrinho?.quantidadeTotalItens} valorTotal={carrinho?.valorTotalItens} setCarrinho={setCarrinho}/>
+      <CarrinhoDrawer open={openCarrinhoDrawer} setOpen={setOpenCarrinhoDrawer} products={carrinho?.itens} quantidadeTotal={carrinho?.quantidadeTotalItens} valorTotal={carrinho?.valorTotalItens} setCarrinho={setCarrinho} />
       <ModalLogin open={openModalLogin} setOpen={setOpenModalLogin} setOpenModalCadastro={setOpenModalCadastro} />
       <ModalCadastro open={openModalCadastro} setOpen={setOpenModalCadastro} setOpenModalLogin={setOpenModalLogin} setOpenCadastroEndereco={setOpenModalCadastroEndereco} setNewUserId={setNewUserId} />
       <ModalCadastroEndereco open={openModalCadastroEndereco} setOpen={setOpenModalCadastroEndereco} setOpenModalCartao={setOpenModalCadastroCartao} newUserId={newUserId} />

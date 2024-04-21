@@ -62,7 +62,7 @@ function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal, 
                                     <ProductCardCarrinhoContainer>
                                         <Grid container sx={{ display: 'flex', flexDirection: 'row' }}>
                                             <Grid item xs={3} >
-                                                <img src={`/capas/${product?.caminhoImagem}`} alt={product?.livroNome} style={{ width: '100px', height: '150px', objectFit: 'cover' }} />
+                                                <img src={`/capas/${product?.caminhoImagem}`} alt={product?.livroNome} style={{ width: '100px', height: '150px', objectFit: 'cover', borderRadius: '7px' }} />
                                             </Grid>
 
                                             <Grid item xs={7} >
@@ -84,7 +84,7 @@ function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal, 
                                                     </Box>
 
                                                     <Typography variant="h6" sx={{ ml: '1rem', mt: '.6rem' }}>
-                                                        Valor: {product?.valor * product?.quantidade}
+                                                        Valor: {(product?.valor * product?.quantidade).toFixed(2)}
                                                     </Typography>
                                                 </Box>
                                             </Grid>

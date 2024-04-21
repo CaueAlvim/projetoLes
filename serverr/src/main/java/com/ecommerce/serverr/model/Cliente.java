@@ -27,6 +27,8 @@ public class Cliente {
     private LocalDate dataNascimento;
     @Builder.Default
     private boolean isAdmin = false;
+    @Builder.Default
+    private boolean isAtivo = true;
 
     @JsonIgnore
     @OneToOne(mappedBy = "cliente")

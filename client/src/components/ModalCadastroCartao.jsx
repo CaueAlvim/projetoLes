@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import CartaoService from "../services/CartaoService";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ModalCadastroCartao({ open, setOpen, newUserId }) {
     const [fieldsError, setFieldsError] = useState(undefined);
@@ -10,7 +12,14 @@ function ModalCadastroCartao({ open, setOpen, newUserId }) {
         try {
             await CartaoService.salvar({ ...cadastroCartaoFields, clienteId: newUserId });
             console.log("Cartão cadastrado com sucesso!");
-            window.location.reload();
+            toast.success("Cadastrado com sucesso!", {
+                toastId: 'register-success',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+            setTimeout(() => {
+                window.location.reload();
+            }, 2500);
         } catch (error) {
             console.error("Falha no cadastro:", error);
         }
@@ -29,6 +38,17 @@ function ModalCadastroCartao({ open, setOpen, newUserId }) {
     const handleClose = () => {
         setOpen(false);
     }
+
+    function formatarCartao(numeroCartao) {
+        numeroCartao = numeroCartao.replace(/\D/g, '');
+        numeroCartao = numeroCartao.replace(/(\d{4})(?=\d)/g, '$1-');
+        return numeroCartao;
+    }
+
+    const handleCartaoChange = (event) => {
+        const formattedCard = formatarCartao(event.target.value);
+        setCadastroCartaoFields({ ...cadastroCartaoFields, numeroCartao: formattedCard });
+    };
 
     return (
         <>
@@ -78,7 +98,10 @@ function ModalCadastroCartao({ open, setOpen, newUserId }) {
                                 fullWidth
                                 type="text"
                                 value={cadastroCartaoFields.numeroCartao}
-                                onChange={(event) => setCadastroCartaoFields({ ...cadastroCartaoFields, numeroCartao: event.target.value })}
+                                onChange={handleCartaoChange}
+                                inputProps={{
+                                    maxLength: 19,
+                                }}
                             />
                         </Grid>
                         <Grid item xs={6} md={2}>
@@ -92,6 +115,9 @@ function ModalCadastroCartao({ open, setOpen, newUserId }) {
                                 type="text"
                                 value={cadastroCartaoFields.cvc}
                                 onChange={(event) => setCadastroCartaoFields({ ...cadastroCartaoFields, cvc: event.target.value })}
+                                inputProps={{
+                                    maxLength: 3,
+                                }}
                             />
                         </Grid>
                         <Grid item xs={6} md={3}>

@@ -38,7 +38,7 @@ public class CarrinhoService {
 
         return CarrinhoDTO.builder()
                 .quantidadeTotalItens(itensDTO.stream().mapToInt(CarrinhoItemDTO::getQuantidade).sum())
-                .valorTotalItens(itensDTO.stream().mapToDouble(CarrinhoItemDTO::getValor).sum())
+                .valorTotalItens(itensDTO.stream().mapToDouble(CarrinhoItemDTO::getValorTotal).sum())
                 .itens(itensDTO)
                 .build();
     }

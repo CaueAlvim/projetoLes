@@ -11,10 +11,10 @@ public class ClienteValidator {
     public ClienteValidator(ClienteRepository repository) { ClienteValidator.repository = repository; }
 
     public static Cliente validate(Integer id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("Cliente inválido"));
+        return repository.findByIdAndIsAtivoIsTrue(id).orElseThrow(() -> new Exception("Cliente inválido"));
     }
 
     public static Cliente validatePorEmail(String email) throws Exception {
-        return repository.findFirstByEmailIsLike(email).orElseThrow(() -> new Exception("Cliente inválido"));
+        return repository.findFirstByIsAtivoIsTrueAndEmail(email).orElseThrow(() -> new Exception("Cliente inválido"));
     }
 }

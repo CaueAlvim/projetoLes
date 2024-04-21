@@ -33,6 +33,17 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId })
         setOpen(false);
     }
 
+    function formatarCEP(cep) {
+        cep = cep.replace(/\D/g, '');
+        cep = cep.replace(/^(\d{5})(\d)/, '$1-$2');
+        return cep;
+    }
+
+    const handleCepChange = (event) => {
+        const formattedCep = formatarCEP(event.target.value);
+        setCadastroEnderecoFields({ ...cadastroEnderecoFields, cep: formattedCep });
+    };
+
     return (
         <>
             <Dialog
@@ -71,7 +82,10 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId })
                                 fullWidth
                                 variant="standard"
                                 value={cadastroEnderecoFields.cep}
-                                onChange={(event) => setCadastroEnderecoFields({ ...cadastroEnderecoFields, cep: event.target.value })}
+                                onChange={handleCepChange}
+                                inputProps={{
+                                    maxLength: 9,
+                                }}
                             />
                         </Grid>
                         <Grid item xs={8}>

@@ -43,7 +43,7 @@ function ProductCard({ product, setCarrinho }) {
   return (
     <>
       <ProductCardContainer onClick={() => setOpenModalDetalheProduto(true)}>
-        <img src={`/capas/${product?.caminhoImagem}`} alt={product?.titulo} style={{ width: '100px', height: '150px', objectFit: 'cover' }} />
+        <img src={`/capas/${product?.caminhoImagem}`} alt={product?.titulo} style={{ width: '100px', height: '150px', objectFit: 'cover', borderRadius: '7px' }} />
         <Typography variant="h6" component="div">
           {product?.titulo}
         </Typography>

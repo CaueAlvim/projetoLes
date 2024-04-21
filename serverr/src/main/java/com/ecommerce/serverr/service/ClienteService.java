@@ -3,7 +3,9 @@ package com.ecommerce.serverr.service;
 import com.ecommerce.serverr.dto.ClienteDTO;
 import com.ecommerce.serverr.filter.ClienteFilter;
 import com.ecommerce.serverr.form.ClienteForm;
+import com.ecommerce.serverr.model.Carrinho;
 import com.ecommerce.serverr.model.Cliente;
+import com.ecommerce.serverr.repository.CarrinhoRepository;
 import com.ecommerce.serverr.repository.ClienteRepository;
 import com.ecommerce.serverr.validator.ClienteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,12 @@ import java.util.stream.Collectors;
 public class ClienteService {
     private final ClienteRepository repository;
 
+    private final CarrinhoRepository carrinhoRepository;
+
     @Autowired
-    public ClienteService( ClienteRepository repository ){
+    public ClienteService(ClienteRepository repository, CarrinhoRepository carrinhoRepository){
         this.repository = repository;
+        this.carrinhoRepository = carrinhoRepository;
     }
 
     public Cliente findById(Integer id) throws Exception{
@@ -40,6 +45,9 @@ public class ClienteService {
         Cliente cliente = form.transform();
         cliente.setDataCadastro(LocalDate.now());
         Cliente clienteSalvo = repository.save(cliente);
+
+        carrinhoRepository.save(Carrinho.builder().cliente(clienteSalvo).build());
+
         return clienteSalvo.getId();
     }
 
@@ -62,7 +70,9 @@ public class ClienteService {
                         .build()).collect(Collectors.toList());
     }
 
-    public void excluir(Integer id) throws Exception{
-        repository.delete(ClienteValidator.validate(id));
+    public void inativar(Integer id) throws Exception{
+        Cliente cliente = ClienteValidator.validate(id);
+        cliente.setAtivo(false);
+        repository.save(cliente);
     }
 }

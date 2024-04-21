@@ -70,7 +70,7 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> excluir(@PathVariable("id") Integer id){
         try{
-            service.excluir(id);
+            service.inativar(id);
             return ResponseEntity.ok().build();
         }catch (Exception e) {
             return ResponseEntity.badRequest().build();

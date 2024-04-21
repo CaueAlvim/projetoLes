@@ -21,7 +21,7 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
             setFieldsError('Por favor, preencha todos os campos.');
             return;
         }
-        
+
         handleCadastrar().then(() => {
             handleClose();
             setOpenCadastroEndereco(true);
@@ -31,6 +31,31 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
     const handleClose = () => {
         setOpen(false);
     }
+
+    const formatarCPF = (cpf) => {
+        cpf = cpf.replace(/\D/g, '');
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        return cpf;
+    }
+
+    const formatarTelefone = (telefone) => {
+        telefone = telefone.replace(/\D/g, '');
+        telefone = telefone.replace(/^(\d{2})(\d)/g, '($1) $2');
+        telefone = telefone.replace(/(\d{5})(\d)/, '$1-$2');
+        return telefone;
+    }
+
+    const handleCPFChange = (event) => {
+        const formattedCPF = formatarCPF(event.target.value);
+        setRegisterFields({ ...registerFields, cpf: formattedCPF });
+    };
+
+    const handleTelefoneChange = (event) => {
+        const formattedPhone = formatarTelefone(event.target.value);
+        setRegisterFields({ ...registerFields, telefone: formattedPhone });
+    };
 
     return (
         <>
@@ -77,7 +102,10 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
                                 fullWidth
                                 variant="standard"
                                 value={registerFields.cpf}
-                                onChange={(event) => setRegisterFields({ ...registerFields, cpf: event.target.value })}
+                                onChange={handleCPFChange}
+                                inputProps={{
+                                    maxLength: 14,
+                                }}
                             />
                         </Grid>
                         <Grid item xs={3}>
@@ -121,7 +149,10 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
                                 fullWidth
                                 variant="standard"
                                 value={registerFields.telefone}
-                                onChange={(event) => setRegisterFields({ ...registerFields, telefone: event.target.value })}
+                                onChange={handleTelefoneChange}
+                                inputProps={{
+                                    maxLength: 15,
+                                }}
                             />
                         </Grid>
 

@@ -77,7 +77,7 @@ function CheckoutForm() {
                     </FormControl>
                 </Grid>
 
-                <Grid container item xs={6} sx={{ width: 'auto', alignItems: 'center' }}>
+                <Grid container item xs={6} sx={{ width: 'auto', alignItems: 'center', maxHeight: '16rem', overflowY: 'scroll', overflowX: 'hidden' }}>
                     {cardFields.map(field => (
                         <Grid item xs={field.cardFieldId === 1 ? 12 : 10} key={field.cardFieldId}>
                             <FormControl sx={{ width: '99%', paddingRight: 1.5, ml: 1, mb: 1 }}>
