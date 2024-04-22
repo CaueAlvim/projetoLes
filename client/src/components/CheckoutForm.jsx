@@ -20,12 +20,11 @@ const theme = createTheme({
     },
 })
 
-function CheckoutForm() {
-    const [checkoutFields, setCheckoutFields] = useState({ cartao: '' });
-    const [cardFields, setCardFields] = useState([{ cardFieldId: 1 }]);
+function CheckoutForm({ listaCartoes, listaEnderecos }) {
+    const [cardFields, setCardFields] = useState([{ cardFieldId: 1, cartaoInfo: null }]);
+    const [enderecoField, setEnderecoField] = useState('');
     const [modalCartaoOpen, setModalCartaoOpen] = useState(false);
     const [modalEnderecoOpen, setModalEnderecoOpen] = useState(false);
-    const [checkoutEndereco, setCheckoutEndereco] = useState(false);
 
     const handleAddCardField = () => {
         const newId = cardFields.length + 1;
@@ -39,7 +38,8 @@ function CheckoutForm() {
     };
 
     const handleCardChange = (id, value) => {
-        setCardFields(cardFields.map(field => field.cardFieldId === id ? { ...field, value } : field));
+        setCardFields(cardFields.map(field =>
+            field.cardFieldId === id ? { ...field, cartaoInfo: value } : field));
     };
 
     return (
@@ -63,16 +63,23 @@ function CheckoutForm() {
             <Grid container >
 
                 <Grid container item xs={6}>
-                    <FormControl fullWidth sx={{ paddingLeft: 1 }}>
+                    <FormControl fullWidth variant='filled' sx={{ paddingLeft: 1 }}>
                         <InputLabel id={'labelSelecionarEndereco'}>SELECIONAR ENDEREÇO</InputLabel>
                         <Select
                             labelId={'labelSelecionarEndereco'}
                             id={'selecionarEnderecoCheckout'}
-                            value={checkoutFields.cartao}
-                            onChange={(event) => handleCardChange(field.cardFieldId, event.target.value)}
+                            value={enderecoField}
+                            onChange={(event) => setEnderecoField(event.target.value)}
                         >
-                            <MenuItem value={'1'}>CARTÃO 1</MenuItem>
-                            <MenuItem value={'2'}>CARTÃO 2</MenuItem>
+                            {listaEnderecos.map(endereco => {
+                                const enderecoInfo = `${endereco.rua} ${endereco.numero}, ${endereco.bairro}`;
+
+                                return (
+                                    <MenuItem key={endereco.enderecoId} value={enderecoInfo}>
+                                        {enderecoInfo}
+                                    </MenuItem>
+                                )
+                            })}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -80,16 +87,23 @@ function CheckoutForm() {
                 <Grid container item xs={6} sx={{ width: 'auto', alignItems: 'center', maxHeight: '16rem', overflowY: 'scroll', overflowX: 'hidden' }}>
                     {cardFields.map(field => (
                         <Grid item xs={field.cardFieldId === 1 ? 12 : 10} key={field.cardFieldId}>
-                            <FormControl sx={{ width: '99%', paddingRight: 1.5, ml: 1, mb: 1 }}>
+                            <FormControl variant='filled' sx={{ width: '99%', paddingRight: 1.5, ml: 1, mb: 1 }}>
                                 <InputLabel id={'labelSelecionarCartao'}>SELECIONAR CARTÃO</InputLabel>
                                 <Select
                                     labelId={'labelSelecionarCartao'}
                                     id={'selecionarCartaoCheckout'}
-                                    value={checkoutFields.cartao}
+                                    value={field.cartaoInfo || ''}
                                     onChange={(event) => handleCardChange(field.cardFieldId, event.target.value)}
                                 >
-                                    <MenuItem value={'1'}>CARTÃO 1</MenuItem>
-                                    <MenuItem value={'2'}>CARTÃO 2</MenuItem>
+                                    {listaCartoes.map(cartao => {
+                                        const cartaoInfo = `${cartao.cartaoId} - ${cartao.nomeCartao} / ${cartao.numeroCartao} / ${cartao.bandeira}`;
+
+                                        return (
+                                            <MenuItem key={cartao.cartaoId} value={cartaoInfo}>
+                                                {cartaoInfo}
+                                            </MenuItem>
+                                        );
+                                    })}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -107,7 +121,7 @@ function CheckoutForm() {
 
                     <Grid item xs={12} sx={{ display: 'flex', alignContent: 'center', mb: 1 }}>
                         <Button fullWidth onClick={handleAddCardField}>
-                             <AddIcon />
+                            <AddIcon />
                         </Button>
                     </Grid>
 

@@ -64,7 +64,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete }
 
                     <Box sx={{ ml: '1.25rem', width: 'auto', display: 'flex', alignItems: 'center', flexDirection: 'row', my: isCheckout ? 2 : 2 }}>
                         <Typography variant="h6">
-                            Cupom promocional:
+                            Utilizar Cupom:
                         </Typography>
 
 

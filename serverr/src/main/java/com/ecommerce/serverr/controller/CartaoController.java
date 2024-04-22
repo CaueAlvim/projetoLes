@@ -26,6 +26,15 @@ public class CartaoController {
         }
     }
     @CrossOrigin
+    @GetMapping("/pesquisar/cliente/{id}")
+    public ResponseEntity<Object> carregarPorCliente(@PathVariable("id") Integer clienteId) {
+        try {
+            return ResponseEntity.ok(service.pesquisar(clienteId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @CrossOrigin
     @PostMapping("/")
     public ResponseEntity<Object> salvar(@RequestBody CartaoForm form) {
         try {
@@ -41,15 +50,6 @@ public class CartaoController {
         try {
             service.editar(form);
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    @CrossOrigin
-    @PostMapping("/pesquisar")
-    public ResponseEntity<Object> pesquisar(CartaoForm form) {
-        try {
-            return ResponseEntity.ok(service.pesquisar());
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

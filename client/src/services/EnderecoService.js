@@ -11,6 +11,17 @@ export default class EnderecoService {
         return data;
     }
 
+    static async carregarPorCliente(id) {
+        const response = await fetch(`http://localhost:5000/endereco/pesquisar/cliente/${id}`, {
+            method: 'GET',
+        });
+        if (!response.ok) {
+            throw new Error('Erros');
+        }
+        const data = await response.json();
+        return data;
+    }
+
     static async salvar(form) {
         const response = await fetch('http://localhost:5000/endereco/', {
             method: 'POST',
@@ -39,7 +50,7 @@ export default class EnderecoService {
         return response.status;
     }
     
-    static async search(form) {
+    static async pesquisar(form) {
         const response = await fetch('http://localhost:5000/endereco/pesquisar', {
             method: 'POST',
             headers: {

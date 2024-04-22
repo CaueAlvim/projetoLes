@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.service;
 
+import com.ecommerce.serverr.dto.CartaoDTO;
 import com.ecommerce.serverr.form.CartaoForm;
 import com.ecommerce.serverr.model.Cartao;
 import com.ecommerce.serverr.model.Cliente;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CartaoService {
@@ -37,8 +39,14 @@ public class CartaoService {
         repository.save(newCartao);
     }
 
-    public List<Cartao> pesquisar() throws Exception {
-        return repository.findAll();
+    public List<CartaoDTO> pesquisar(Integer clienteId) throws Exception {
+        List<Cartao> cartoes = repository.findAllByCliente_Id(clienteId);
+        return cartoes.stream().map(c -> CartaoDTO.builder()
+                .cartaoId(c.getId())
+                .nomeCartao(c.getNomeCartao())
+                .numeroCartao(c.getNumeroCartao())
+                .bandeira(c.getBandeira())
+                .build()).collect(Collectors.toList());
     }
 
     public void excluir(Integer id) throws Exception{

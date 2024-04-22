@@ -6,9 +6,13 @@ import ResumoCompra from '../components/ResumoCompra';
 import CheckoutForm from '../components/CheckoutForm';
 import CheckoutProducts from '../components/CheckoutProducts';
 import CarrinhoService from '../services/CarrinhoService';
+import CartaoService from '../services/CartaoService';
+import EnderecoService from '../services/EnderecoService';
 
 function Checkout() {
     const [carrinho, setCarrinho] = useState({});
+    const [listaCartoes, setListaCartoes] = useState([]);
+    const [listaEnderecos, setListaEnderecos] = useState([]);
 
     useEffect(() => {
         fetchLocalStorage();
@@ -17,7 +21,9 @@ function Checkout() {
     const fetchLocalStorage = async () => {
         const storedUser = JSON.parse(localStorage.getItem('user'));
         if (storedUser) {
-            fetchCarrinho(storedUser.id)
+            fetchCarrinho(storedUser.id);
+            fetchCards(storedUser.id);
+            fetchAddresses(storedUser.id);
         }
     }
 
@@ -25,6 +31,14 @@ function Checkout() {
         setCarrinho(await CarrinhoService.carregarCarrinho(id));
     }
 
+    const fetchCards = async (id) => {
+        setListaCartoes(await CartaoService.carregarPorCliente(id));
+    }
+
+    const fetchAddresses = async (id) => {
+        setListaEnderecos(await EnderecoService.carregarPorCliente(id));
+    }
+    console.log(carrinho);
     return (
         <>
             <Grid container sx={{ overflow: 'hidden' }}>
@@ -42,7 +56,7 @@ function Checkout() {
                                     </Typography>
                                 </Box>
 
-                                <CheckoutForm />
+                                <CheckoutForm listaCartoes={listaCartoes} listaEnderecos={listaEnderecos} />
 
                             </Box>
 
@@ -53,8 +67,8 @@ function Checkout() {
                         <Grid item xs={12} md={4} sx={{ mt: '.5rem' }}>
                             <ResumoCompra
                                 isCheckout={true}
-                                quantidadeProdutos={carrinho?.length}
-                                valorTotal={100}
+                                quantidadeProdutos={carrinho?.quantidadeTotalItens}
+                                valorTotal={carrinho?.valorTotalItens}
                                 valorFrete={30}
                             />
                         </Grid>

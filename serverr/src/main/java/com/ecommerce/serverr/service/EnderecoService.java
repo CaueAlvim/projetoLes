@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.service;
 
+import com.ecommerce.serverr.dto.EnderecoDTO;
 import com.ecommerce.serverr.form.EnderecoForm;
 import com.ecommerce.serverr.model.Cliente;
 import com.ecommerce.serverr.model.Endereco;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EnderecoService {
@@ -37,8 +39,15 @@ public class EnderecoService {
         repository.save(newEndereco);
     }
 
-    public List<Endereco> pesquisar() throws Exception {
-        return repository.findAll();
+    public List<EnderecoDTO> pesquisar(Integer clienteId) throws Exception {
+        List<Endereco> enderecos = repository.findAllByCliente_Id(clienteId);
+        return enderecos.stream().map(e -> EnderecoDTO.builder()
+                .enderecoId(e.getId())
+                .numero(e.getNumero())
+                .rua(e.getRua())
+                .bairro(e.getBairro())
+                .estado(e.getEstado())
+                .build()).collect(Collectors.toList());
     }
 
     public void excluir(Integer id) throws Exception{
