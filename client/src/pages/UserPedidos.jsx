@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel, Box } from '@mui/material';
 import moment from 'moment';
+import PedidoVendaService from '../services/PedidoVendaService';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ProductCardDevolucao from '../components/ProductCardDevolucao';
 
@@ -11,6 +12,9 @@ function UserPedidos({ isAdmin }) {
     const [openStatusDialog, setOpenStatusDialog] = useState(false);
     const [produtoSelecionado, setProdutoSelecionado] = useState({ status: '' });
     const [selectTrocaDevolucao, setSelectTrocaDevolucao] = useState({ operacao: 'Troca' });
+    const [filter, setFilter] = useState({ numPedido: '', feitoPor: '', dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
+    const [listaPedidos, setListaPedidos] = useState([]);
+
 
     const pedidosTable = [
         { numero: '123', usuario: 'NOMEUSUARIO1', status: 'ENCAMINHADO', dataPedido: '2023-12-02' },
@@ -44,6 +48,15 @@ function UserPedidos({ isAdmin }) {
         setOpenMenu(true);
     }
 
+    const handlePesquisar = async () => {
+        try {
+            const lista = await PedidoVendaService.search(filter);
+            setListaPedidos(lista);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+console.log(listaPedidos);
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
@@ -115,23 +128,57 @@ function UserPedidos({ isAdmin }) {
 
                 <Divider variant='fullWidth' sx={{ width: '100%', margin: ' auto', bgcolor: 'black' }} />
                 {isAdmin && (
-                    <Container fixed sx={{ mt: 3, mb: 5 }}>
-                        <Typography variant="h6">Pesquisar:</Typography>
-                        <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: .3 }}>
-                            <Grid item xs={6}>
-                                <TextField id="filled-basic" label="Nº Pedido" variant="filled" fullWidth />
+                    <>
+                        <Container fixed sx={{ mt: 3, mb: 5 }}>
+                            <Typography variant="h6">Pesquisar:</Typography>
+                            <Grid container spacing={1} sx={{ display: 'flex', justifyContent: 'center', width: '100%', mt: .3 }}>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        id="filter-admpedidos-npedido"
+                                        label="Nº Pedido"
+                                        variant="filled"
+                                        fullWidth
+                                        value={filter.numPedido}
+                                        onChange={(event) => setFilter({ ...filter, numPedido: event.target.value })} />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        id="filter-admpedidos-datainicial"
+                                        label="Data Inicial"
+                                        type='date'
+                                        variant="filled"
+                                        fullWidth
+                                        value={filter.dataInicial}
+                                        onChange={(event) => setFilter({ ...filter, dataInicial: event.target.value })} />
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <TextField
+                                        id="filter-admpedidos-datafinal"
+                                        label="Data Final"
+                                        type='date'
+                                        variant="filled"
+                                        fullWidth
+                                        value={filter.dataFinal}
+                                        onChange={(event) => setFilter({ ...filter, dataFinal: event.target.value })} />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        id="filter-admpedidos-feitopor"
+                                        label="Feito Por"
+                                        variant="filled"
+                                        fullWidth
+                                        value={filter.feitoPor}
+                                        onChange={(event) => setFilter({ ...filter, feitoPor: event.target.value })} />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={3}>
-                                <TextField id="filled-basic" label="Data Inicial" variant="filled" fullWidth />
-                            </Grid>
-                            <Grid item xs={3}>
-                                <TextField id="filled-basic" label="Data Final" variant="filled" fullWidth />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField id="filled-basic" label="Feito Por" variant="filled" fullWidth />
-                            </Grid>
-                        </Grid>
-                    </Container>
+                        </Container>
+
+                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
+                            <Button id='cypress-pedidosearch' onClick={handlePesquisar} sx={{ mb: 2, mr: 5 }}> Pesquisar</Button>
+                        </Box>
+
+                        <Divider variant='fullWidth' sx={{ width: '97%', margin: ' auto' }} />
+                    </>
                 )}
 
                 <Divider variant='fullWidth' sx={{ width: '97%', margin: ' auto' }} />
@@ -175,7 +222,7 @@ function UserPedidos({ isAdmin }) {
                                                 onClose={() => setOpenMenu(false)}
                                             >
                                                 {isAdmin && (<MenuItem id='cypress-adm-alterar-status-pedido' onClick={handleOpenDialogStatus}>Alterar Status</MenuItem>)}
-                                                <MenuItem id='cypress-solicitartroca' onClick={handleOpenDialogDevolucao}>Solicitar Troca/Devolução</MenuItem>
+                                                {!isAdmin && (<MenuItem id='cypress-solicitartroca' onClick={handleOpenDialogDevolucao}>Solicitar Troca/Devolução</MenuItem>)}
                                             </Menu>
                                         </TableCell>
                                     </TableRow>

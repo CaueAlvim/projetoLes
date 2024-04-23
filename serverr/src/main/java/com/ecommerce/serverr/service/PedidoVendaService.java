@@ -1,5 +1,8 @@
 package com.ecommerce.serverr.service;
 
+import com.ecommerce.serverr.dto.ClienteDTO;
+import com.ecommerce.serverr.filter.ClienteFilter;
+import com.ecommerce.serverr.filter.PedidoVendaFilter;
 import com.ecommerce.serverr.form.PedidoVendaForm;
 import com.ecommerce.serverr.model.*;
 import com.ecommerce.serverr.repository.EstoqueLivroRepository;
@@ -30,6 +33,19 @@ public class PedidoVendaService {
         this.estoqueLivroRepository = estoqueLivroRepository;
         this.pedidoVendaCupomRepository = pedidoVendaCupomRepository;
         this.pedidoVendaCartaoRepository = pedidoVendaCartaoRepository;
+    }
+
+    public List<PedidoVenda> pesquisar(PedidoVendaFilter filter) throws Exception {
+        List<PedidoVenda> pedidos = repository.pesquisar(filter.getNumPedido(), filter.getDataInicial(), filter.getDataFinal(), filter.getFeitoPor());
+//        return pedidos.stream().map(c -> ClienteDTO.builder()
+//                .id(c.getId())
+//                .nome(c.getNome())
+//                .email(c.getEmail())
+//                .cpf(c.getCpf())
+//                .telefone(c.getTelefone())
+//                .dataCadastro(c.getDataCadastro())
+//                .build()).collect(Collectors.toList());
+        return pedidos;
     }
 
     public Integer salvar(PedidoVendaForm form) throws Exception {
