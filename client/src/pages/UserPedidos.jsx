@@ -4,13 +4,16 @@ import moment from 'moment';
 import PedidoVendaService from '../services/PedidoVendaService';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ProductCardDevolucao from '../components/ProductCardDevolucao';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function UserPedidos({ isAdmin }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
     const [openDevolucaoDialog, setOpenDevolucaoDialog] = useState(false);
     const [openStatusDialog, setOpenStatusDialog] = useState(false);
-    const [pedidoSelecionado, setPedidoSelecionado] = useState({ status: '' });
+    const [pedidoSelecionado, setPedidoSelecionado] = useState();
+    const [alterarStatus, setAlterarStatus] = useState({ pedidoId: 0, status: '' });
     const [selectTrocaDevolucao, setSelectTrocaDevolucao] = useState({ operacao: 'Troca' });
     const [filter, setFilter] = useState({ numPedido: '', feitoPor: '', dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
     const [listaPedidos, setListaPedidos] = useState([]);
@@ -41,7 +44,7 @@ function UserPedidos({ isAdmin }) {
 
     const handleClickMoreOptions = (event, itemSelecinado) => {
         setAnchorEl(event.currentTarget);
-        setPedidoSelecionado(itemSelecinado)
+        setPedidoSelecionado(itemSelecinado);
         setOpenMenu(true);
     }
 
@@ -49,6 +52,21 @@ function UserPedidos({ isAdmin }) {
         try {
             const lista = await PedidoVendaService.search(filter);
             setListaPedidos(lista);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const handleAlterarStatus = async () => {
+        try {
+            await PedidoVendaService.alterarStatus(alterarStatus?.pedidoId, alterarStatus?.status);
+            toast.success("Status do pedido alterado com sucesso!", {
+                toastId: 'status-pedido-alterar-success',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+            handlePesquisar();
+            handleCloseDialogStatus();
         } catch (error) {
             console.error(error)
         }
@@ -101,20 +119,27 @@ function UserPedidos({ isAdmin }) {
                 <DialogContent>
                     <Select
                         id="alterarStatus"
-                        value={pedidoSelecionado.status}
+                        value={alterarStatus.status}
                         fullWidth
                         onChange={(e) => {
-                            setProdutoSelecionado(prevState => ({ ...prevState, status: e.target.value }));
+                            setAlterarStatus(prevState => ({ ...prevState, pedidoId: pedidoSelecionado?.id , status: e.target.value }));
                         }}
                     >
-                        <MenuItem value={'ENCAMINHADO'}>ENCAMINHADO</MenuItem>
-                        <MenuItem value={'AGUARDANDO PAGAMENTO'}>AGUARDANDO PAGAMENTO</MenuItem>
-                        <MenuItem value={'FINALIZADO'}>FINALIZADO</MenuItem>
+                        <MenuItem value={'EM PROCESSAMENTO'}>EM PROCESSAMENTO</MenuItem>
+                        <MenuItem value={'APROVADO'}>APROVADO</MenuItem>
+                        <MenuItem value={'REPROVADO'}>REPROVADO</MenuItem>
+                        <MenuItem value={'EM TRANSPORTE'}>EM TRANSPORTE</MenuItem>
+                        <MenuItem value={'ENTREGUE'}>ENTREGUE</MenuItem>
+                        <MenuItem value={'EM TROCA'}>EM TROCA</MenuItem>
+                        <MenuItem value={'TROCADO'}>TROCADO</MenuItem>
+                        <MenuItem value={'PAGAMENTO REALIZADO'}>PAGAMENTO REALIZADO</MenuItem>
+                        <MenuItem value={'PAGAMENTO RECUSADO'}>PAGAMENTO RECUSADO</MenuItem>
+                        <MenuItem value={'PEDIDO CANCELADO'}>PEDIDO CANCELADO</MenuItem>
                     </Select>
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDialogStatus}>OK</Button>
+                    <Button onClick={handleAlterarStatus}>OK</Button>
                 </DialogActions>
             </Dialog>
 

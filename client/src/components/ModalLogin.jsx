@@ -15,7 +15,7 @@ function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
                 localStorage.setItem('user', JSON.stringify({ id: user?.id, nome: user?.nome, email: user?.email, isAdmin: user?.admin }));
                 toast.success("Logado com sucesso!", {
                     toastId: 'login-success',
-                    autoClose: 2000,
+                    autoClose: 1500,
                     position: toast.POSITION.BOTTOM_LEFT
                 });
                 setTimeout(() => {

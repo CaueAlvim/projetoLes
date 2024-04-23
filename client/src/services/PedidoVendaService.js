@@ -28,4 +28,17 @@ export default class PedidoVendaService {
         const data = await response.json();
         return data;
     }
+
+    static async alterarStatus(id, status) {
+        const response = await fetch(`http://localhost:5000/pedidovenda/alterarstatus/${id}/${status}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Erro ao alterar status');
+        }
+        return response.status;
+    }
 }

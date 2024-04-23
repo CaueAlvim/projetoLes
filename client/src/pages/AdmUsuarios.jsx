@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Grid, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import moment from 'moment';
 import ClienteService from '../services/ClienteService';
@@ -11,6 +11,10 @@ function AdmUsuarios() {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
+
+    useEffect(() => {
+        fetchUsuarios();
+    }, []);
 
     const fetchUsuarios = async () => {
         try {

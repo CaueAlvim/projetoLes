@@ -73,7 +73,7 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId, i
                 </DialogTitle>
                 <DialogContent>
                     <Grid container spacing={1}>
-                        {newUserId && (
+                        {!isCheckout && (
                             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-start' }}>
                                 <Typography color="grey" variant="subtitle">
                                     Este primeiro endereço será cadastrado para cobrança e para entrega.
@@ -287,7 +287,7 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId, i
                         </Grid>
 
                         <Grid item xs={5} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button onClick={handleSubmit}> {newUserId ? 'Continuar Cadastro' : 'Finalizar Cadastro'} </Button>
+                            <Button onClick={handleSubmit}> {!isCheckout ? 'Continuar Cadastro' : 'Finalizar Cadastro'} </Button>
                         </Grid>
                     </Grid>
                 </DialogActions>

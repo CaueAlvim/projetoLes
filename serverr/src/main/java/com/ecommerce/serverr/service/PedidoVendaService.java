@@ -2,14 +2,12 @@ package com.ecommerce.serverr.service;
 
 import com.ecommerce.serverr.dto.PedidoVendaDTO;
 import com.ecommerce.serverr.dto.PedidoVendaItemDTO;
+import com.ecommerce.serverr.enums.PedidoVendaStatus;
 import com.ecommerce.serverr.filter.PedidoVendaFilter;
 import com.ecommerce.serverr.form.PedidoVendaForm;
 import com.ecommerce.serverr.model.*;
 import com.ecommerce.serverr.repository.*;
-import com.ecommerce.serverr.validator.CartaoValidator;
-import com.ecommerce.serverr.validator.ClienteValidator;
-import com.ecommerce.serverr.validator.CupomValidator;
-import com.ecommerce.serverr.validator.EnderecoValidator;
+import com.ecommerce.serverr.validator.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,18 @@ public class PedidoVendaService {
         this.repository = repository;
         this.estoqueLivroRepository = estoqueLivroRepository;
         this.itemRepository = itemRepository;
+    }
+
+    public void alterarStatus (Integer pedidoId, String status) throws Exception {
+        PedidoVenda pedido = PedidoVendaValidator.validate(pedidoId);
+        PedidoVendaStatus novoStatus = PedidoVendaStatus.getByDescricao(status);
+
+        if (pedido.getStatus().equals(novoStatus)) {
+            throw new Exception("Status informado é idêntico");
+        }
+
+        pedido.setStatus(novoStatus);
+        repository.save(pedido);
     }
 
     public List<PedidoVendaDTO> pesquisar(PedidoVendaFilter filter) throws Exception {
