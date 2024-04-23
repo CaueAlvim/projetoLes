@@ -4,15 +4,14 @@ import CartaoService from "../services/CartaoService";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function ModalCadastroCartao({ open, setOpen, newUserId }) {
+function ModalCadastroCartao({ open, setOpen, newUserId, isCheckout }) {
     const [fieldsError, setFieldsError] = useState(undefined);
     const [cadastroCartaoFields, setCadastroCartaoFields] = useState({ nomeCartao: '', numeroCartao: '', cvc: '', bandeira: '' });
 
     const handleCadastrar = async () => {
         try {
             await CartaoService.salvar({ ...cadastroCartaoFields, clienteId: newUserId });
-            console.log("Cartão cadastrado com sucesso!");
-            toast.success("Cadastrado com sucesso!", {
+            toast.success(isCheckout ? "Cartão cadastrado com sucesso!" : "Cadastro finalizado com sucesso!", {
                 toastId: 'register-success',
                 autoClose: 2000,
                 position: toast.POSITION.BOTTOM_LEFT

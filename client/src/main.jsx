@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     element: <UserHome />
   },
   {
-    path: "/finalizacao",
+    path: "/finalizacao/:pedidoCodigo",
     element: <FinalizacaoCompra />
   },
 ]);
@@ -40,5 +40,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       closeOnClick
       theme="light"
     />
-  </React.StrictMode>,
+  </React.StrictMode>
 )

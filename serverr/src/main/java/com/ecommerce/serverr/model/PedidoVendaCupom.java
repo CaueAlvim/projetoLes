@@ -10,19 +10,18 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class PedidoVendaItem {
+public class PedidoVendaCupom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer quantidadeUnitaria;
-    private Double valorUnitario;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "pedido_venda_id")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "pedido_venda_id", referencedColumnName = "id")
     private PedidoVenda pedidoVenda;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "estoque_livro_id")
-    private EstoqueLivro estoqueLivro;
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "cupom_id", referencedColumnName = "id")
+    private Cupom cupom;
 }

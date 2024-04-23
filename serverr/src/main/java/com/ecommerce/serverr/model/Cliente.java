@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -33,17 +32,5 @@ public class Cliente {
     @JsonIgnore
     @OneToOne(mappedBy = "cliente")
     private Carrinho carrinho;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
-    private List<Endereco> enderecos;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
-    private List<Cupom> cupons;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
-    private List<Cartao> cartoes;
 
 }

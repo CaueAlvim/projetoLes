@@ -15,9 +15,13 @@ public class Cupom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String numero;
+    private String codigo;
+    private LocalDate dataGeracao;
     private Double valor;
-    private LocalDate validade;
+    private Double porcentagemDesconto;
+    private boolean isDesconto;
+    private boolean isTroca;
+    private boolean isAtivo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id")

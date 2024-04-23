@@ -20,9 +20,7 @@ const theme = createTheme({
     },
 })
 
-function CheckoutForm({ listaCartoes, listaEnderecos }) {
-    const [cardFields, setCardFields] = useState([{ cardFieldId: 1, cartaoInfo: null }]);
-    const [enderecoField, setEnderecoField] = useState('');
+function CheckoutForm({ listaCartoes, listaEnderecos, user, cardFields, setCardFields, enderecoField, setEnderecoField }) {
     const [modalCartaoOpen, setModalCartaoOpen] = useState(false);
     const [modalEnderecoOpen, setModalEnderecoOpen] = useState(false);
 
@@ -44,8 +42,8 @@ function CheckoutForm({ listaCartoes, listaEnderecos }) {
 
     return (
         <>
-            <ModalCadastroCartao open={modalCartaoOpen} setOpen={setModalCartaoOpen} />
-            <ModalCadastroEndereco open={modalEnderecoOpen} setOpen={setModalEnderecoOpen} />
+            <ModalCadastroCartao open={modalCartaoOpen} setOpen={setModalCartaoOpen} newUserId={user?.id} isCheckout={true} />
+            <ModalCadastroEndereco open={modalEnderecoOpen} setOpen={setModalEnderecoOpen} newUserId={user?.id} isCheckout={true} />
 
             <Grid container sx={{ my: 2 }}>
                 <Grid item xs={6} sx={{ paddingLeft: 1 }} >
@@ -72,7 +70,7 @@ function CheckoutForm({ listaCartoes, listaEnderecos }) {
                             onChange={(event) => setEnderecoField(event.target.value)}
                         >
                             {listaEnderecos.map(endereco => {
-                                const enderecoInfo = `${endereco.rua} ${endereco.numero}, ${endereco.bairro}`;
+                                const enderecoInfo = `${endereco.enderecoId} - ${endereco.rua} ${endereco.numero}, ${endereco.bairro}, ${endereco.estado}`;
 
                                 return (
                                     <MenuItem key={endereco.enderecoId} value={enderecoInfo}>

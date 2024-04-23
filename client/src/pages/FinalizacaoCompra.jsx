@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import AppBarSearch from "../components/AppBarSearch";
 import Footer from "../components/Footer";
 
 function FinalizacaoCompra() {
     const navigate = useNavigate();
+    const { pedidoCodigo } = useParams();
+
     return (
         <>
             <Grid container sx={{ overflow: 'hidden' }}>
@@ -18,7 +19,7 @@ function FinalizacaoCompra() {
                             Obrigado pela compra!
                         </Typography>
                         <Typography color="black" variant="h4" sx={{ mt: 5 }}>
-                            Seu pedido foi completado com sucesso!
+                            {'Seu pedido de número ' + pedidoCodigo + ' foi feito com sucesso!'}
                         </Typography>
                         <Button variant="outlined" onClick={() => navigate('/')} sx={{ mt: 5, height: '5rem' }}>Voltar à tela inicial</Button>
                     </Box>

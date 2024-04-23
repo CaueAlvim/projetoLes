@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,4 +35,7 @@ public class PedidoVenda {
 
     @Enumerated(EnumType.STRING)
     private PedidoVendaStatus status;
+
+    @OneToMany(mappedBy = "pedidoVenda", cascade = CascadeType.ALL)
+    private List<PedidoVendaItem> itensPedido;
 }

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import EnderecoService from "../services/EnderecoService";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId }) {
+function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId, isCheckout }) {
     const [fieldsError, setFieldsError] = useState(undefined);
     const [cadastroEnderecoFields, setCadastroEnderecoFields] = useState({ cep: '', rua: '', numero: '', bairro: '', cidade: '', estado: '', pais: '', tipoResidencia: '', tipoLogradouro: '' });
     const [cadastroEnderecoObs, setCadastroEnderecoObs] = useState({ observacoes: '' });
@@ -10,7 +12,16 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId })
     const handleCadastrar = async (endereco) => {
         try {
             await EnderecoService.salvar({ ...endereco, clienteId: newUserId });
-            console.log("Endereco cadastrado com sucesso!");
+            if (isCheckout) {
+                toast.success("Endereço cadastrado com sucesso!", {
+                    toastId: 'register-success',
+                    autoClose: 2000,
+                    position: toast.POSITION.BOTTOM_LEFT
+                });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2500);
+            }
         } catch (error) {
             console.error("Falha no cadastro:", error);
         }
@@ -24,7 +35,7 @@ function ModalCadastroEndereco({ open, setOpen, setOpenModalCartao, newUserId })
         const enderecoCompleto = { ...cadastroEnderecoFields, ...cadastroEnderecoObs };
 
         handleCadastrar(enderecoCompleto).then(() => {
-            setOpenModalCartao(true);
+            !isCheckout && setOpenModalCartao(true);
             handleClose();
         });
     }

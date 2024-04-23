@@ -4,25 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class PedidoVendaItem {
+public class PedidoVendaCartao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer quantidadeUnitaria;
-    private Double valorUnitario;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "pedido_venda_id")
     private PedidoVenda pedidoVenda;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "estoque_livro_id")
-    private EstoqueLivro estoqueLivro;
+    @JoinColumn(name = "cartao_id")
+    private Cartao cartao;
 }
