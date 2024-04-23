@@ -68,7 +68,7 @@ public class ClienteController {
     }
     @CrossOrigin
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> excluir(@PathVariable("id") Integer id){
+    public ResponseEntity<Object> inativar(@PathVariable("id") Integer id){
         try{
             service.inativar(id);
             return ResponseEntity.ok().build();

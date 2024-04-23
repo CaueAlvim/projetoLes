@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography } from "@mui/material";
 import ClienteService from "../services/ClienteService";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
+    const [fieldsError, setFieldsError] = useState(undefined);
     const [loginFields, setLoginFields] = useState({ email: '', senha: '' });
 
     const handleLogin = async () => {
@@ -22,8 +23,21 @@ function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
                 }, 2500);
             }
         } catch (error) {
-            toast.error("Falha no login", { toastId: "login-fail" });
+            toast.error("Falha no login!", {
+                toastId: 'login-fail',
+                autoClose: 1500,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
         }
+    }
+
+    const handleSubmit = () => {
+        if (Object.values(loginFields).some(field => field.trim() === '')) {
+            setFieldsError('Por favor, preencha todos os campos.');
+            return;
+        }
+
+        handleLogin();
     }
 
     const handleClose = () => {
@@ -79,6 +93,11 @@ function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
                             />
                         </Grid>
                     </Grid>
+                    {fieldsError && (
+                        <Typography color="red" variant="subtitle">
+                            {fieldsError}
+                        </Typography>
+                    )}
                 </DialogContent>
                 <DialogActions>
                     <Grid container>
@@ -93,7 +112,7 @@ function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
 
                         <Grid item xs={5} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <Button onClick={handleClose}>Cancelar</Button>
-                            <Button id="cypress-login" onClick={handleLogin}>Login</Button>
+                            <Button id="cypress-login" onClick={handleSubmit}>Login</Button>
                         </Grid>
                     </Grid>
                 </DialogActions>

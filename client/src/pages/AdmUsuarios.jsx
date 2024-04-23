@@ -27,9 +27,9 @@ function AdmUsuarios() {
         setOpenMenu(true);
     }
 
-    const handleDeleteUser = async () => {
+    const handleInativarUser = async () => {
         try {
-            await ClienteService.delete(userSelecionadoCodigo);
+            await ClienteService.inativar(userSelecionadoCodigo);
             window.location.reload();
             console.log("Usuário excluido com sucesso!");
         } catch (error) {
@@ -124,7 +124,7 @@ function AdmUsuarios() {
                                                     open={openMenu}
                                                     onClose={() => setOpenMenu(false)}
                                                 >
-                                                    <MenuItem id='cypress-moreoptionsusersdelete' onClick={handleDeleteUser}>Excluir Usuário</MenuItem>
+                                                    <MenuItem id='cypress-moreoptionsusersdelete' onClick={handleInativarUser}>Inativar Usuário</MenuItem>
                                                 </Menu>
                                             </TableCell>
                                         </TableRow>

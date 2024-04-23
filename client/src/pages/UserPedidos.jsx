@@ -17,9 +17,9 @@ function UserPedidos({ isAdmin }) {
 
     const product = { id: 1, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100' };
 
-    // useEffect(() => {
-    //     handlePesquisar();
-    // }, []);
+    useEffect(() => {
+        handlePesquisar();
+    }, []);
 
     const handleOpenDialogDevolucao = () => {
         setOpenDevolucaoDialog(true)

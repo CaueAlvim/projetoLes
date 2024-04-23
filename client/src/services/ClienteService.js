@@ -70,7 +70,7 @@ export default class ClienteService {
         return data;
     }
     
-    static async delete(id) {
+    static async inativar(id) {
         const response = await fetch(`http://localhost:5000/cliente/${id}`, {
             method: 'DELETE',
         });
