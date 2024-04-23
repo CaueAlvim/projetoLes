@@ -4,7 +4,7 @@ DELETE FROM `endereco`;
 DELETE FROM `cliente`;
 
 INSERT INTO `cliente` (`id`, `cpf`, `data_cadastro`, `data_nascimento`, `email`, `genero`, `is_admin`, `nome`, `senha`, `telefone`, `is_ativo`)
-VALUES (1, '123.123.123-12', '2024-04-07', '2000-01-01', 'caue@mail.com', 'Masculino', b'1', 'Caue', '1234', '(11)91234-5678', 1),
+VALUES (1, '123.123.123-12', '2024-04-07', '2000-01-01', 'admin', 'Masculino', b'1', 'Caue', '1234', '(11)91234-5678', 1),
        (2, '456.456.456-45', '2024-04-22', '2000-01-01', 'teste', 'Masculino', b'0', 'Teste', '1234', '(11)94567-8910', 1);
 
 INSERT INTO `endereco` (`id`, `bairro`, `cep`, `cidade`, `estado`, `numero`, `observacoes`, `pais`, `rua`, `tipo_logradouro`, `tipo_residencia`, `cliente_id`, `is_entrega`, `is_cobranca`)

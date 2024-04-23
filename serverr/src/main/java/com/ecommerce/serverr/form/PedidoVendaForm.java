@@ -5,6 +5,7 @@ import com.ecommerce.serverr.model.PedidoVenda;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -25,7 +26,9 @@ public class PedidoVendaForm {
                 .dataPedido(LocalDate.now())
                 .valorPedido(valorPedido)
                 .valorFrete(valorFrete)
-                .status(PedidoVendaStatus.PAGAMENTO_REALIZADO)
+                .status(PedidoVendaStatus.EM_PROCESSAMENTO)
+                .cartoes(new ArrayList<>())
+                .cupons(new ArrayList<>())
                 .build();
     }
 }

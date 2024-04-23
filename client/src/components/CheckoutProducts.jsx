@@ -5,7 +5,7 @@ function CheckoutProducts({ carrinho }) {
     return (
         <>
             {carrinho?.itens && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', height: '46vh', bgcolor: 'white', overflowY: 'scroll', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', mt: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', height: 'auto', maxHeight: '46vh', bgcolor: 'white', overflowY: 'scroll', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', mt: 2 }}>
                     <Box sx={{ borderBottom: '1px solid #000', width: '100%' }}>
                         <Typography variant="h4" sx={{ ml: 1.8, mt: 1.8, mb: 1 }}>
                             Resumo do pedido

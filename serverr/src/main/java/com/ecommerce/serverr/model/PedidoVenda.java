@@ -36,6 +36,20 @@ public class PedidoVenda {
     @Enumerated(EnumType.STRING)
     private PedidoVendaStatus status;
 
-    @OneToMany(mappedBy = "pedidoVenda", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pedidoVenda", cascade = CascadeType.REMOVE)
     private List<PedidoVendaItem> itensPedido;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pedido_venda_cupom",
+            joinColumns = @JoinColumn(name = "pedidovenda_id"),
+            inverseJoinColumns = @JoinColumn(name = "cupom_id"))
+    private List<Cupom> cupons;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pedido_venda_cartao",
+            joinColumns = @JoinColumn(name = "pedidovenda_id"),
+            inverseJoinColumns = @JoinColumn(name = "cartao_id"))
+    private List<Cartao> cartoes;
 }

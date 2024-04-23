@@ -1,7 +1,10 @@
 package com.ecommerce.serverr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,4 +24,8 @@ public class Cartao {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "cartoes")
+    private List<PedidoVenda> pedidos;
 }

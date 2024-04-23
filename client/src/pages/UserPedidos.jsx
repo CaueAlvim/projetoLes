@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel, Box } from '@mui/material';
 import moment from 'moment';
 import PedidoVendaService from '../services/PedidoVendaService';
@@ -10,19 +10,16 @@ function UserPedidos({ isAdmin }) {
     const [openMenu, setOpenMenu] = useState(false);
     const [openDevolucaoDialog, setOpenDevolucaoDialog] = useState(false);
     const [openStatusDialog, setOpenStatusDialog] = useState(false);
-    const [produtoSelecionado, setProdutoSelecionado] = useState({ status: '' });
+    const [pedidoSelecionado, setPedidoSelecionado] = useState({ status: '' });
     const [selectTrocaDevolucao, setSelectTrocaDevolucao] = useState({ operacao: 'Troca' });
     const [filter, setFilter] = useState({ numPedido: '', feitoPor: '', dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
     const [listaPedidos, setListaPedidos] = useState([]);
 
-
-    const pedidosTable = [
-        { numero: '123', usuario: 'NOMEUSUARIO1', status: 'ENCAMINHADO', dataPedido: '2023-12-02' },
-        { numero: '456', usuario: 'NOMEUSUARIO2', status: 'AGUARDANDO PAGAMENTO', dataPedido: '2023-12-30' },
-        { numero: '789', usuario: 'NOMEUSUARIO3', status: 'FINALIZADO', dataPedido: '2023-12-03' },
-    ];
-
     const product = { id: 1, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100' };
+
+    // useEffect(() => {
+    //     handlePesquisar();
+    // }, []);
 
     const handleOpenDialogDevolucao = () => {
         setOpenDevolucaoDialog(true)
@@ -44,7 +41,7 @@ function UserPedidos({ isAdmin }) {
 
     const handleClickMoreOptions = (event, itemSelecinado) => {
         setAnchorEl(event.currentTarget);
-        setProdutoSelecionado(itemSelecinado)
+        setPedidoSelecionado(itemSelecinado)
         setOpenMenu(true);
     }
 
@@ -56,7 +53,7 @@ function UserPedidos({ isAdmin }) {
             console.error(error)
         }
     }
-console.log(listaPedidos);
+
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
@@ -104,7 +101,7 @@ console.log(listaPedidos);
                 <DialogContent>
                     <Select
                         id="alterarStatus"
-                        value={produtoSelecionado.status}
+                        value={pedidoSelecionado.status}
                         fullWidth
                         onChange={(e) => {
                             setProdutoSelecionado(prevState => ({ ...prevState, status: e.target.value }));
@@ -191,29 +188,33 @@ console.log(listaPedidos);
                                     <TableCell>Nº do pedido</TableCell>
                                     {isAdmin && (<TableCell align="center">Feito por</TableCell>)}
                                     <TableCell align="center">Status</TableCell>
+                                    <TableCell align="right">Valor pedido</TableCell>
                                     <TableCell align="right">Data do pedido</TableCell>
                                     <TableCell align="right"></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {pedidosTable.map((row) => (
-                                    <TableRow key={row.numero}>
+                                {listaPedidos.map((pedido) => (
+                                    <TableRow key={pedido?.id}>
                                         <TableCell component="th" scope="row">
-                                            {row.numero}
+                                            {pedido?.id}
                                         </TableCell>
                                         {isAdmin && (
                                             <TableCell align="center" component="th" scope="row">
-                                                {row.usuario}
+                                                {pedido?.feitoPor}
                                             </TableCell>
                                         )}
                                         <TableCell align="center" component="th" scope="row">
-                                            {row.status}
+                                            {pedido?.status}
                                         </TableCell>
                                         <TableCell align="right">
-                                            {moment(row.dataPedido).format('DD/MM/YYYY')}
+                                            R${(pedido?.valorPedido).toFixed(2)}
                                         </TableCell>
                                         <TableCell align="right">
-                                            <Button id='cypress-moreoptionpedidos' onClick={(e) => handleClickMoreOptions(e, row)} sx={{ height: '.5rem' }}>
+                                            {moment(pedido?.dataPedido).format('DD/MM/YYYY')}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <Button id='cypress-moreoptionpedidos' onClick={(e) => handleClickMoreOptions(e, pedido)} sx={{ height: '.5rem' }}>
                                                 <MoreHorizIcon />
                                             </Button>
                                             <Menu
