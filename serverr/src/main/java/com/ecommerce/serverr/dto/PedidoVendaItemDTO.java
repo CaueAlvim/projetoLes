@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class PedidoVendaItemDTO {
     private Integer id;
+    private String titulo;
     private Integer quantidadeUnitaria;
     private Double valorUnitario;
 }

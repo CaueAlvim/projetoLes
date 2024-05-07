@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel, Box } from '@mui/material';
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel, Box, Checkbox } from '@mui/material';
 import moment from 'moment';
 import PedidoVendaService from '../services/PedidoVendaService';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import ProductCardDevolucao from '../components/ProductCardDevolucao';
+
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ModalSolicitarTroca from '../components/ModalSolicitarTroca';
 
 function UserPedidos({ isAdmin }) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -14,28 +15,23 @@ function UserPedidos({ isAdmin }) {
     const [openStatusDialog, setOpenStatusDialog] = useState(false);
     const [pedidoSelecionado, setPedidoSelecionado] = useState();
     const [alterarStatus, setAlterarStatus] = useState({ pedidoId: 0, status: '' });
-    const [selectTrocaDevolucao, setSelectTrocaDevolucao] = useState({ operacao: 'Troca' });
     const [filter, setFilter] = useState({ numPedido: '', feitoPor: '', dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
     const [listaPedidos, setListaPedidos] = useState([]);
-
-    const product = { id: 1, name: 'Livro 1', image: 'https://via.placeholder.com/100', price: 'R$100' };
+    const [listaItensPedido, setListaItensPedido] = useState([]);
 
     useEffect(() => {
         handlePesquisar();
     }, []);
 
-    const handleOpenDialogDevolucao = () => {
-        setOpenDevolucaoDialog(true)
+    const handleOpenDialogDevolucao = (pedido) => {
+        setOpenDevolucaoDialog(true);
+        setListaItensPedido(pedido?.itens);
         setOpenMenu(false);
     }
 
     const handleOpenDialogStatus = () => {
         setOpenStatusDialog(true);
         setOpenMenu(false);
-    }
-
-    const handleCloseDialogDevolucao = () => {
-        setOpenDevolucaoDialog(false);
     }
 
     const handleCloseDialogStatus = () => {
@@ -75,39 +71,11 @@ function UserPedidos({ isAdmin }) {
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
-            <Dialog
+            <ModalSolicitarTroca
                 open={openDevolucaoDialog}
-                keepMounted
-                onClose={handleCloseDialogDevolucao}
-                aria-describedby="descricao"
-            >
-                <DialogTitle>{"Deseja solicitar a troca/devolução deste item?"}</DialogTitle>
-                <DialogContent>
-                    <FormControl variant="standard" fullWidth sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="label-troca-devolucao">Operação</InputLabel>
-                        <Select
-                            labelId="label-troca-devolucao"
-                            id="operacao-troca-devolucao"
-                            value={selectTrocaDevolucao.operacao}
-                            onChange={(event) => setSelectTrocaDevolucao({ ...selectTrocaDevolucao, operacao: event.target.value })}
-                        >
-                            <MenuItem value={'Troca'}>Troca</MenuItem>
-                            <MenuItem value={'Devolucao'}>Devolucao</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <Typography variant="body1" sx={{ mt: 3 }}>
-                        Dados do pedido
-                    </Typography>
-                    <Divider variant='fullWidth' sx={{ width: '100%', margin: ' auto', bgcolor: 'black' }} />
-                    <ProductCardDevolucao product={product} />
-                    <DialogContentText id="descricao" sx={{ mt: 4 }}>
-                        Após enviar esta solicitação você receberá um retorno em até 3 dias.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDialogDevolucao}>Seguir</Button>
-                </DialogActions>
-            </Dialog>
+                setOpen={() => setOpenDevolucaoDialog(false)}
+                listaItensPedido={listaItensPedido}
+            />
 
             <Dialog
                 open={openStatusDialog}
@@ -122,7 +90,7 @@ function UserPedidos({ isAdmin }) {
                         value={alterarStatus.status}
                         fullWidth
                         onChange={(e) => {
-                            setAlterarStatus(prevState => ({ ...prevState, pedidoId: pedidoSelecionado?.id , status: e.target.value }));
+                            setAlterarStatus(prevState => ({ ...prevState, pedidoId: pedidoSelecionado?.id, status: e.target.value }));
                         }}
                     >
                         <MenuItem value={'EM PROCESSAMENTO'}>EM PROCESSAMENTO</MenuItem>
@@ -248,7 +216,7 @@ function UserPedidos({ isAdmin }) {
                                                 onClose={() => setOpenMenu(false)}
                                             >
                                                 {isAdmin && (<MenuItem id='cypress-adm-alterar-status-pedido' onClick={handleOpenDialogStatus}>Alterar Status</MenuItem>)}
-                                                {!isAdmin && (<MenuItem id='cypress-solicitartroca' onClick={handleOpenDialogDevolucao}>Solicitar Troca/Devolução</MenuItem>)}
+                                                {!isAdmin && (<MenuItem id='cypress-solicitartroca' onClick={() => handleOpenDialogDevolucao(pedido)}>Solicitar Troca/Devolução</MenuItem>)}
                                             </Menu>
                                         </TableCell>
                                     </TableRow>

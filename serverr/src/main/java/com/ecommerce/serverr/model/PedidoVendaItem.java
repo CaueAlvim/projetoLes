@@ -25,4 +25,16 @@ public class PedidoVendaItem {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "estoque_livro_id")
     private EstoqueLivro estoqueLivro;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    private String nomeItem;
+
+    public String getNomeItem(){
+        if (estoqueLivro != null && estoqueLivro.getLivro() != null){
+            return estoqueLivro.getLivro().getTitulo();
+        }
+        return null;
+    }
+
 }
