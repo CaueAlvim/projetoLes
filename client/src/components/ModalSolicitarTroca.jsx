@@ -1,13 +1,30 @@
 import { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, FormControl, InputLabel, Checkbox, Box, TextField } from '@mui/material';
-import ConfirmDialog from './ConfirmDialog';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
-    const [openConfirmTrade, setOpenConfirmTrade] = useState(false);
     const [selectTrocaDevolucao, setSelectTrocaDevolucao] = useState({ operacao: 'Troca' });
     const [itensSelecionados, setItensSelecionados] = useState([]);
+    const [quantidadeTroca, setQuantidadeTroca] = useState({});
     const [motivoObs, setMotivoObs] = useState({ observacoes: '' });
-    const [quantities, setQuantities] = useState({});
+    
+    const handleSolicitarPedido = async () => {
+        try {
+            const pedidoForm = itensSelecionados.map(id => ({
+                produtoId: id,
+                quantidadeSolicitada: quantidadeTroca[id] || 0
+            }));
+            toast.success("Solicitação confluída!", {
+                toastId: 'register-success',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+            setOpen();
+        } catch (error) {
+            console.error("Falha na solicitação:", error);
+        }
+    }
 
     const handleCheckAllItens = (event) => {
         if (event.target.checked) {
@@ -29,8 +46,8 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
     };
 
     const handleQuantityChange = (id, value) => {
-        setQuantities(prevQuantities => ({
-            ...prevQuantities,
+        setQuantidadeTroca(prevQuantidadeTroca => ({
+            ...prevQuantidadeTroca,
             [id]: value
         }));
     };
@@ -116,7 +133,7 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
                                                 <TextField
                                                     id="outlined-number"
                                                     type="number"
-                                                    value={quantities[item?.id] || 0}
+                                                    value={quantidadeTroca[item?.id] || 0}
                                                     inputProps={{
                                                         min: 0,
                                                         max: item.quantidadeUnitaria
@@ -155,7 +172,7 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setOpenConfirmTrade(true)}>Seguir</Button>
+                    <Button onClick={handleSolicitarPedido}>Seguir</Button>
                 </DialogActions>
             </Dialog>
         </>
