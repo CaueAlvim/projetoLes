@@ -2,31 +2,37 @@ import { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, FormControl, InputLabel, Checkbox, Box, TextField } from '@mui/material';
 import ConfirmDialog from './ConfirmDialog';
 
-
-
 function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
     const [openConfirmTrade, setOpenConfirmTrade] = useState(false);
     const [selectTrocaDevolucao, setSelectTrocaDevolucao] = useState({ operacao: 'Troca' });
-    const [listaItensPedidoSelecionados, setListaItensPedidoSelecionados] = useState([]);
+    const [itensSelecionados, setItensSelecionados] = useState([]);
     const [motivoObs, setMotivoObs] = useState({ observacoes: '' });
+    const [quantities, setQuantities] = useState({});
 
     const handleCheckAllItens = (event) => {
         if (event.target.checked) {
-            setListaItensPedidoSelecionados(listaItensPedido.map(item => item.id));
+            setItensSelecionados(listaItensPedido.map(item => item.id));
             return;
         }
-        setListaItensPedidoSelecionados([]);
+        setItensSelecionados([]);
     };
 
     const handleCheckItem = (id) => {
-        const isAlreadySelected = listaItensPedidoSelecionados?.includes(id);
+        const isAlreadySelected = itensSelecionados?.includes(id);
 
         const newSelected = isAlreadySelected ?
-            listaItensPedidoSelecionados?.filter(item => item !== id)
-            :
-            [...(listaItensPedidoSelecionados || []), id];
+                            itensSelecionados?.filter(item => item !== id)
+                            :
+                            [...(itensSelecionados || []), id];
 
-        setListaItensPedidoSelecionados(newSelected);
+        setItensSelecionados(newSelected);
+    };
+
+    const handleQuantityChange = (id, value) => {
+        setQuantities(prevQuantities => ({
+            ...prevQuantities,
+            [id]: value
+        }));
     };
 
     return (
@@ -66,8 +72,8 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
                                     <TableCell padding='checkbox'>
                                         <Checkbox
                                             color="primary"
-                                            indeterminate={listaItensPedidoSelecionados?.length > 0 && listaItensPedidoSelecionados?.length < listaItensPedido?.length}
-                                            checked={listaItensPedidoSelecionados?.length === listaItensPedido?.length && listaItensPedido?.length > 0}
+                                            indeterminate={itensSelecionados?.length > 0 && itensSelecionados?.length < listaItensPedido?.length}
+                                            checked={itensSelecionados?.length === listaItensPedido?.length && listaItensPedido?.length > 0}
                                             onChange={handleCheckAllItens}
                                         />
                                     </TableCell>
@@ -79,13 +85,12 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
                             </TableHead>
                             <TableBody>
                                 {listaItensPedido.map((item, index) => {
-                                    const isItemSelected = listaItensPedidoSelecionados?.indexOf(item?.id) !== -1;
+                                    const isItemSelected = itensSelecionados?.indexOf(item?.id) !== -1;
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={() => handleCheckItem(item?.id)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
@@ -96,6 +101,7 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
                                             <TableCell padding="checkbox">
                                                 <Checkbox
                                                     color="primary"
+                                                    onClick={() => handleCheckItem(item?.id)}
                                                     checked={isItemSelected}
                                                     inputProps={{
                                                         'aria-labelledby': labelId,
@@ -107,7 +113,19 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
                                                 {item?.titulo}
                                             </TableCell>
                                             <TableCell align="center">
-                                                {item?.quantidadeUnitaria}
+                                                <TextField
+                                                    id="outlined-number"
+                                                    type="number"
+                                                    value={quantities[item?.id] || 0}
+                                                    inputProps={{
+                                                        min: 0,
+                                                        max: item.quantidadeUnitaria
+                                                    }}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                    onChange={(event) => handleQuantityChange(item?.id, event.target.value)}
+                                                />
                                             </TableCell>
                                             <TableCell align="right">
                                                 R${(item?.valorUnitario).toFixed(2)}
