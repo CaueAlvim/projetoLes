@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.model;
 
+import com.ecommerce.serverr.controller.PedidoVendaCartao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,7 +26,6 @@ public class Cartao {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "cartoes")
-    private List<PedidoVenda> pedidos;
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.REMOVE)
+    private List<PedidoVendaCartao> pedidos;
 }

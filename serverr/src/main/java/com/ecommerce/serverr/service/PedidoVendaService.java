@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.service;
 
+import com.ecommerce.serverr.controller.PedidoVendaCartao;
 import com.ecommerce.serverr.dto.PedidoVendaDTO;
 import com.ecommerce.serverr.dto.PedidoVendaItemDTO;
 import com.ecommerce.serverr.enums.PedidoVendaStatus;
@@ -11,7 +12,6 @@ import com.ecommerce.serverr.validator.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,7 +67,11 @@ public class PedidoVendaService {
 
         if(form.getCartoesIds() != null){
             for (Integer id : form.getCartoesIds()){
-                pedidoVenda.getCartoes().add(CartaoValidator.validate(id));
+                pedidoVenda.getCartoes().add(
+                        PedidoVendaCartao.builder()
+                        .cartao(CartaoValidator.validate(id))
+                        .pedidoVenda(pedidoVenda).build()
+                );
             }
         }
 

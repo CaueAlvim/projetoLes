@@ -29,6 +29,7 @@ public class Livro {
     private String largura;
     private String peso;
     private String profundidade;
+    private String codigoBarras;
 
     @Builder.Default
     private boolean isAtivo = true;
@@ -45,6 +46,10 @@ public class Livro {
     @JsonIgnore
     @OneToOne(mappedBy = "livro")
     private EstoqueLivro estoque;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "grupo_precificacao_id")
+    private GrupoPrecificacao grupoPrecificacao;
 
     private String caminhoImagem;
 }

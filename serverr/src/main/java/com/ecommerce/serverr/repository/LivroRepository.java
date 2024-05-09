@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LivroRepository extends JpaRepository<Livro, Integer> {
     List<Livro> findAllByIsAtivoIsTrue();
+
+    Livro findFirstByIdAndIsAtivoIsTrue(Integer id);
 }

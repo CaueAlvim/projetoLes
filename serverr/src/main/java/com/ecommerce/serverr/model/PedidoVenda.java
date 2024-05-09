@@ -1,5 +1,6 @@
 package com.ecommerce.serverr.model;
 
+import com.ecommerce.serverr.controller.PedidoVendaCartao;
 import com.ecommerce.serverr.enums.PedidoVendaStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,10 +47,6 @@ public class PedidoVenda {
             inverseJoinColumns = @JoinColumn(name = "cupom_id"))
     private List<Cupom> cupons;
 
-    @ManyToMany
-    @JoinTable(
-            name = "pedido_venda_cartao",
-            joinColumns = @JoinColumn(name = "pedidovenda_id"),
-            inverseJoinColumns = @JoinColumn(name = "cartao_id"))
-    private List<Cartao> cartoes;
+    @OneToMany(mappedBy = "pedidoVenda", cascade = CascadeType.ALL)
+    private List<PedidoVendaCartao> cartoes;
 }

@@ -14,7 +14,8 @@ public enum PedidoVendaStatus {
     TROCADO(7, "TROCADO"),
     PAGAMENTO_REALIZADO(8, "PAGAMENTO REALIZADO"),
     PAGAMENTO_RECUSADO(9, "PAGAMENTO RECUSADO"),
-    PEDIDO_CANCELADO(10, "PEDIDO CANCELADO");
+    PEDIDO_CANCELADO(10, "PEDIDO CANCELADO"),
+    AGUARDANDO_ENVIO(11, "AGUARDANDO ENVIO");
 
     private final Integer codigo;
     private final String descricao;

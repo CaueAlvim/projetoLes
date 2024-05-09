@@ -1,6 +1,6 @@
 package com.ecommerce.serverr.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class EstoqueLivro {
     private String fornecedor;
     private LocalDate dataEntrada;
 
-    @JsonIgnore
+    @JsonIgnoreProperties("estoque")
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "livro_id", referencedColumnName = "id")
     private Livro livro;
