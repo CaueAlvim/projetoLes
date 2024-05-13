@@ -9,7 +9,8 @@ VALUES (1, '123.123.123-12', '2024-04-07', '2000-01-01', 'admin', 'Masculino', b
 
 INSERT INTO `endereco` (`id`, `bairro`, `cep`, `cidade`, `estado`, `numero`, `observacoes`, `pais`, `rua`, `tipo_logradouro`, `tipo_residencia`, `cliente_id`, `is_entrega`, `is_cobranca`)
 VALUES (1, 'Bairro 1', '01234-142', 'Mogi das Cruzes', 'SP', '123', 'obsteste', 'Brasil', 'Rua 1', 'logradouro', 'Casa', 1, b'1', b'1'),
-       (2, 'Bairro Teste', '04567-891', 'Mogi das Cruzes', 'SP', '123', null, 'Brasil', 'Rua 2', 'logradouro', 'Casa', 2, b'1', b'1');
+       (2, 'Bairro Teste', '04567-891', 'Mogi das Cruzes', 'SP', '123', null, 'Brasil', 'Rua 2', 'logradouro', 'Casa', 2, b'1', b'1'),
+       (3, 'Segundo Bairro Teste', '09101-892', 'Mogi das Cruzes', 'SP', '456', null, 'Brasil', 'Rua 3', 'logradouro', 'Casa', 2, b'1', b'1');
 
 INSERT INTO `cartao` (`id`, `bandeira`, `cvc`, `nome_cartao`, `numero_cartao`, `cliente_id`)
 VALUES (1, 'Visa', '123', 'caue eyti alvim', '1234.1234.1234.1234', 1),

@@ -6,11 +6,15 @@ import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PersonIcon from '@mui/icons-material/Person';
 import ClienteService from '../services/ClienteService';
+import CartaoService from '../services/CartaoService';
+import EnderecoService from '../services/EnderecoService';
 
 function UserData() {
     const [currentTab, setCurrentTab] = useState('DADOS');
     const [localUser, setLocalUser] = useState({});
     const [userData, setUserData] = useState({ nome: '', email: '', senha: '', cpf: '', genero: '', telefone: '' });
+    const [addressesData, setAddressesData] = useState({ nome: '', email: '', senha: '', cpf: '', genero: '', telefone: '' });
+    const [cardsData, setCardsData] = useState({ nome: '', email: '', senha: '', cpf: '', genero: '', telefone: '' });
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -18,6 +22,8 @@ function UserData() {
             const userObject = JSON.parse(storedUser);
             setLocalUser(userObject);
             fetchUser(userObject);
+            fetchAddresses(userObject);
+            fetchCards(userObject);
         }
     }, [currentTab === 'DADOS']);
 
@@ -30,6 +36,26 @@ function UserData() {
         }
     }
 
+    const fetchAddresses = async (userToFetch) => {
+        try {
+            const fetchedAddresses = await EnderecoService.carregarPorCliente(userToFetch.id);
+            setAddressesData(fetchedAddresses);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const fetchCards = async (userToFetch) => {
+        try {
+            const fetchedCards = await CartaoService.carregarPorCliente(userToFetch.id);
+            setCardsData(fetchedCards);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    console.log('cards', cardsData);
+    console.log('addresses', addressesData);
     const handleAlterarUsuario = async () => {
         try {
             await ClienteService.edit(userData);
@@ -170,20 +196,24 @@ function UserData() {
                                     <TableRow>
                                         <TableCell>Rua</TableCell>
                                         <TableCell align="center">Bairro</TableCell>
-                                        <TableCell align="right">Numero</TableCell>
+                                        <TableCell align="center">Numero</TableCell>
+                                        <TableCell align="right">Estado</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {userData?.enderecos?.map((row) => (
-                                        <TableRow key={row.id}>
+                                    {addressesData?.map((address) => (
+                                        <TableRow key={address?.enderecoId}>
                                             <TableCell component="th" scope="row">
-                                                {row.rua}
+                                                {address?.rua}
                                             </TableCell>
                                             <TableCell align="center">
-                                                {row.bairro}
+                                                {address?.bairro}
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                {address?.numero}
                                             </TableCell>
                                             <TableCell align="right">
-                                                {row.numero}
+                                                {address?.estado}
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -205,21 +235,21 @@ function UserData() {
                                 <TableHead sx={{ bgcolor: '#e0e0e0' }}>
                                     <TableRow>
                                         <TableCell>Nome no Cartão</TableCell>
-                                        <TableCell>Número</TableCell>
+                                        <TableCell align='center'>Número</TableCell>
                                         <TableCell align="right">Bandeira</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {userData?.cartoes?.map((row) => (
-                                        <TableRow key={row.id}>
+                                    {cardsData.map((card) => (
+                                        <TableRow key={card?.cartaoId}>
                                             <TableCell component="th" scope="row">
-                                                {row.nomeCartao}
+                                                {card?.nomeCartao}
                                             </TableCell>
-                                            <TableCell component="th" scope="row">
-                                                {row.numeroCartao}
+                                            <TableCell align='center' component="th" scope="row">
+                                                {card?.numeroCartao}
                                             </TableCell>
                                             <TableCell align="right">
-                                                {row.bandeira}
+                                                {card?.bandeira}
                                             </TableCell>
 
                                         </TableRow>

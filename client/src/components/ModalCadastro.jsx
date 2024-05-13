@@ -5,7 +5,7 @@ import ClienteService from "../services/ClienteService";
 
 function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndereco, setNewUserId }) {
     const [fieldsError, setFieldsError] = useState(undefined);
-    const [registerFields, setRegisterFields] = useState({ nome: '', email: '', senha: '', cpf: '', dataNascimento: moment().format('YYYY-MM-DD'), genero: '', telefone: '' });
+    const [registerFields, setRegisterFields] = useState({ nome: '', email: '', senha: '', senhaConfirmar: '', cpf: '', dataNascimento: moment().format('YYYY-MM-DD'), genero: '', telefone: '' });
 
     const handleCadastrar = async () => {
         try {
@@ -19,6 +19,9 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
     const handleSubmit = () => {
         if (Object.values(registerFields).some(field => field.trim() === '')) {
             setFieldsError('Por favor, preencha todos os campos.');
+            return;
+        } else if (registerFields.senha !== registerFields.senhaConfirmar) {
+            setFieldsError('As senhas não coincidem.');
             return;
         }
 
@@ -171,7 +174,7 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
                                 onChange={(event) => setRegisterFields({ ...registerFields, email: event.target.value })}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <TextField
                                 autoFocus
                                 required
@@ -184,6 +187,21 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
                                 variant="standard"
                                 value={registerFields.senha}
                                 onChange={(event) => setRegisterFields({ ...registerFields, senha: event.target.value })}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                autoFocus
+                                required
+                                margin="dense"
+                                id="passwordConfirm"
+                                name="passwordConfirm"
+                                label="Confirmar Senha"
+                                type="password"
+                                fullWidth
+                                variant="standard"
+                                value={registerFields.senhaConfirmar}
+                                onChange={(event) => setRegisterFields({ ...registerFields, senhaConfirmar: event.target.value })}
                             />
                         </Grid>
                         {fieldsError && (
