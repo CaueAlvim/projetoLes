@@ -1,8 +1,6 @@
-package com.ecommerce.serverr.controller;
+package com.ecommerce.serverr.model;
 
 
-import com.ecommerce.serverr.model.Cartao;
-import com.ecommerce.serverr.model.PedidoVenda;
 import jakarta.persistence.*;
 import lombok.*;
 

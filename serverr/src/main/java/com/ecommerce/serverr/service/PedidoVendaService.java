@@ -1,6 +1,7 @@
 package com.ecommerce.serverr.service;
 
-import com.ecommerce.serverr.controller.PedidoVendaCartao;
+import com.ecommerce.serverr.form.PedidoVendaCartaoForm;
+import com.ecommerce.serverr.model.PedidoVendaCartao;
 import com.ecommerce.serverr.dto.PedidoVendaDTO;
 import com.ecommerce.serverr.dto.PedidoVendaItemDTO;
 import com.ecommerce.serverr.enums.PedidoVendaStatus;
@@ -21,11 +22,13 @@ public class PedidoVendaService {
     private final PedidoVendaRepository repository;
     private final EstoqueLivroRepository estoqueLivroRepository;
     private final PedidoVendaItemRepository itemRepository;
+    private final PedidoVendaCartaoRepository pedidoVendaCartaoRepository;
     @Autowired
-    public PedidoVendaService(PedidoVendaRepository repository, EstoqueLivroRepository estoqueLivroRepository, PedidoVendaItemRepository itemRepository) {
+    public PedidoVendaService(PedidoVendaRepository repository, EstoqueLivroRepository estoqueLivroRepository, PedidoVendaItemRepository itemRepository, PedidoVendaCartaoRepository pedidoVendaCartaoRepository) {
         this.repository = repository;
         this.estoqueLivroRepository = estoqueLivroRepository;
         this.itemRepository = itemRepository;
+        this.pedidoVendaCartaoRepository = pedidoVendaCartaoRepository;
     }
 
     public void alterarStatus (Integer pedidoId, String status) throws Exception {
@@ -65,30 +68,37 @@ public class PedidoVendaService {
         pedidoVenda.setEnderecoCobranca(endereco);
         pedidoVenda.setEnderecoEntrega(endereco);
 
-        if(form.getCartoesIds() != null){
-            for (Integer id : form.getCartoesIds()){
+        if(form.getCartoes() != null){
+            for (PedidoVendaCartaoForm pedidoVendaCartaoForm : form.getCartoes()){
                 pedidoVenda.getCartoes().add(
                         PedidoVendaCartao.builder()
-                        .cartao(CartaoValidator.validate(id))
+                        .cartao(CartaoValidator.validate(pedidoVendaCartaoForm.getCartaoId()))
+                        .precoPago(pedidoVendaCartaoForm.getValorPago())
                         .pedidoVenda(pedidoVenda).build()
                 );
             }
         }
 
-        if(form.getCupomUtilizadoId() != null){
-            Cupom cupom = CupomValidator.validate(form.getCupomUtilizadoId());
-            Double valorPedidoSemDesconto = pedidoVenda.getValorPedido();
+        if(form.getCuponsIds() != null){
+            Cupom cupom;
+            Double valorPedidoFinal = pedidoVenda.getValorPedido();
 
-            pedidoVenda.getCupons().add(cupom);
-
-            if(cupom.isTroca()){
-                pedidoVenda.setValorPedido(valorPedidoSemDesconto - cupom.getValor());
-            } else {
-                pedidoVenda.setValorPedido(valorPedidoSemDesconto - (valorPedidoSemDesconto * cupom.getPorcentagemDesconto()));
+            for (Integer id : form.getCuponsIds()){
+                cupom = CupomValidator.validate(id);
+                if(cupom.isTroca()){
+                    valorPedidoFinal -= cupom.getValor();
+                } else {
+                    valorPedidoFinal -= (valorPedidoFinal * cupom.getPorcentagemDesconto());
+                }
+                pedidoVenda.getCupons().add(cupom);
             }
+
+            pedidoVenda.setValorPedido(valorPedidoFinal + pedidoVenda.getValorFrete());
         }
 
         PedidoVenda pedidoSalvo = repository.save(pedidoVenda);
+
+        pedidoVendaCartaoRepository.saveAll(pedidoVenda.getCartoes());
 
         itemRepository.saveAll(form.getItens().stream().map(item -> PedidoVendaItem.builder()
                 .quantidadeUnitaria(item.getQuantidade())

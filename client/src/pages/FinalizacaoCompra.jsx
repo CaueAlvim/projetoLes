@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import AppBarSearch from "../components/AppBarSearch";
+import { AppBar, Box, Button, Grid, Toolbar, Typography } from "@mui/material";
 import Footer from "../components/Footer";
+import logo from '../assets/logo.png';
 
 function FinalizacaoCompra() {
     const navigate = useNavigate();
@@ -10,11 +10,16 @@ function FinalizacaoCompra() {
     return (
         <>
             <Grid container sx={{ overflow: 'hidden' }}>
-                <AppBarSearch />
+                <AppBar sx={{ backgroundColor: '#559bbc', position: 'relative', height: '4.2rem' }} >
+                    <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
+                        
+                    </Toolbar>
+                </AppBar>
 
                 <Grid container item sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
-                    <Box item sx={{ height: '10rem', width: '91vw', marginTop: '1.5rem', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
+                    <Box sx={{ height: '10rem', width: '91vw', marginTop: '1.5rem', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                         <Typography color="black" variant="h3" sx={{ mt: 30, fontWeight: 'bold' }}>
                             Obrigado pela compra!
                         </Typography>

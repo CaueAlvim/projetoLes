@@ -4,7 +4,6 @@ import { Grid, Button, FormControl, Select, InputLabel, MenuItem, ThemeProvider 
 import ModalCadastroCartao from './ModalCadastroCartao';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import ModalCadastroEndereco from './ModalCadastroEndereco';
@@ -37,7 +36,7 @@ function CheckoutForm({ listaCartoes, listaEnderecos, user, cardFields, setCardF
 
     const handleCardChange = (id, value) => {
         setCardFields(cardFields.map(field =>
-            field.cardFieldId === id ? { ...field, cartaoInfo: value } : field));
+            field.cardFieldId === id ? { ...field, cartaoInfo: value, cartaoValor: 10 } : field));
     };
 
     return (

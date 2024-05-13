@@ -1,6 +1,5 @@
 package com.ecommerce.serverr.model;
 
-import com.ecommerce.serverr.controller.PedidoVendaCartao;
 import com.ecommerce.serverr.enums.PedidoVendaStatus;
 import jakarta.persistence.*;
 import lombok.*;

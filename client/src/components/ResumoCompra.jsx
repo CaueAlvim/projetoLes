@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Box, Button, Divider, TextField, Typography } from "@mui/material";
 
-function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete, handleFinalizarCompra, handleUtilizarCupom, cupom, setCupom }) {
+function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete, handleFinalizarCompra, cupom, setCupom, validarCupom }) {
     const navigate = useNavigate();
 
     return (
@@ -80,7 +79,7 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete, 
                                 sx={{ width: '90%' }}
                                 value={cupom}
                                 onChange={(event) => setCupom(event.target.value)} />
-                            <Button onClick={handleUtilizarCupom} variant="contained" color="primary" size="small" >
+                            <Button onClick={validarCupom} variant="contained" color="primary" size="small" >
                                 OK
                             </Button>
                         </Box>

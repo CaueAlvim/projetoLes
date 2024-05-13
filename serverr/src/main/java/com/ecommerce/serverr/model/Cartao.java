@@ -1,7 +1,5 @@
 package com.ecommerce.serverr.model;
 
-import com.ecommerce.serverr.controller.PedidoVendaCartao;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

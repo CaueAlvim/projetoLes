@@ -10,7 +10,7 @@ public class CupomService {
 
     public CupomDTO validarCupom(String cupomCodigo) throws Exception {
         Cupom cupom = CupomValidator.validate(cupomCodigo);
-        CupomDTO dto = CupomDTO.builder().cupomId(cupom.getId()).build();
+        CupomDTO dto = CupomDTO.builder().cupomId(cupom.getId()).codigoCupom(cupom.getCodigo()).build();
 
         if (cupom.getCliente() != null && cupom.getValor() != null && cupom.isTroca()){
             dto.setValor(cupom.getValor());

@@ -16,8 +16,8 @@ import java.util.List;
 public class PedidoVendaForm {
     private Integer clienteId;
     private Integer enderecoId;
-    private List<Integer> cartoesIds;
-    private Integer cupomUtilizadoId;
+    private List<PedidoVendaCartaoForm> cartoes;
+    private List<Integer> cuponsIds;
     private List<PedidoVendaItemForm> itens;
     private Double valorPedido;
     private Double valorFrete;

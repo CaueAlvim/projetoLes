@@ -14,6 +14,7 @@ import PedidoVendaService from '../services/PedidoVendaService';
 import CupomService from '../services/CupomService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ModalFinalizacaoPagamento from '../components/ModalFinalizacaoPagamento';
 
 function Checkout() {
     const navigate = useNavigate();
@@ -23,11 +24,11 @@ function Checkout() {
     const [listaCartoes, setListaCartoes] = useState([]);
     const [listaEnderecos, setListaEnderecos] = useState([]);
     const [enderecoField, setEnderecoField] = useState('');
-    const [cardFields, setCardFields] = useState([{ cardFieldId: 1, cartaoInfo: null }]);
+    const [cardFields, setCardFields] = useState([{ cardFieldId: 1, cartaoInfo: null, cartaoValor: 10 }]);
     const [valorFrete, setValorFrete] = useState(30);
     const [cupom, setCupom] = useState('');
-    const [cupomValidado, setCupomValidado] = useState(undefined);
-
+    const [listaCupons, setListaCupons] = useState([]);
+    const [modalFinalizacaoOpen, setModalFinalizacaoOpen] = useState(false);
 
     useEffect(() => {
         fetchLocalStorage();
@@ -55,6 +56,18 @@ function Checkout() {
         setListaEnderecos(await EnderecoService.carregarPorCliente(id));
     }
 
+    const prepararFinalizacao = () => {
+        if (cardFields[0]?.cartaoInfo === null) {
+            toast.warning("Selecione pelo menos um cartão ou utilize um cupom de troca!", {
+                toastId: 'coupon-validated-warning',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+        } else {
+            setModalFinalizacaoOpen(true);
+        }
+    }
+
     const handleFinalizarCompra = async () => {
         try {
             setIsLoading(true);
@@ -64,13 +77,16 @@ function Checkout() {
                 enderecoId: parseInt(enderecoField.slice(0, 1)),
                 valorPedido: carrinho?.valorTotalItens,
                 valorFrete: valorFrete,
-                cupomUtilizadoId: cupomValidado?.cupomId,
+                cuponsIds: listaCupons.map(cupom => cupom?.cupomId),
                 itens: carrinho?.itens?.map(item => ({
                     livroId: item?.livroId,
                     quantidade: item?.quantidade,
                     valor: item?.valor
                 })),
-                cartoesIds: cardFields.map((card => parseInt(card.cartaoInfo.slice(0, 1))))
+                cartoes: cardFields.map(card => ({
+                    cartaoId: parseInt(card.cartaoInfo.slice(0, 1)),
+                    valorPago: parseFloat(card.cartaoValor).toFixed(2)
+                }))
             };
 
             const pedidoCodigo = await PedidoVendaService.salvar(form);
@@ -83,25 +99,31 @@ function Checkout() {
 
     }
 
-    const handleUtilizarCupom = async () => {
+    const validarCupom = async () => {
         try {
-            if(cupomValidado === undefined){
-                const cupomValidado = await CupomService.validar(cupom);
-                setCupomValidado(cupomValidado);
-                toast.success("Cupom validado com sucesso!", {
-                    toastId: 'coupon-validated-success',
-                    autoClose: 2000,
-                    position: toast.POSITION.BOTTOM_LEFT
-                });
-            } else {
+            if (listaCupons.find(c => c.codigoCupom === cupom)) { 
                 toast.warning("Cupom já validado!", {
                     toastId: 'coupon-validated-warning',
                     autoClose: 2000,
                     position: toast.POSITION.BOTTOM_LEFT
                 });
+            } else {
+                const cupomValidado = await CupomService.validar(cupom);
+                if (cupomValidado !== undefined) {
+                    setListaCupons(prevListaCupons => [...prevListaCupons, cupomValidado]);
+                    toast.success("Cupom validado com sucesso!", {
+                        toastId: 'coupon-validated-success',
+                        autoClose: 2000,
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                }
             }
         } catch (error) {
-            console.error(error);
+            toast.error("Cupom invalido!", {
+                toastId: 'coupon-validated-fail',
+                autoClose: 1500,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
         }
     }
 
@@ -139,20 +161,28 @@ function Checkout() {
                             <ResumoCompra
                                 isCheckout={true}
                                 quantidadeProdutos={carrinho?.quantidadeTotalItens}
-                                valorTotal={cupomValidado ?
-                                    (carrinho?.valorTotalItens - (carrinho?.valorTotalItens * cupomValidado?.valor))
-                                    :
-                                    carrinho?.valorTotalItens}
+                                valorTotal={carrinho?.valorTotalItens}
                                 valorFrete={valorFrete}
-                                handleFinalizarCompra={handleFinalizarCompra}
+                                handleFinalizarCompra={prepararFinalizacao}
                                 cupom={cupom}
                                 setCupom={setCupom}
-                                handleUtilizarCupom={handleUtilizarCupom}
+                                validarCupom={validarCupom}
 
                             />
                         </Grid>
                     </Grid>
                 </Grid>
+
+                <ModalFinalizacaoPagamento
+                    open={modalFinalizacaoOpen}
+                    setOpen={setModalFinalizacaoOpen}
+                    cartoesUsados={cardFields}
+                    setCartoesUsados={setCardFields}
+                    valorTotalItens={carrinho?.valorTotalItens}
+                    valorFrete={valorFrete}
+                    listaCupons={listaCupons.filter(cupom => cupom?.troca === true)}
+                    cupomDesconto={listaCupons.find(cupom => cupom?.troca === false)} 
+                    handleFinalizarCompra={handleFinalizarCompra}/>
 
                 <Footer />
             </Grid>

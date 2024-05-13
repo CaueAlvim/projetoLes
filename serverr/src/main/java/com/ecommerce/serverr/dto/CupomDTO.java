@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class CupomDTO {
     private Integer cupomId;
+    private String codigoCupom;
     private boolean isTroca;
     private Double valor;
 }
