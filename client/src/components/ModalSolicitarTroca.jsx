@@ -2,18 +2,24 @@ import { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Checkbox, TextField } from '@mui/material';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PedidoTrocaService from '../services/PedidoTrocaService'
 
-function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
+function ModalSolicitarTroca({ open, setOpen, listaItensPedido, pedidoSelecionadoId }) {
     const [itensSelecionados, setItensSelecionados] = useState([]);
     const [quantidadeTroca, setQuantidadeTroca] = useState({});
     
     const handleSolicitarPedido = async () => {
         try {
             const pedidoForm = itensSelecionados.map(id => ({
-                pedidoVendaId: selectTrocaDevolucao?.operacao,
+                pedidoVendaId: pedidoSelecionadoId,
                 livroId: id,
-                quantidadeSolicitada: quantidadeTroca[id] || 0
+                quantidadeSolicitada: parseInt(quantidadeTroca[id]) || 0
             }));
+            
+            for (const item of pedidoForm) {
+                await PedidoTrocaService.solicitarPedido(item);
+            }
+
             toast.success("Solicitação confluída!", {
                 toastId: 'register-success',
                 autoClose: 2000,
@@ -24,7 +30,7 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido }) {
             console.error("Falha na solicitação:", error);
         }
     }
-console.log(listaItensPedido);
+
     const handleCheckAllItens = (event) => {
         if (event.target.checked) {
             setItensSelecionados(listaItensPedido.map(item => item.id));
@@ -60,7 +66,7 @@ console.log(listaItensPedido);
                 fullWidth={true}
                 maxWidth={'lg'}
             >
-                <DialogTitle>{"Deseja solicitar a troca/devolução deste item?"}</DialogTitle>
+                <DialogTitle>{"Deseja solicitar a troca deste pedido?"}</DialogTitle>
                 <DialogContent >
 
                     <Typography variant="body1" sx={{ mt: 3 }}>

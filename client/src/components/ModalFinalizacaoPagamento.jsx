@@ -3,7 +3,6 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, 
 
 function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsados, setCartoesUsados, valorFrete, listaCupons, cupomDesconto, handleFinalizarCompra }) {
     const [fieldsError, setFieldsError] = useState(undefined);
-    const [loginFields, setLoginFields] = useState({ email: '', senha: '' });
 
     const handleClose = () => {
         setOpen(false);

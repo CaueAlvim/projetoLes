@@ -2,6 +2,7 @@ import { Box, Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListI
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 function UserDrawer({ isAdmin, setPage }) {
 
@@ -23,6 +24,14 @@ function UserDrawer({ isAdmin, setPage }) {
                                 <ReceiptLongIcon />
                             </ListItemIcon>
                             <ListItemText id='cypress-usuaripedidos' primary={isAdmin ? 'Detalhes dos pedidos' : 'Meus pedidos'} />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => setPage('TROCAS')}>
+                            <ListItemIcon>
+                                <KeyboardReturnIcon />
+                            </ListItemIcon>
+                            <ListItemText id='cypress-usuaripedidos' primary={'Pedidos de troca'} />
                         </ListItemButton>
                     </ListItem>
                     {isAdmin && (

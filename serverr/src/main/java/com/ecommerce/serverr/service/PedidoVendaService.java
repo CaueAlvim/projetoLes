@@ -53,7 +53,7 @@ public class PedidoVendaService {
                 .valorPedido(p.getValorPedido())
                 .itens(p.getItensPedido().stream().map(
                         item -> PedidoVendaItemDTO.builder()
-                        .id(item.getId())
+                        .id(item.getEstoqueLivro().getId())
                         .titulo(item.getNomeItem())
                         .quantidadeUnitaria(item.getQuantidadeUnitaria())
                         .valorUnitario(item.getValorUnitario()).build()).collect(Collectors.toList()))

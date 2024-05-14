@@ -1,36 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, Menu, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel, Box, Checkbox } from '@mui/material';
+import { Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, Box, Dialog, DialogTitle, DialogContent, Select, MenuItem, DialogActions } from '@mui/material';
 import moment from 'moment';
-import PedidoVendaService from '../services/PedidoVendaService';
+import PedidoTrocaService from '../services/PedidoTrocaService';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ModalSolicitarTroca from '../components/ModalSolicitarTroca';
 
-function UserPedidos({ isAdmin }) {
+function AdmPedidosTroca({ isAdmin }) {
     const [openMenu, setOpenMenu] = useState(false);
-    const [openDevolucaoDialog, setOpenDevolucaoDialog] = useState(false);
     const [openStatusDialog, setOpenStatusDialog] = useState(false);
     const [pedidoSelecionado, setPedidoSelecionado] = useState();
-    const [alterarStatus, setAlterarStatus] = useState({ pedidoId: 0, status: '' });
+    const [alterarStatus, setAlterarStatus] = useState({ id: 0, status: '' });
     const [filter, setFilter] = useState({ numPedido: '', feitoPor: '', dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
     const [listaPedidos, setListaPedidos] = useState([]);
-    const [listaItensPedido, setListaItensPedido] = useState([]);
 
     useEffect(() => {
         handlePesquisar();
     }, []);
 
-    const handleOpenDialogDevolucao = (pedido) => {
-        setOpenDevolucaoDialog(true);
-        setListaItensPedido(pedido?.itens);
-        setPedidoSelecionado(pedido);
-        setOpenMenu(false);
-    }
-
     const handleOpenDialogStatus = (pedido) => {
-        setOpenStatusDialog(true);
         setPedidoSelecionado(pedido);
+        setOpenStatusDialog(true);
         setOpenMenu(false);
     }
 
@@ -40,7 +30,7 @@ function UserPedidos({ isAdmin }) {
 
     const handlePesquisar = async () => {
         try {
-            const lista = await PedidoVendaService.search(filter);
+            const lista = await PedidoTrocaService.search(filter);
             setListaPedidos(lista);
         } catch (error) {
             console.error(error)
@@ -49,7 +39,7 @@ function UserPedidos({ isAdmin }) {
 
     const handleAlterarStatus = async () => {
         try {
-            await PedidoVendaService.alterarStatus(pedidoSelecionado?.id, alterarStatus?.status);
+            await PedidoTrocaService.alterarStatus(pedidoSelecionado?.id, alterarStatus?.status);
             toast.success("Status do pedido alterado com sucesso!", {
                 toastId: 'status-pedido-alterar-success',
                 autoClose: 2000,
@@ -64,13 +54,6 @@ function UserPedidos({ isAdmin }) {
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
-
-            <ModalSolicitarTroca
-                open={openDevolucaoDialog}
-                setOpen={() => setOpenDevolucaoDialog(false)}
-                listaItensPedido={listaItensPedido}
-                pedidoSelecionadoId={pedidoSelecionado?.id}
-            />
 
             <Dialog
                 open={openStatusDialog}
@@ -88,14 +71,11 @@ function UserPedidos({ isAdmin }) {
                             setAlterarStatus(prevState => ({ ...prevState, status: e.target.value }));
                         }}
                     >
-                        <MenuItem value={'EM PROCESSAMENTO'}>EM PROCESSAMENTO</MenuItem>
-                        <MenuItem value={'APROVADO'}>APROVADO</MenuItem>
-                        <MenuItem value={'REPROVADO'}>REPROVADO</MenuItem>
-                        <MenuItem value={'EM TRANSPORTE'}>EM TRANSPORTE</MenuItem>
-                        <MenuItem value={'ENTREGUE'}>ENTREGUE</MenuItem>
-                        <MenuItem value={'EM TROCA'}>EM TROCA</MenuItem>
-                        <MenuItem value={'TROCADO'}>TROCADO</MenuItem>
-                        <MenuItem value={'PEDIDO CANCELADO'}>PEDIDO CANCELADO</MenuItem>
+                        {!isAdmin && <MenuItem value={'EM TRANSPORTE'}>EM TRANSPORTE</MenuItem>}
+                        {isAdmin && <MenuItem value={'ENTREGUE'}>ENTREGUE</MenuItem>}
+                        {isAdmin && <MenuItem value={'EM TROCA'}>EM TROCA</MenuItem>}
+                        {isAdmin && <MenuItem value={'TROCA AUTORIZADA'}>TROCA AUTORIZADA</MenuItem>}
+                        {isAdmin && <MenuItem value={'TROCADO'}>TROCADO</MenuItem>}
                     </Select>
 
                 </DialogContent>
@@ -106,7 +86,7 @@ function UserPedidos({ isAdmin }) {
 
             <Paper elevation={3} sx={{ width: '75%', height: 'auto' }}>
                 <Typography variant="h4" sx={{ ml: 2, mt: 2 }}>
-                    Pedidos
+                    Pedidos de troca
                 </Typography>
 
                 <Divider variant='fullWidth' sx={{ width: '100%', margin: ' auto', bgcolor: 'black' }} />
@@ -173,9 +153,10 @@ function UserPedidos({ isAdmin }) {
                                 <TableRow>
                                     <TableCell>Nº do pedido</TableCell>
                                     {isAdmin && (<TableCell align="center">Feito por</TableCell>)}
+                                    <TableCell align="center">Livro</TableCell>
+                                    <TableCell align="center">Quantidade</TableCell>
                                     <TableCell align="center">Status</TableCell>
-                                    <TableCell align="right">Valor pedido</TableCell>
-                                    <TableCell align="right">Data do pedido</TableCell>
+                                    <TableCell align="right">Data da solicitação</TableCell>
                                     <TableCell align="right" />
                                     <TableCell align="right" />
                                 </TableRow>
@@ -191,29 +172,27 @@ function UserPedidos({ isAdmin }) {
                                                 {pedido?.feitoPor}
                                             </TableCell>
                                         )}
+                                         <TableCell align="center" component="th" scope="row">
+                                            {pedido?.livroNome}
+                                        </TableCell>
+
+                                        <TableCell align="center" component="th" scope="row">
+                                            {pedido?.quantidade}
+                                        </TableCell>
+
                                         <TableCell align="center" component="th" scope="row">
                                             {pedido?.status}
                                         </TableCell>
+
                                         <TableCell align="right">
-                                            R${(pedido?.valorPedido).toFixed(2)}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                            {moment(pedido?.dataPedido).format('DD/MM/YYYY')}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                        {!isAdmin && (
-                                            <Button id='cypress-moreoptionpedidos' onClick={() => handleOpenDialogDevolucao(pedido)} variant='outlined'>
-                                                Troca
-                                            </Button>
-                                        )}
+                                            {moment(pedido?.dataSolicitacao).format('DD/MM/YYYY')}
                                         </TableCell>
 
                                         <TableCell align="right">
-                                            {isAdmin && (
-                                                <Button id='cypress-adm-alterar-status-pedido' variant='outlined' onClick={() => handleOpenDialogStatus(pedido)}>
-                                                    Alterar Status
-                                                </Button>
-                                            )}
+                                            <Button id='cypress-adm-alterar-status-pedido-troca' variant='outlined' onClick={() => handleOpenDialogStatus(pedido)}>
+                                                Alterar Status
+                                            </Button>
+
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -227,4 +206,4 @@ function UserPedidos({ isAdmin }) {
     )
 }
 
-export default UserPedidos;
+export default AdmPedidosTroca;

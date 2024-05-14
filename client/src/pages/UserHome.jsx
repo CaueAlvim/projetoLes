@@ -7,6 +7,7 @@ import UserData from './UserData';
 import { useEffect, useState } from 'react';
 import UserPedidos from './UserPedidos';
 import AdmUsuarios from './AdmUsuarios';
+import AdmPedidosTroca from './AdmPedidosTroca';
 
 function UserHome() {
     const navigate = useNavigate();
@@ -28,6 +29,8 @@ function UserHome() {
                 return <UserPedidos isAdmin={user?.isAdmin} />;
             case 'USUARIOS':
                 return <AdmUsuarios />;
+            case 'TROCAS':
+                return <AdmPedidosTroca isAdmin={user?.isAdmin} />;
             default:
                 return <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }} />;
         }
