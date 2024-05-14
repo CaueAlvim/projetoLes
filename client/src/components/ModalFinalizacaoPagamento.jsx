@@ -142,7 +142,10 @@ function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsad
                                 Valor a ser pago:
                             </Typography>
                             <Typography variant={"h6"} sx={{ mr: 1 }}>
-                                R${((valorTotalItens + valorFrete - (listaCupons?.reduce((total, cupom) => total + cupom.valor, 0) || 0)) - (valorTotalItens * (cupomDesconto?.valor || 0))).toFixed(2)}
+                                R${Math.max(
+                                    ((valorTotalItens + valorFrete - (listaCupons?.reduce((total, cupom) => total + cupom.valor, 0) || 0)) - (valorTotalItens * (cupomDesconto?.valor || 0))),
+                                    0
+                                ).toFixed(2)}
                             </Typography>
                         </Box>
                     </Box>

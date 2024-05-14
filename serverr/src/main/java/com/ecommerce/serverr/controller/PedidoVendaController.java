@@ -1,11 +1,10 @@
 package com.ecommerce.serverr.controller;
 
-import com.ecommerce.serverr.filter.ClienteFilter;
 import com.ecommerce.serverr.filter.PedidoVendaFilter;
-import com.ecommerce.serverr.form.CartaoForm;
 import com.ecommerce.serverr.form.PedidoVendaForm;
 import com.ecommerce.serverr.service.PedidoVendaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +47,18 @@ public class PedidoVendaController {
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @CrossOrigin
+    @PatchMapping("/cancelar/{id}")
+    public ResponseEntity<Object> cancelar(@PathVariable("id") Integer id) {
+        try {
+            service.cancelarPedido(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\": \"" + e.getMessage() + "\"}");
         }
     }
 }

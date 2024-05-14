@@ -27,4 +27,14 @@ public class CupomController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @CrossOrigin
+    @GetMapping("/pesquisar/cliente/{id}")
+    public ResponseEntity<Object> carregarPorCliente(@PathVariable("id") Integer clienteId) {
+        try {
+            return ResponseEntity.ok(service.pesquisar(clienteId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

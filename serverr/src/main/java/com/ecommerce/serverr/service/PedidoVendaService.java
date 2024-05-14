@@ -31,12 +31,32 @@ public class PedidoVendaService {
         this.pedidoVendaCartaoRepository = pedidoVendaCartaoRepository;
     }
 
-    public void alterarStatus (Integer pedidoId, String status) throws Exception {
+    private void atualizarEstoque (List<PedidoVendaItem> itensPedido, boolean aumento) {
+        for (PedidoVendaItem item : itensPedido) {
+            EstoqueLivro estoqueLivro = item.getEstoqueLivro();
+            Integer quantidadeUnitaria = item.getQuantidadeUnitaria();
+
+            Integer novaQuantidade = !aumento ?
+                    estoqueLivro.getQuantidade() - quantidadeUnitaria
+                    :
+                    estoqueLivro.getQuantidade() + quantidadeUnitaria;
+            estoqueLivro.setQuantidade(novaQuantidade);
+            estoqueLivroRepository.save(estoqueLivro);
+        }
+    }
+
+    public void alterarStatus (Integer pedidoId, String statusPedido) throws Exception {
         PedidoVenda pedido = PedidoVendaValidator.validate(pedidoId);
-        PedidoVendaStatus novoStatus = PedidoVendaStatus.getByDescricao(status);
+        PedidoVendaStatus novoStatus = PedidoVendaStatus.getByDescricao(statusPedido);
 
         if (pedido.getStatus().equals(novoStatus)) {
             throw new Exception("Status informado é idêntico");
+        }
+        if (statusPedido.equals(PedidoVendaStatus.EM_TRANSPORTE.getDescricao())) {
+            atualizarEstoque(pedido.getItensPedido(), false);
+        }
+        if (statusPedido.equals(PedidoVendaStatus.PEDIDO_CANCELADO.getDescricao())) {
+            atualizarEstoque(pedido.getItensPedido(), true);
         }
 
         pedido.setStatus(novoStatus);
@@ -109,4 +129,20 @@ public class PedidoVendaService {
         return pedidoSalvo.getId();
     }
 
+    public void cancelarPedido (Integer pedidoId) throws Exception {
+        PedidoVenda pedido = PedidoVendaValidator.validate(pedidoId);
+
+        if (pedido.getStatus().equals(PedidoVendaStatus.PEDIDO_CANCELADO)) {
+            throw new Exception("Pedido já foi cancelado");
+        }
+
+        PedidoVendaStatus novoStatus = PedidoVendaStatus.PEDIDO_CANCELADO;
+
+        if (pedido.getStatus().equals(PedidoVendaStatus.EM_TRANSPORTE)) {
+            atualizarEstoque(pedido.getItensPedido(), true);
+        }
+
+        pedido.setStatus(novoStatus);
+        repository.save(pedido);
+    }
 }

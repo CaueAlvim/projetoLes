@@ -13,8 +13,9 @@ public enum PedidoVendaStatus {
     EM_TROCA(6, "EM TROCA"),
     TROCADO(7, "TROCADO"),
     TROCA_AUTORIZADA(8, "TROCA AUTORIZADA"),
-    PEDIDO_CANCELADO(9, "PEDIDO CANCELADO"),
-    AGUARDANDO_ENVIO(10, "AGUARDANDO ENVIO");
+    TROCA_RECUSADA(9, "TROCA RECUSADA"),
+    PEDIDO_CANCELADO(10, "PEDIDO CANCELADO"),
+    AGUARDANDO_ENVIO(11, "AGUARDANDO ENVIO");
 
     private final Integer codigo;
     private final String descricao;

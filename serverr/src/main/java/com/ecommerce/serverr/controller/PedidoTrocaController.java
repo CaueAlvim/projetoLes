@@ -4,6 +4,7 @@ import com.ecommerce.serverr.filter.PedidoVendaFilter;
 import com.ecommerce.serverr.form.PedidoTrocaForm;
 import com.ecommerce.serverr.service.PedidoTrocaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,8 @@ public class PedidoTrocaController {
             Integer pedidoId = service.salvar(form);
             return ResponseEntity.ok().body(pedidoId);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\": \"" + e.getMessage() + "\"}");
         }
     }
 
@@ -46,7 +48,8 @@ public class PedidoTrocaController {
             service.alterarStatus(id, status);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\": \"" + e.getMessage() + "\"}");
         }
     }
 }

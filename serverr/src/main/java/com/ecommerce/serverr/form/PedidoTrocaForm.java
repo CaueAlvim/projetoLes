@@ -22,7 +22,7 @@ public class PedidoTrocaForm {
     public PedidoTroca transform() {
         return PedidoTroca.builder()
                 .dataSolicitacao(LocalDate.now())
-                .status(PedidoVendaStatus.AGUARDANDO_ENVIO)
+                .status(PedidoVendaStatus.EM_TROCA)
                 .quantidadeUnitaria(quantidadeSolicitada)
                 .build();
     }
