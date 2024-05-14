@@ -1,6 +1,6 @@
 describe('adm visualiza e deleta algum usuario', () => {
     it('passes', () => {
-        cy.viewport(1280, 720)
+        cy.viewport(1366, 768)
         cy.visit('http://localhost:5173/')
         cy.contains('button', 'Login').click();
 

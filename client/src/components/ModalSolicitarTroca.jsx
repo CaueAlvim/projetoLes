@@ -117,6 +117,7 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido, pedidoSelecionad
                                         >
                                             <TableCell padding="checkbox">
                                                 <Checkbox
+                                                    id={`cypress-modal-troca-checkbox-item-${item?.id}`}
                                                     color="primary"
                                                     onClick={() => handleCheckItem(item?.id)}
                                                     checked={isItemSelected}
@@ -131,12 +132,13 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido, pedidoSelecionad
                                             </TableCell>
                                             <TableCell align="center">
                                                 <TextField
-                                                    id="outlined-number"
                                                     type="number"
+                                                    id={`cypress-modal-troca-textfield-item-${item?.id}`}
                                                     value={quantidadeTroca[item?.id] || 0}
                                                     inputProps={{
                                                         min: 0,
                                                         max: item.quantidadeUnitaria
+                                                        
                                                     }}
                                                     InputLabelProps={{
                                                         shrink: true,

@@ -118,7 +118,7 @@ function UserPedidos({ isAdmin }) {
 
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleAlterarStatus}>OK</Button>
+                    <Button id='cypress-modal-status-pedido-venda-ok' onClick={handleAlterarStatus}>OK</Button>
                 </DialogActions>
             </Dialog>
 
@@ -220,7 +220,7 @@ function UserPedidos({ isAdmin }) {
                                         </TableCell>
                                         <TableCell align="right">
                                         {!isAdmin && (
-                                            <Button id='cypress-moreoptionpedidos' onClick={() => handleOpenDialogDevolucao(pedido)} variant='outlined'>
+                                            <Button id='cypress-user-solicitar-troca' onClick={() => handleOpenDialogDevolucao(pedido)} variant='outlined'>
                                                 Troca
                                             </Button>
                                         )}
@@ -228,12 +228,12 @@ function UserPedidos({ isAdmin }) {
 
                                         <TableCell align="right">
                                             {isAdmin && (
-                                                <Button id='cypress-adm-alterar-status-pedido' variant='outlined' onClick={() => handleOpenDialogStatus(pedido)}>
+                                                <Button id={`cypress-adm-alterar-status-pedido-${pedido?.id}`} variant='outlined' onClick={() => handleOpenDialogStatus(pedido)}>
                                                     Alterar Status
                                                 </Button>
                                             )}
                                             {!isAdmin && (
-                                                <Button id='cypress-cancelar-pedido' variant='outlined' onClick={() => handleCancelarPedido(pedido)}>
+                                                <Button id={`cypress-cancelar-pedido-${pedido?.id}`} variant='outlined' onClick={() => handleCancelarPedido(pedido)}>
                                                     Cancelar
                                                 </Button>
                                             )}

@@ -31,7 +31,7 @@ function UserDrawer({ isAdmin, setPage }) {
                             <ListItemIcon>
                                 <KeyboardReturnIcon />
                             </ListItemIcon>
-                            <ListItemText id='cypress-usuaripedidos' primary={'Pedidos de troca'} />
+                            <ListItemText id='cypress-usuariopedidos-troca' primary={'Pedidos de troca'} />
                         </ListItemButton>
                     </ListItem>
                     {isAdmin && (

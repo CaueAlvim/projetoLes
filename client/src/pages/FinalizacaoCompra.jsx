@@ -26,7 +26,7 @@ function FinalizacaoCompra() {
                         <Typography color="black" variant="h4" sx={{ mt: 5 }}>
                             {'Seu pedido de número ' + pedidoCodigo + ' foi feito com sucesso!'}
                         </Typography>
-                        <Button variant="outlined" onClick={() => navigate('/')} sx={{ mt: 5, height: '5rem' }}>Voltar à tela inicial</Button>
+                        <Button id="cypress-go-back-index" variant="outlined" onClick={() => navigate('/')} sx={{ mt: 5, height: '5rem' }}>Voltar à tela inicial</Button>
                     </Box>
 
                 </Grid>

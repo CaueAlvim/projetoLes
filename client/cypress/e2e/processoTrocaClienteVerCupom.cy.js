@@ -1,10 +1,10 @@
-describe('editar cliente', () => {
+describe('cliente ver cupom gerado apos troca', () => {
     it('passes', () => {
       cy.viewport(1366, 768)
       cy.visit('http://localhost:5173/')
       cy.contains('button', 'Login').click();
   
-      cy.get('#email').type('cypress@gmail.com');
+      cy.get('#email').type('teste');
       cy.get('#password').type('1234');
 
       cy.wait(1000);
@@ -19,13 +19,12 @@ describe('editar cliente', () => {
       
       cy.get('#cypress-minhacontaedit').click();
 
-      cy.wait(2000);
-
-      cy.get('#name').clear().type('Cypress alterar');
-      cy.get('#cypress-editarcliente').click();
-      cy.get('#cypress-minhacontaedit').click();
+      cy.wait(1000);
+      
+      cy.get('#cypress-minhaconta-cupom-tab').click();
 
       cy.wait(3000);
+      
       cy.get('#cypress-logout').click();
 
     })

@@ -59,6 +59,7 @@ function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsad
                                                     <TableCell align="right">
                                                         <TextField
                                                             autoFocus
+                                                            id={`cypress-finalizar-pagamento-modal-${cartao?.cardFieldId}`}
                                                             value={cartao?.cartaoValor}
                                                             onChange={(event) => handleChangeCardsValue(cartao.cardFieldId, event.target.value)}
                                                             InputProps={{
@@ -163,7 +164,7 @@ function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsad
 
                         <Grid item xs={5} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
 
-                            <Button id="cypress-login" onClick={handleFinalizarCompra}>Finalizar Compra</Button>
+                            <Button id="cypress-modal-finalizar-compra" onClick={handleFinalizarCompra}>Finalizar Compra</Button>
                         </Grid>
                     </Grid>
                 </DialogActions>

@@ -37,8 +37,12 @@ public class PedidoTrocaService {
     public Integer salvar(PedidoTrocaForm form) throws Exception {
         PedidoVenda pedidoVenda = PedidoVendaValidator.validate(form.getPedidoVendaId());
 
+
+
         if(!pedidoVenda.getStatus().equals(PedidoVendaStatus.ENTREGUE)){
             throw new Exception("Pedido ainda não entregue ou já cancelado");
+        } else if(form.getQuantidadeSolicitada().equals(0)) {
+            throw new Exception("A quantidade informada não pode ser zero");
         }
 
         Livro livro = LivroValidator.validate(form.getLivroId());

@@ -55,7 +55,7 @@ function AdmPedidosTroca({ isAdmin }) {
             });
         }
     }
-
+console.log(listaPedidos);
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
@@ -68,7 +68,7 @@ function AdmPedidosTroca({ isAdmin }) {
                 <DialogTitle>{"Deseja alterar status deste pedido?"}</DialogTitle>
                 <DialogContent>
                     <Select
-                        id="alterarStatus"
+                        id="alterarStatusTroca"
                         value={alterarStatus.status}
                         fullWidth
                         onChange={(e) => {
@@ -193,7 +193,7 @@ function AdmPedidosTroca({ isAdmin }) {
                                         </TableCell>
 
                                         <TableCell align="right">
-                                            <Button id='cypress-adm-alterar-status-pedido-troca' variant='outlined' onClick={() => handleOpenDialogStatus(pedido)}>
+                                            <Button id={`cypress-adm-alterar-status-pedido-troca-${pedido?.id}`} variant='outlined' onClick={() => handleOpenDialogStatus(pedido)}>
                                                 Alterar Status
                                             </Button>
 

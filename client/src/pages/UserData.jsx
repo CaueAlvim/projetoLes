@@ -96,7 +96,7 @@ function UserData() {
                         <Button variant="outlined" onClick={() => setCurrentTab('CARTOES')} endIcon={<CreditCardIcon />} sx={{ height: '3rem', mx: 1, width: '94%' }}>Cartões</Button>
                     </Grid>
                     <Grid item xs={3}>
-                        <Button variant="outlined" onClick={() => setCurrentTab('CUPONS')} endIcon={<ReceiptIcon />} sx={{ height: '3rem', mx: 1, width: '94%' }}>Cupons</Button>
+                        <Button id='cypress-minhaconta-cupom-tab' variant="outlined" onClick={() => setCurrentTab('CUPONS')} endIcon={<ReceiptIcon />} sx={{ height: '3rem', mx: 1, width: '94%' }}>Cupons</Button>
                     </Grid>
                 </Grid>
                 {currentTab === 'DADOS' && (

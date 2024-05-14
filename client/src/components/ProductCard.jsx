@@ -29,7 +29,7 @@ function ProductCard({ product, setCarrinho }) {
         const response = await CarrinhoService.adicionarItemCarrinho({ livroId: product?.id, clienteId: storedUser?.id }).then(
           async () => setCarrinho(await CarrinhoService.carregarCarrinho(storedUser?.id))
         );
-        toast.success("Item adicionado com sucesso!", { 
+        toast.success("Item adicionado com sucesso!", {
           toastId: 'item-add-cart-success',
           autoClose: 1500,
           position: toast.POSITION.BOTTOM_LEFT
@@ -51,6 +51,7 @@ function ProductCard({ product, setCarrinho }) {
           R$ {product?.valor}
         </Typography>
         <Button
+          id='cypress-add-item-cart'
           variant="contained"
           color="primary"
           sx={{ marginTop: '0.5rem' }}

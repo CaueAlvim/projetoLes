@@ -13,7 +13,10 @@ import com.ecommerce.serverr.validator.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,12 +26,14 @@ public class PedidoVendaService {
     private final EstoqueLivroRepository estoqueLivroRepository;
     private final PedidoVendaItemRepository itemRepository;
     private final PedidoVendaCartaoRepository pedidoVendaCartaoRepository;
+    private final CupomRepository cupomRepository;
     @Autowired
-    public PedidoVendaService(PedidoVendaRepository repository, EstoqueLivroRepository estoqueLivroRepository, PedidoVendaItemRepository itemRepository, PedidoVendaCartaoRepository pedidoVendaCartaoRepository) {
+    public PedidoVendaService(PedidoVendaRepository repository, EstoqueLivroRepository estoqueLivroRepository, PedidoVendaItemRepository itemRepository, PedidoVendaCartaoRepository pedidoVendaCartaoRepository, CupomRepository cupomRepository) {
         this.repository = repository;
         this.estoqueLivroRepository = estoqueLivroRepository;
         this.itemRepository = itemRepository;
         this.pedidoVendaCartaoRepository = pedidoVendaCartaoRepository;
+        this.cupomRepository = cupomRepository;
     }
 
     private void atualizarEstoque (List<PedidoVendaItem> itensPedido, boolean aumento) {
@@ -148,5 +153,28 @@ public class PedidoVendaService {
 
         pedido.setStatus(novoStatus);
         repository.save(pedido);
+
+        Cupom cupom = Cupom.builder()
+                .cliente(pedido.getCliente())
+                .isTroca(true)
+                .dataGeracao(LocalDate.now())
+                .valor(pedido.getValorPedido())
+                .isAtivo(true)
+                .codigo(gerarCupomAleatorio())
+                .build();
+        cupomRepository.save(cupom);
+    }
+
+    public String gerarCupomAleatorio() {
+        StringBuilder builder = new StringBuilder();
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new SecureRandom();
+
+        for (int i = 0; i < 6; i++) {
+            int index = random.nextInt(characters.length());
+            builder.append(characters.charAt(index));
+        }
+
+        return builder.toString();
     }
 }

@@ -88,7 +88,7 @@ function CheckoutForm({ listaCartoes, listaEnderecos, user, cardFields, setCardF
                                 <InputLabel id={'labelSelecionarCartao'}>SELECIONAR CARTÃO</InputLabel>
                                 <Select
                                     labelId={'labelSelecionarCartao'}
-                                    id={'selecionarCartaoCheckout'}
+                                    id={`selecionarCartaoCheckout-${field.cardFieldId}`}
                                     value={field.cartaoInfo || ''}
                                     onChange={(event) => handleCardChange(field.cardFieldId, event.target.value)}
                                 >
@@ -117,7 +117,7 @@ function CheckoutForm({ listaCartoes, listaEnderecos, user, cardFields, setCardF
                     )}
 
                     <Grid item xs={12} sx={{ display: 'flex', alignContent: 'center', mb: 1 }}>
-                        <Button fullWidth onClick={handleAddCardField}>
+                        <Button fullWidth id='cypress-checkout-add-card' onClick={handleAddCardField}>
                             <AddIcon />
                         </Button>
                     </Grid>
