@@ -3,11 +3,12 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Table
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PedidoTrocaService from '../services/PedidoTrocaService'
+import PedidoVendaService from '../services/PedidoVendaService';
 
 function ModalSolicitarTroca({ open, setOpen, listaItensPedido, pedidoSelecionadoId }) {
     const [itensSelecionados, setItensSelecionados] = useState([]);
     const [quantidadeTroca, setQuantidadeTroca] = useState({});
-    
+
     const handleSolicitarPedido = async () => {
         try {
             const pedidoForm = itensSelecionados.map(id => ({
@@ -15,19 +16,27 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido, pedidoSelecionad
                 livroId: id,
                 quantidadeSolicitada: parseInt(quantidadeTroca[id]) || 0
             }));
-            
+
             for (const item of pedidoForm) {
                 await PedidoTrocaService.solicitarPedido(item);
             }
 
+            await PedidoVendaService.alterarStatus(pedidoSelecionadoId, 'EM TROCA');
             toast.success("Solicitação confluída!", {
-                toastId: 'register-success',
+                toastId: 'trade-success',
                 autoClose: 2000,
                 position: toast.POSITION.BOTTOM_LEFT
             });
+            setTimeout(() => {
+                window.location.reload();
+            }, 2500);
             setOpen();
         } catch (error) {
-            console.error("Falha na solicitação:", error);
+            toast.error(error.toString(), {
+                toastId: 'trade-fail',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
         }
     }
 
@@ -43,9 +52,9 @@ function ModalSolicitarTroca({ open, setOpen, listaItensPedido, pedidoSelecionad
         const isAlreadySelected = itensSelecionados?.includes(id);
 
         const newSelected = isAlreadySelected ?
-                            itensSelecionados?.filter(item => item !== id)
-                            :
-                            [...(itensSelecionados || []), id];
+            itensSelecionados?.filter(item => item !== id)
+            :
+            [...(itensSelecionados || []), id];
 
         setItensSelecionados(newSelected);
     };

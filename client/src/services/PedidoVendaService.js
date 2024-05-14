@@ -41,4 +41,18 @@ export default class PedidoVendaService {
         }
         return response.status;
     }
+
+    static async cancelarPedido(id) {
+        const response = await fetch(`http://localhost:5000/pedidovenda/cancelar/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
+        }
+        return response.status;
+    }
 }

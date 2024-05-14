@@ -41,14 +41,18 @@ function AdmPedidosTroca({ isAdmin }) {
         try {
             await PedidoTrocaService.alterarStatus(pedidoSelecionado?.id, alterarStatus?.status);
             toast.success("Status do pedido alterado com sucesso!", {
-                toastId: 'status-pedido-alterar-success',
+                toastId: 'status-troca-alterar-success',
                 autoClose: 2000,
                 position: toast.POSITION.BOTTOM_LEFT
             });
             handlePesquisar();
             handleCloseDialogStatus();
         } catch (error) {
-            console.error(error)
+            toast.error(error.toString(), {
+                toastId: 'status-troca-alterar-error',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
         }
     }
 
@@ -72,8 +76,8 @@ function AdmPedidosTroca({ isAdmin }) {
                         }}
                     >
                         {!isAdmin && <MenuItem value={'EM TRANSPORTE'}>EM TRANSPORTE</MenuItem>}
-                        {isAdmin && <MenuItem value={'ENTREGUE'}>ENTREGUE</MenuItem>}
                         {isAdmin && <MenuItem value={'EM TROCA'}>EM TROCA</MenuItem>}
+                        {isAdmin && <MenuItem value={'TROCA RECUSADA'}>TROCA RECUSADA</MenuItem>}
                         {isAdmin && <MenuItem value={'TROCA AUTORIZADA'}>TROCA AUTORIZADA</MenuItem>}
                         {isAdmin && <MenuItem value={'TROCADO'}>TROCADO</MenuItem>}
                     </Select>

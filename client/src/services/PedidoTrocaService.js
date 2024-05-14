@@ -8,7 +8,8 @@ export default class PedidoTrocaService {
             body: JSON.stringify(form),
         });
         if (!response.ok) {
-            throw new Error('Erro');
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
         }
         const pedidoTrocaId = await response.json();
         return pedidoTrocaId;
@@ -37,7 +38,8 @@ export default class PedidoTrocaService {
             },
         });
         if (!response.ok) {
-            throw new Error('Erro ao alterar status');
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message);
         }
         return response.status;
     }

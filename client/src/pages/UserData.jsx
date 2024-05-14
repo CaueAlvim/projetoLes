@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import moment from 'moment';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -8,6 +7,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import ClienteService from '../services/ClienteService';
 import CartaoService from '../services/CartaoService';
 import EnderecoService from '../services/EnderecoService';
+import CupomService from '../services/CupomService';
+import { ListAlt } from '@mui/icons-material';
 
 function UserData() {
     const [currentTab, setCurrentTab] = useState('DADOS');
@@ -15,6 +16,7 @@ function UserData() {
     const [userData, setUserData] = useState({ nome: '', email: '', senha: '', cpf: '', genero: '', telefone: '' });
     const [addressesData, setAddressesData] = useState({ nome: '', email: '', senha: '', cpf: '', genero: '', telefone: '' });
     const [cardsData, setCardsData] = useState({ nome: '', email: '', senha: '', cpf: '', genero: '', telefone: '' });
+    const [listaCuponsTroca, setListaCuponsTroca] = useState([]);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -24,6 +26,7 @@ function UserData() {
             fetchUser(userObject);
             fetchAddresses(userObject);
             fetchCards(userObject);
+            fetchCoupons(userObject);
         }
     }, [currentTab === 'DADOS']);
 
@@ -54,8 +57,15 @@ function UserData() {
         }
     }
 
-    console.log('cards', cardsData);
-    console.log('addresses', addressesData);
+
+    const fetchCoupons = async (userToFetch) => {
+        try {
+            setListaCuponsTroca(await CupomService.carregarPorCliente(userToFetch.id));
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     const handleAlterarUsuario = async () => {
         try {
             await ClienteService.edit(userData);
@@ -65,15 +75,6 @@ function UserData() {
             console.error("Falha nas alterações:", error);
         }
     }
-
-    const cupomTable = [
-        { nome: 'AAAAAAAAAAAAAAAAAA', valor: 159.10 },
-        { nome: 'BBBBBBBBBBBBBBBBBB', valor: 237 },
-        { nome: 'CCCCCCCCCCCCCCCCCC', valor: 262 },
-        { nome: 'FFFFFFFFFFFFFFFFFF', valor: 356 },
-        { nome: 'DDDDDDDDDDDDDDDDDD', valor: 305 },
-        { nome: 'EEEEEEEEEEEEEEEEEE', valor: 356 },
-    ];
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
@@ -276,13 +277,13 @@ function UserData() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {cupomTable.map((row) => (
-                                        <TableRow key={row.nome}>
+                                    {listaCuponsTroca.map((cupom) => (
+                                        <TableRow key={cupom?.cupomId}>
                                             <TableCell component="th" scope="row">
-                                                {row.nome}
+                                                {cupom?.codigoCupom}
                                             </TableCell>
                                             <TableCell align="right">
-                                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(row.valor)}
+                                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cupom?.valor)}
                                             </TableCell>
                                         </TableRow>
                                     ))}

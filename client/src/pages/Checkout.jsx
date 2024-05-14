@@ -56,17 +56,17 @@ function Checkout() {
         setListaEnderecos(await EnderecoService.carregarPorCliente(id));
     }
 
-    const prepararFinalizacao = () => {
-        if (cardFields[0]?.cartaoInfo === null) {
-            toast.warning("Selecione pelo menos um cartão ou utilize um cupom de troca!", {
-                toastId: 'coupon-validated-warning',
-                autoClose: 2000,
-                position: toast.POSITION.BOTTOM_LEFT
-            });
-        } else {
-            setModalFinalizacaoOpen(true);
-        }
-    }
+    // const prepararFinalizacao = () => {
+    //     if (cardFields[0]?.cartaoInfo === null) {
+    //         toast.warning("Selecione pelo menos um cartão ou utilize um cupom de troca!", {
+    //             toastId: 'coupon-validated-warning',
+    //             autoClose: 2000,
+    //             position: toast.POSITION.BOTTOM_LEFT
+    //         });
+    //     } else {
+    //         setModalFinalizacaoOpen(true);
+    //     }
+    // }
 
     const handleFinalizarCompra = async () => {
         try {
@@ -163,7 +163,7 @@ function Checkout() {
                                 quantidadeProdutos={carrinho?.quantidadeTotalItens}
                                 valorTotal={carrinho?.valorTotalItens}
                                 valorFrete={valorFrete}
-                                handleFinalizarCompra={prepararFinalizacao}
+                                handleFinalizarCompra={() => setModalFinalizacaoOpen(true)}
                                 cupom={cupom}
                                 setCupom={setCupom}
                                 validarCupom={validarCupom}

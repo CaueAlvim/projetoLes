@@ -62,6 +62,25 @@ function UserPedidos({ isAdmin }) {
         }
     }
 
+    const handleCancelarPedido = async (pedido) => {
+        try {
+            await PedidoVendaService.cancelarPedido(pedido?.id);
+            toast.success("Pedido cancelado com sucesso!", {
+                toastId: 'pedido-cancelar-success',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+            handlePesquisar();
+            handleCloseDialogStatus();
+        } catch (error) {
+            toast.error(error.toString(), {
+                toastId: 'pedido-cancelar-error',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+        }
+    }
+
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
@@ -88,7 +107,6 @@ function UserPedidos({ isAdmin }) {
                             setAlterarStatus(prevState => ({ ...prevState, status: e.target.value }));
                         }}
                     >
-                        <MenuItem value={'EM PROCESSAMENTO'}>EM PROCESSAMENTO</MenuItem>
                         <MenuItem value={'APROVADO'}>APROVADO</MenuItem>
                         <MenuItem value={'REPROVADO'}>REPROVADO</MenuItem>
                         <MenuItem value={'EM TRANSPORTE'}>EM TRANSPORTE</MenuItem>
@@ -212,6 +230,11 @@ function UserPedidos({ isAdmin }) {
                                             {isAdmin && (
                                                 <Button id='cypress-adm-alterar-status-pedido' variant='outlined' onClick={() => handleOpenDialogStatus(pedido)}>
                                                     Alterar Status
+                                                </Button>
+                                            )}
+                                            {!isAdmin && (
+                                                <Button id='cypress-cancelar-pedido' variant='outlined' onClick={() => handleCancelarPedido(pedido)}>
+                                                    Cancelar
                                                 </Button>
                                             )}
                                         </TableCell>
