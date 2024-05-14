@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react';
 import { Box, Button, Container, Divider, Grid, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import moment from 'moment';
 import ClienteService from '../services/ClienteService';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AdmUsuarios() {
     const [filter, setFilter] = useState({ nome: '', dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
     const [listaUsuarios, setListaUsuarios] = useState([]);
     const [userSelecionadoCodigo, setUserSelecionadoCodigo] = useState();
-
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [openMenu, setOpenMenu] = useState(false);
 
     useEffect(() => {
         fetchUsuarios();
@@ -25,19 +23,17 @@ function AdmUsuarios() {
         }
     }
 
-    const handleClickMoreOptions = (event, itemSelecinado) => {
-        setAnchorEl(event.currentTarget);
-        setUserSelecionadoCodigo(itemSelecinado.id);
-        setOpenMenu(true);
-    }
-
-    const handleInativarUser = async () => {
+    const handleInativarUser = async (userSelecionado) => {
         try {
-            await ClienteService.inativar(userSelecionadoCodigo);
-            window.location.reload();
-            console.log("Usuário excluido com sucesso!");
+            await ClienteService.inativar(userSelecionado?.id);
+            toast.success("Usuário inativado com sucesso!", {
+                toastId: 'inactivate-user-success',
+                autoClose: 2000,
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+            fetchUsuarios();
         } catch (error) {
-            console.error("Falha ao excluir:", error);
+            console.error("Falha ao inativar:", error);
         }
     }
 
@@ -102,34 +98,27 @@ function AdmUsuarios() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {listaUsuarios.map((row) => (
-                                        <TableRow key={row.cpf}>
+                                    {listaUsuarios.map((user) => (
+                                        <TableRow key={user?.cpf}>
                                             <TableCell component="th" scope="row">
-                                                {row.nome}
+                                                {user?.nome}
                                             </TableCell>
                                             <TableCell component="th" scope="row">
-                                                {row.email}
+                                                {user?.email}
                                             </TableCell>
                                             <TableCell component="th" scope="row">
-                                                {row.cpf}
+                                                {user?.cpf}
                                             </TableCell>
                                             <TableCell component="th" scope="row">
-                                                {row.telefone}
+                                                {user?.telefone}
                                             </TableCell>
                                             <TableCell align="right">
-                                                {moment(row.dataCadastro).format('DD/MM/YYYY')}
+                                                {moment(user?.dataCadastro).format('DD/MM/YYYY')}
                                             </TableCell>
                                             <TableCell align="right">
-                                                <Button id='cypress-moreoptionsusers' onClick={(e) => handleClickMoreOptions(e, row)} sx={{ height: '.5rem' }}>
-                                                    <MoreHorizIcon />
+                                                <Button id='cypress-adm-users-inactivate' variant='outlined' onClick={() => handleInativarUser(user)}>
+                                                    Inativar
                                                 </Button>
-                                                <Menu
-                                                    anchorEl={anchorEl}
-                                                    open={openMenu}
-                                                    onClose={() => setOpenMenu(false)}
-                                                >
-                                                    <MenuItem id='cypress-moreoptionsusersdelete' onClick={handleInativarUser}>Inativar Usuário</MenuItem>
-                                                </Menu>
                                             </TableCell>
                                         </TableRow>
                                     ))}

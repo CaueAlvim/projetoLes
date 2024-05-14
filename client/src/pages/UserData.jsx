@@ -77,7 +77,7 @@ function UserData() {
     }
 
     return (
-        <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
+        <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center', height: '100vh' }}>
             <Paper elevation={3} sx={{ width: '75%', height: 'auto' }}>
                 <Typography variant="h4" sx={{ ml: 2, mt: 2 }}>
                     Minha conta
