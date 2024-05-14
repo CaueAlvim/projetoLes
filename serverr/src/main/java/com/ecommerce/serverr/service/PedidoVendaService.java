@@ -116,6 +116,10 @@ public class PedidoVendaService {
             pedidoVenda.setValorPedido(valorPedidoFinal + pedidoVenda.getValorFrete());
         }
 
+        if(pedidoVenda.getValorPedido() < 0d){
+            pedidoVenda.setValorPedido(0d);
+        }
+
         PedidoVenda pedidoSalvo = repository.save(pedidoVenda);
 
         pedidoVendaCartaoRepository.saveAll(pedidoVenda.getCartoes());
