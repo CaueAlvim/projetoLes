@@ -1,4 +1,4 @@
-describe('adm atualizar gerar cupom troca', () => {
+describe('cliente alterar status para enviar troca', () => {
     it('passes', () => {
         cy.viewport(1366, 768)
         cy.visit('http://localhost:5173/')

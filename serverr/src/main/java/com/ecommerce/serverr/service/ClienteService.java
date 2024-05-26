@@ -9,6 +9,7 @@ import com.ecommerce.serverr.repository.CarrinhoRepository;
 import com.ecommerce.serverr.repository.ClienteRepository;
 import com.ecommerce.serverr.validator.ClienteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -27,14 +28,19 @@ public class ClienteService {
         this.carrinhoRepository = carrinhoRepository;
     }
 
+    private String encryptPassword(String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(password);
+    }
+
     public Cliente findById(Integer id) throws Exception{
-        Cliente cliente = ClienteValidator.validate(id);
-        return cliente;
+        return ClienteValidator.validate(id);
     }
 
     public Cliente login(ClienteForm form) throws Exception {
         Cliente clienteLogin = ClienteValidator.validatePorEmail(form.getEmail());
-        if (clienteLogin.getSenha().equals(form.getSenha())){
+
+        if (clienteLogin.getSenha().equals(encryptPassword(form.getSenha()))){
             return clienteLogin;
         } else {
             throw new Exception("Senha incorreta");
@@ -44,6 +50,7 @@ public class ClienteService {
     public Integer salvar(ClienteForm form) throws Exception {
         Cliente cliente = form.transform();
         cliente.setDataCadastro(LocalDate.now());
+        cliente.setSenha(encryptPassword(form.getSenha()));
         Cliente clienteSalvo = repository.save(cliente);
 
         carrinhoRepository.save(Carrinho.builder().cliente(clienteSalvo).build());
