@@ -23,6 +23,9 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
         } else if (registerFields.senha !== registerFields.senhaConfirmar) {
             setFieldsError('As senhas não coincidem.');
             return;
+        } else if (!isPasswordStrong(registerFields.senha)) {
+            setFieldsError('A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número.');
+            return;
         }
 
         handleCadastrar().then(() => {
@@ -58,6 +61,14 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
     const handleTelefoneChange = (event) => {
         const formattedPhone = formatarTelefone(event.target.value);
         setRegisterFields({ ...registerFields, telefone: formattedPhone });
+    };
+
+    const isStrongPassword = (senha) => {
+        const hasUpperCase = /[A-Z]/.test(senha);
+        const hasLowerCase = /[a-z]/.test(senha);
+        const hasNumber = /\d/.test(senha);
+
+        return hasUpperCase && hasLowerCase && hasNumber;
     };
 
     return (

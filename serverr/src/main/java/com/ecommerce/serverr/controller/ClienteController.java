@@ -44,7 +44,7 @@ public class ClienteController {
         try {
             return ResponseEntity.ok().body(service.login(form));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
     @CrossOrigin
