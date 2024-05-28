@@ -53,27 +53,15 @@ describe('processo de compra', () => {
             .parent()
             .click()
             .get('ul > li')
+            .contains('1111.1111.1111.1111')
             .first()
-            .click();
-
-        cy.get('#cypress-checkout-add-card').click();
-
-        cy.wait(1500);
-
-        cy.get('#selecionarCartaoCheckout-2')
-            .parent()
-            .click()
-            .get('ul > li')
-            .eq(1)
             .click();
 
         cy.contains('button', 'Finalizar Compra').click();
 
         cy.wait(1000);
 
-        cy.get('#cypress-finalizar-pagamento-modal-1').clear().type('139.00');
-
-        cy.get('#cypress-finalizar-pagamento-modal-2').clear().type('10.97');
+        cy.get('#cypress-finalizar-pagamento-modal-1').clear().type('149.97');
 
         cy.wait(500);
 

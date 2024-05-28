@@ -18,7 +18,7 @@ describe('adm atualizar gerar cupom troca', () => {
 
         cy.wait(1000);
 
-        cy.get('#cypress-adm-alterar-status-pedido-troca-1').click();
+        cy.get('#cypress-adm-alterar-status-pedido-troca-2').click();
 
         cy.wait(1000);
 

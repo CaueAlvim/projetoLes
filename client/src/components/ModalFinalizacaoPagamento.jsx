@@ -12,7 +12,7 @@ function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsad
         setCartoesUsados(cartoesUsados.map(cartao =>
             cartao.cardFieldId === id ? { ...cartao, cartaoValor: value } : cartao));
     }
-
+    console.log(cartoesUsados);
     return (
         <>
             <Dialog
@@ -31,51 +31,56 @@ function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsad
                 </DialogTitle>
                 <DialogContent>
                     <Box sx={{ width: '34rem' }}>
-                        <Grid container sx={{ display: 'flex', alignItems: 'center', mb: 3, mt: 4, width: '100%', borderBottom: '2px solid #e5e5e5' }}>
-                            <Grid item xs={12}>
-                                <Typography variant={"h6"} sx={{ ml: 1 }}>
-                                    Cartões selecionados:
-                                </Typography>
-                            </Grid>
+                        <Grid container sx={{ display: 'flex', alignItems: 'center', mb: 3, mt: 4, width: '100%' }}>
 
-                            <Grid item xs={12} >
-                                <TableContainer sx={{ maxHeight: '20rem' }}>
-                                    <Table size="small">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell />
-                                                <TableCell align="right">Valor a pagar com este cartão</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {cartoesUsados.map((cartao) => (
-                                                <TableRow
-                                                    key={cartao?.cardFieldId}
-                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                                >
-                                                    <TableCell component="th" scope="row">
-                                                        {cartao?.cartaoInfo}
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        <TextField
-                                                            autoFocus
-                                                            id={`cypress-finalizar-pagamento-modal-${cartao?.cardFieldId}`}
-                                                            value={cartao?.cartaoValor}
-                                                            onChange={(event) => handleChangeCardsValue(cartao.cardFieldId, event.target.value)}
-                                                            InputProps={{
-                                                                startAdornment: 'R$',
-                                                                inputProps: {
-                                                                    style: { textAlign: 'right' },
-                                                                },
-                                                            }}
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </Grid>
+                            {(cartoesUsados.length > 1 || cartoesUsados[0].cartaoInfo !== null) && (
+                                <>
+                                    <Grid item xs={12}>
+                                        <Typography variant={"h6"} sx={{ ml: 1 }}>
+                                            Cartões selecionados:
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12} >
+                                        <TableContainer sx={{ maxHeight: '20rem' }}>
+                                            <Table size="small">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell />
+                                                        <TableCell align="right">Valor a pagar com este cartão</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {cartoesUsados.map((cartao) => (
+                                                        <TableRow
+                                                            key={cartao?.cardFieldId}
+                                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                        >
+                                                            <TableCell component="th" scope="row">
+                                                                {cartao?.cartaoInfo}
+                                                            </TableCell>
+                                                            <TableCell align="right">
+                                                                <TextField
+                                                                    autoFocus
+                                                                    id={`cypress-finalizar-pagamento-modal-${cartao?.cardFieldId}`}
+                                                                    value={cartao?.cartaoValor}
+                                                                    onChange={(event) => handleChangeCardsValue(cartao.cardFieldId, event.target.value)}
+                                                                    InputProps={{
+                                                                        startAdornment: 'R$',
+                                                                        inputProps: {
+                                                                            style: { textAlign: 'right' },
+                                                                        },
+                                                                    }}
+                                                                />
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </Grid>
+                                </>
+                            )}
                         </Grid>
 
                         {listaCupons.length > 0 && (

@@ -40,7 +40,7 @@ function ModalCadastroCartao({ open, setOpen, newUserId, isCheckout }) {
 
     function formatarCartao(numeroCartao) {
         numeroCartao = numeroCartao.replace(/\D/g, '');
-        numeroCartao = numeroCartao.replace(/(\d{4})(?=\d)/g, '$1-');
+        numeroCartao = numeroCartao.replace(/(\d{4})(?=\d)/g, '$1.');
         return numeroCartao;
     }
 

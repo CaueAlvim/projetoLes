@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -27,13 +28,16 @@ public class PedidoVendaService {
     private final PedidoVendaItemRepository itemRepository;
     private final PedidoVendaCartaoRepository pedidoVendaCartaoRepository;
     private final CupomRepository cupomRepository;
+    private final CarrinhoItemRepository carrinhoItemRepository;
+
     @Autowired
-    public PedidoVendaService(PedidoVendaRepository repository, EstoqueLivroRepository estoqueLivroRepository, PedidoVendaItemRepository itemRepository, PedidoVendaCartaoRepository pedidoVendaCartaoRepository, CupomRepository cupomRepository) {
+    public PedidoVendaService(PedidoVendaRepository repository, EstoqueLivroRepository estoqueLivroRepository, PedidoVendaItemRepository itemRepository, PedidoVendaCartaoRepository pedidoVendaCartaoRepository, CupomRepository cupomRepository, CarrinhoItemRepository carrinhoItemRepository) {
         this.repository = repository;
         this.estoqueLivroRepository = estoqueLivroRepository;
         this.itemRepository = itemRepository;
         this.pedidoVendaCartaoRepository = pedidoVendaCartaoRepository;
         this.cupomRepository = cupomRepository;
+        this.carrinhoItemRepository = carrinhoItemRepository;
     }
 
     private void atualizarEstoque (List<PedidoVendaItem> itensPedido, boolean aumento) {
@@ -134,6 +138,8 @@ public class PedidoVendaService {
                 .valorUnitario(item.getValor())
                 .pedidoVenda(pedidoSalvo)
                 .estoqueLivro(estoqueLivroRepository.findFirstByLivro_Id(item.getLivroId())).build()).collect(Collectors.toList()));
+
+        carrinhoItemRepository.deleteAll(pedidoSalvo.getCliente().getCarrinho().getItensCarrinho());
 
         return pedidoSalvo.getId();
     }

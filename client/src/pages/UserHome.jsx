@@ -41,7 +41,7 @@ function UserHome() {
             <Grid sx={{ overflow: 'scroll', height: '100vh' }}>
                 <AppBar sx={{ backgroundColor: '#559bbc', position: 'relative', height: '4.2rem' }} >
                     <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
+                        <img id='cypress-user-home' src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
                         <Button id='cypress-logout' color="inherit" onClick={() => {
                             localStorage.clear();
                             navigate('/');

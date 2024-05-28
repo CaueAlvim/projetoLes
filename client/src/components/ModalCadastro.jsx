@@ -63,7 +63,7 @@ function ModalCadastro({ open, setOpen, setOpenModalLogin, setOpenCadastroEndere
         setRegisterFields({ ...registerFields, telefone: formattedPhone });
     };
 
-    const isStrongPassword = (senha) => {
+    const isPasswordStrong = (senha) => {
         const hasUpperCase = /[A-Z]/.test(senha);
         const hasLowerCase = /[a-z]/.test(senha);
         const hasNumber = /\d/.test(senha);

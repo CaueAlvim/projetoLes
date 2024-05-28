@@ -14,8 +14,8 @@ describe('cadastro de cliente', () => {
     cy.get('#generoCadastro').parent().click().get('ul > li[data-value="Masculino"]').click();
     cy.get('#telefone').type('(11)93456-7890');
     cy.get('#email').type('cypress@gmail.com');
-    cy.get('#password').type('1234');
-    cy.get('#passwordConfirm').type('1234');
+    cy.get('#password').type('Ca1234');
+    cy.get('#passwordConfirm').type('Ca1234');
     cy.contains('button', 'Continuar Cadastro').click();
 
     cy.wait(1000);

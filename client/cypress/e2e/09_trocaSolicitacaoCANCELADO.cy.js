@@ -18,7 +18,7 @@ describe('cliente visualiza e solicita troca ou devolucao', () => {
 
         cy.wait(1000);
 
-        cy.get('#cypress-user-solicitar-troca').click();
+        cy.get('#cypress-user-solicitar-troca-1').click();
 
         cy.get('#cypress-modal-troca-checkbox-item-1').click();
 

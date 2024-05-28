@@ -220,7 +220,7 @@ function UserPedidos({ isAdmin }) {
                                         </TableCell>
                                         <TableCell align="right">
                                         {!isAdmin && (
-                                            <Button id='cypress-user-solicitar-troca' onClick={() => handleOpenDialogDevolucao(pedido)} variant='outlined'>
+                                            <Button id={`cypress-user-solicitar-troca-${pedido?.id}`} onClick={() => handleOpenDialogDevolucao(pedido)} variant='outlined'>
                                                 Troca
                                             </Button>
                                         )}

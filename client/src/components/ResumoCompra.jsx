@@ -74,12 +74,13 @@ function ResumoCompra({ isCheckout, quantidadeProdutos, valorTotal, valorFrete, 
 
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mr: '1rem', width: '100%', mt: .5 }}>
                             <TextField
+                                id='cypress-checkout-cupom-field'
                                 size="small"
                                 variant="outlined"
                                 sx={{ width: '90%' }}
                                 value={cupom}
                                 onChange={(event) => setCupom(event.target.value)} />
-                            <Button onClick={validarCupom} variant="contained" color="primary" size="small" >
+                            <Button id='cypress-checkout-cupom-ok-button' onClick={validarCupom} variant="contained" color="primary" size="small" >
                                 OK
                             </Button>
                         </Box>

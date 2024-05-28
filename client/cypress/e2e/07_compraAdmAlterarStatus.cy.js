@@ -18,7 +18,7 @@ describe('adm atualizar status pedido', () => {
 
         cy.wait(1000);
 
-        cy.get('#cypress-adm-alterar-status-pedido-1').click();
+        cy.get('#cypress-adm-alterar-status-pedido-2').click();
 
         cy.wait(1000);
 
@@ -32,7 +32,7 @@ describe('adm atualizar status pedido', () => {
 
         cy.wait(1000);
 
-        cy.get('#cypress-adm-alterar-status-pedido-1').click();
+        cy.get('#cypress-adm-alterar-status-pedido-2').click();
 
         cy.get('#alterarStatus')
             .parent()
@@ -44,7 +44,7 @@ describe('adm atualizar status pedido', () => {
 
         cy.wait(1000);
 
-        cy.get('#cypress-adm-alterar-status-pedido-1').click();
+        cy.get('#cypress-adm-alterar-status-pedido-2').click();
 
         cy.get('#alterarStatus')
             .parent()

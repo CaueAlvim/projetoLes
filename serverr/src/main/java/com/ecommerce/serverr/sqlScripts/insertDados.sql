@@ -5,8 +5,8 @@ DELETE FROM `cupom`;
 DELETE FROM `cliente`;
 
 INSERT INTO `cliente` (`id`, `cpf`, `data_cadastro`, `data_nascimento`, `email`, `genero`, `is_admin`, `nome`, `senha`, `telefone`, `is_ativo`)
-VALUES (1, '123.123.123-12', '2024-04-07', '2000-01-01', 'admin', 'Masculino', b'1', 'Caue', '1234', '(11)91234-5678', 1),
-       (2, '456.456.456-45', '2024-04-22', '2000-01-01', 'teste', 'Masculino', b'0', 'Teste', '1234', '(11)94567-8910', 1);
+VALUES (1, '123.123.123-12', '2024-04-07', '2000-01-01', 'admin', 'Masculino', b'1', 'Caue', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '(11)91234-5678', 1),
+       (2, '456.456.456-45', '2024-04-22', '2000-01-01', 'teste', 'Masculino', b'0', 'Teste', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', '(11)94567-8910', 1);
 
 INSERT INTO `endereco` (`id`, `bairro`, `cep`, `cidade`, `estado`, `numero`, `observacoes`, `pais`, `rua`, `tipo_logradouro`, `tipo_residencia`, `cliente_id`, `is_entrega`, `is_cobranca`)
 VALUES (1, 'Bairro 1', '01234-142', 'Mogi das Cruzes', 'SP', '123', 'obsteste', 'Brasil', 'Rua 1', 'logradouro', 'Casa', 1, b'1', b'1'),

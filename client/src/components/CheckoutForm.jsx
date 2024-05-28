@@ -46,12 +46,12 @@ function CheckoutForm({ listaCartoes, listaEnderecos, user, cardFields, setCardF
 
             <Grid container sx={{ my: 2 }}>
                 <Grid item xs={6} sx={{ paddingLeft: 1 }} >
-                    <Button fullWidth variant='outlined' onClick={() => setModalEnderecoOpen(true)} >
+                    <Button fullWidth variant='outlined' id='cypress-checkout-cadastrar-endereco' onClick={() => setModalEnderecoOpen(true)} >
                         Novo endereço <AddLocationIcon />
                     </Button>
                 </Grid>
                 <Grid item xs={6} sx={{ paddingLeft: 1, paddingRight: 1 }} >
-                    <Button fullWidth variant='outlined' onClick={() => setModalCartaoOpen(true)} >
+                    <Button fullWidth variant='outlined' id='cypress-checkout-cadastrar-cartao' onClick={() => setModalCartaoOpen(true)} >
                         Novo cartão <AddCardIcon />
                     </Button>
                 </Grid>

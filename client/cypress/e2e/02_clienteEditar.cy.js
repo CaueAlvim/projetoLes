@@ -5,7 +5,7 @@ describe('editar cliente', () => {
       cy.contains('button', 'Login').click();
   
       cy.get('#email').type('cypress@gmail.com');
-      cy.get('#password').type('1234');
+      cy.get('#password').type('Ca1234');
 
       cy.wait(1000);
 

@@ -74,7 +74,7 @@ function Checkout() {
 
             const form = {
                 clienteId: user?.id,
-                enderecoId: parseInt(enderecoField.slice(0, 1)),
+                enderecoId: parseInt(enderecoField.slice(0)),
                 valorPedido: carrinho?.valorTotalItens,
                 valorFrete: valorFrete,
                 cuponsIds: listaCupons.map(cupom => cupom?.cupomId),
@@ -84,7 +84,7 @@ function Checkout() {
                     valor: item?.valor
                 })),
                 cartoes: cardFields.map(card => ({
-                    cartaoId: parseInt(card.cartaoInfo.slice(0, 1)),
+                    cartaoId: parseInt(card.cartaoInfo.slice(0)),
                     valorPago: parseFloat(card.cartaoValor).toFixed(2)
                 }))
             };
