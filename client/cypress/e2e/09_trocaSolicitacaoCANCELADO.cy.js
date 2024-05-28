@@ -1,4 +1,4 @@
-describe('cliente visualiza e solicita troca ou devolucao', () => {
+describe('cliente visualiza e solicita troca mas pedido e cancelado', () => {
     it('passes', () => {
         cy.viewport(1366, 768)
         cy.visit('http://localhost:5173/')
