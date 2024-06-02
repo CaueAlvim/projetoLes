@@ -3,6 +3,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 function UserDrawer({ isAdmin, setPage }) {
 
@@ -41,6 +42,16 @@ function UserDrawer({ isAdmin, setPage }) {
                                     <SupervisorAccountIcon />
                                 </ListItemIcon>
                                 <ListItemText id='cypress-usuarioscadastrados' primary={'Usuários cadastrados'} />
+                            </ListItemButton>
+                        </ListItem>
+                    )}
+                    {isAdmin && (
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={() => setPage('DASHBOARDS')}>
+                                <ListItemIcon>
+                                    <TrendingUpIcon />
+                                </ListItemIcon>
+                                <ListItemText id='cypress-dashboards' primary={'Dashboards'} />
                             </ListItemButton>
                         </ListItem>
                     )}

@@ -55,7 +55,7 @@ function AdmPedidosTroca({ isAdmin }) {
             });
         }
     }
-console.log(listaPedidos);
+
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
 
