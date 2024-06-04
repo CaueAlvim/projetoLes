@@ -46,11 +46,11 @@ public class DashboardRepositoryImpl implements DashboardRepository {
         List<Object[]> results = query.getResultList();
 
         List<DashboardDTO> dtos = results.stream()
-                .map(row -> DashboardDTO.builder()
-                        .titulo((String) row[0])
-                        .valorTotalPedidoItem((Double) row[1])
-                        .itemQuantidade((BigDecimal) row[2])
-                        .dataPedido(((java.sql.Date) row[3]).toLocalDate())
+                .map(coluna -> DashboardDTO.builder()
+                        .titulo((String) coluna[0])
+                        .valorTotalPedidoItem((Double) coluna[1])
+                        .itemQuantidade((BigDecimal) coluna[2])
+                        .dataPedido(((java.sql.Date) coluna[3]).toLocalDate())
                         .build())
                 .collect(Collectors.toList());
 
