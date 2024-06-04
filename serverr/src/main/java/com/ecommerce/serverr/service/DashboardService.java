@@ -1,11 +1,13 @@
 package com.ecommerce.serverr.service;
 
+import com.ecommerce.serverr.dto.DashboardDTO;
 import com.ecommerce.serverr.filter.DashboardFilter;
 import com.ecommerce.serverr.repository.implementations.DashboardRepositoryImpl;
 import com.ecommerce.serverr.validator.LivroValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Service
 public class DashboardService {
@@ -15,12 +17,11 @@ public class DashboardService {
         this.repository = repository;
     }
 
-    public Boolean pesquisar(DashboardFilter filter) throws Exception {
-        if(filter.getProdutoId() != null){
+    public List<DashboardDTO> pesquisar(DashboardFilter filter) throws Exception {
+        if(!filter.getProdutoId().equals(0)){
             LivroValidator.validate(filter.getProdutoId());
         }
 
-        repository.findVendasPorPeriodoEProduto(filter.getProdutoId(), filter.getDataInicial(), filter.getDataFinal());
-        return false;
+        return repository.findVendasPorPeriodoEProduto(filter.getProdutoId(), filter.getDataInicial(), filter.getDataFinal());
     }
 }

@@ -18,14 +18,15 @@ function Carousel({ setBgColor }) {
     };
 
     return (
-        // autoplay={{
-        //     delay: 4000,
-        // }}
+       
         <Swiper
             spaceBetween={30}
             centeredSlides={true}
             pagination={{
                 clickable: true,
+            }}
+            autoplay={{
+                delay: 4000,
             }}
             navigation={true}
             allowTouchMove={true}

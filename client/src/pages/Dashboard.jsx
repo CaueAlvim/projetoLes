@@ -1,61 +1,27 @@
 import { Box, Button, Container, Divider, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import DashboardService from "../services/DashboardService";
+import LivroService from "../services/LivroService";
 
 function Dashboard() {
-    const [filter, setFilter] = useState({ produtoId: 1, dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
+    const [filter, setFilter] = useState({ produtoId: 0, dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
     const [listaVendasPeriodosProduto, setListaVendasPeriodosProduto] = useState([]);
+    const [listaLivrosSelect, setListaLivrosSelect] = useState([]);
 
-    // useEffect(() => {
-    //     handlePesquisar();
-    // }, []);
+    useEffect(() => {
+        fetchLivros();
+    }, []);
 
-    const data = [
-        {
-            "name": "Page A",
-            "uv": 4000,
-            "pv": 2400,
-            "amt": 2400
-        },
-        {
-            "name": "Page B",
-            "uv": 3000,
-            "pv": 1398,
-            "amt": 2210
-        },
-        {
-            "name": "Page C",
-            "uv": 2000,
-            "pv": 9800,
-            "amt": 2290
-        },
-        {
-            "name": "Page D",
-            "uv": 2780,
-            "pv": 3908,
-            "amt": 2000
-        },
-        {
-            "name": "Page E",
-            "uv": 1890,
-            "pv": 4800,
-            "amt": 2181
-        },
-        {
-            "name": "Page F",
-            "uv": 2390,
-            "pv": 3800,
-            "amt": 2500
-        },
-        {
-            "name": "Page G",
-            "uv": 3490,
-            "pv": 4300,
-            "amt": 2100
+    const fetchLivros = async () => {
+        try {
+            const listaLivros = await LivroService.searchAll(filter);
+            setListaLivrosSelect(listaLivros);
+        } catch (error) {
+            console.error(error)
         }
-    ]
+    }
 
     const handlePesquisar = async () => {
         try {
@@ -65,8 +31,15 @@ function Dashboard() {
             console.error(error)
         }
     }
-    
-    // console.log('receba', listaVendasPeriodosProduto);
+
+    const chartData = listaVendasPeriodosProduto.map(item => ({
+        data: new Date(moment(item?.dataPedido).format('YYYY, MM, DD')),
+        valorTotal: item?.valorTotalPedidoItem
+    }));
+
+    const dateFormatter = date => {
+        return moment(date).format('DD/MM/YY');
+    };
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
@@ -84,15 +57,15 @@ function Dashboard() {
                                 <InputLabel id="dashboard-livro">Produtos</InputLabel>
                                 <Select
                                     labelId="dashboard-livro"
-                                    value={[]}
-                                    onChange={() => 1}
+                                    value={filter.produtoId}
+                                    onChange={(event) => setFilter({ ...filter, produtoId: event.target.value })}
                                 >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    <MenuItem value={0}>TODOS</MenuItem>
+                                    {listaLivrosSelect?.map((livro) => (
+                                        <MenuItem key={livro.id} value={livro.id}>
+                                            {livro.id} - {livro.titulo}
+                                        </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -121,28 +94,25 @@ function Dashboard() {
                     <Button id='cypress-dashboard-search' onClick={handlePesquisar} sx={{ mb: 1, mr: 5 }}>Pesquisar</Button>
                 </Box>
 
-                <Divider variant='fullWidth' sx={{ width: '97%', margin: 'auto', marginBottom: '2rem' }} />
+                <Divider variant='fullWidth' sx={{ width: '97%', margin: 'auto', marginBottom: '1rem' }} />
 
                 <Box sx={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer>
-                        <LineChart width={730} height={250} data={data}
-                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                        <AreaChart
+                            data={chartData}
+                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                        >
                             <XAxis
-                                dataKey="date"
-                                hasTick
-                                scale="time"
-                                // tickFormatter={dateFormatter}
-                                type="number"
-                                // domain={domain}
-                                // ticks={ticks}
+                                dataKey="data"
+                                type="category"
+                                tickFormatter={dateFormatter}
                             />
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" />
                             <Tooltip />
                             <Legend verticalAlign="top" height={36} />
-                            <Line name="pv of pages" type="monotone" dataKey="pv" stroke="#8884d8" />
-                            <Line name="uv of pages" type="monotone" dataKey="uv" stroke="#82ca9d" />
-                        </LineChart>
+                            <Area name="Total Vendido" type="monotone" dataKey="valorTotal" stroke="#bc7655" fill="#ce8659" />
+                        </AreaChart>
                     </ResponsiveContainer>
                 </Box>
             </Paper>
