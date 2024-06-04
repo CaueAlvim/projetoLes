@@ -18,7 +18,7 @@ public class DashboardController {
     }
     @CrossOrigin
     @PostMapping("/")
-    public ResponseEntity<Object> pesquisar(DashboardFilter filter) {
+    public ResponseEntity<Object> pesquisar(@RequestBody DashboardFilter filter) {
         try {
             return ResponseEntity.ok().body(service.pesquisar(filter));
         } catch (Exception e) {

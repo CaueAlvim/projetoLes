@@ -1,6 +1,5 @@
 package com.ecommerce.serverr.repository;
 
-import com.ecommerce.serverr.model.Cartao;
 import com.ecommerce.serverr.model.Cupom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

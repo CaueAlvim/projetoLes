@@ -2,17 +2,14 @@ import { Box, Button, Container, Divider, FormControl, Grid, InputLabel, MenuIte
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import DashboardService from "../services/DashboardService";
 
 function Dashboard() {
-    const [openMenu, setOpenMenu] = useState(false);
-    const [openStatusDialog, setOpenStatusDialog] = useState(false);
-    const [pedidoSelecionado, setPedidoSelecionado] = useState();
-    const [alterarStatus, setAlterarStatus] = useState({ id: 0, status: '' });
-    const [filter, setFilter] = useState({ produto: 0, dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
-    const [listaPedidos, setListaPedidos] = useState([]);
+    const [filter, setFilter] = useState({ produtoId: 1, dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
+    const [listaVendasPeriodosProduto, setListaVendasPeriodosProduto] = useState([]);
 
     // useEffect(() => {
-    //     console.log();
+    //     handlePesquisar();
     // }, []);
 
     const data = [
@@ -59,6 +56,17 @@ function Dashboard() {
             "amt": 2100
         }
     ]
+
+    const handlePesquisar = async () => {
+        try {
+            const lista = await DashboardService.pesquisar(filter);
+            setListaVendasPeriodosProduto(lista);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    
+    // console.log('receba', listaVendasPeriodosProduto);
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
@@ -110,7 +118,7 @@ function Dashboard() {
                 </Container>
 
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
-                    <Button id='cypress-dashboard-search' onClick={() => 1} sx={{ mb: 1, mr: 5 }}>Pesquisar</Button>
+                    <Button id='cypress-dashboard-search' onClick={handlePesquisar} sx={{ mb: 1, mr: 5 }}>Pesquisar</Button>
                 </Box>
 
                 <Divider variant='fullWidth' sx={{ width: '97%', margin: 'auto', marginBottom: '2rem' }} />
@@ -119,7 +127,15 @@ function Dashboard() {
                     <ResponsiveContainer>
                         <LineChart width={730} height={250} data={data}
                             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                            <XAxis dataKey="name" />
+                            <XAxis
+                                dataKey="date"
+                                hasTick
+                                scale="time"
+                                // tickFormatter={dateFormatter}
+                                type="number"
+                                // domain={domain}
+                                // ticks={ticks}
+                            />
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" />
                             <Tooltip />

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 public class DashboardFilter {
-    private Integer livroId;
+    private Integer produtoId;
     private LocalDate dataInicial;
     private LocalDate dataFinal;
 }
