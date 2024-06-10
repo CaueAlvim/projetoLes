@@ -18,10 +18,12 @@ public class DashboardService {
     }
 
     public List<DashboardDTO> pesquisar(DashboardFilter filter) throws Exception {
-        if(!filter.getProdutoId().equals(0)){
-            LivroValidator.validate(filter.getProdutoId());
+        if(!filter.getProdutosId().isEmpty()){
+            for(Integer id : filter.getProdutosId()){
+                LivroValidator.validate(id);
+            }
         }
 
-        return repository.findVendasPorPeriodoEProduto(filter.getProdutoId(), filter.getDataInicial(), filter.getDataFinal());
+        return repository.findVendasPorPeriodoEProduto(filter.getProdutosId(), filter.getDataInicial(), filter.getDataFinal());
     }
 }

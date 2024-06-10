@@ -1,14 +1,15 @@
-import { Box, Button, Container, Divider, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Divider, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography, Chip, OutlinedInput } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { Area, AreaChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import DashboardService from "../services/DashboardService";
 import LivroService from "../services/LivroService";
 
 function Dashboard() {
-    const [filter, setFilter] = useState({ produtoId: 0, dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
-    const [listaVendasPeriodosProduto, setListaVendasPeriodosProduto] = useState([]);
     const [listaLivrosSelect, setListaLivrosSelect] = useState([]);
+    const [filter, setFilter] = useState({ produtos: [], dataInicial: '2024-01-01', dataFinal: moment().format('YYYY-MM-DD') });
+    const [listaVendasPeriodosProduto, setListaVendasPeriodosProduto] = useState([]);
+    const chartData = {};
 
     useEffect(() => {
         fetchLivros();
@@ -25,21 +26,48 @@ function Dashboard() {
 
     const handlePesquisar = async () => {
         try {
-            const lista = await DashboardService.pesquisar(filter);
+            const lista = await DashboardService.pesquisar({ ...filter, produtosId: filter?.produtos?.map(livro => livro.id) });
             setListaVendasPeriodosProduto(lista);
         } catch (error) {
             console.error(error)
         }
     }
 
-    const chartData = listaVendasPeriodosProduto.map(item => ({
-        data: new Date(moment(item?.dataPedido).format('YYYY, MM, DD')),
-        valorTotal: item?.valorTotalPedidoItem
-    }));
-
     const dateFormatter = date => {
         return moment(date).format('DD/MM/YY');
     };
+
+    const handleChangeFilterProducts = (event) => {
+        const {
+            target: { value },
+        } = event;
+
+        setFilter({
+            ...filter,
+            produtos: typeof value === 'string' ? value.split(',') : value,
+        });
+    };
+
+    listaVendasPeriodosProduto.forEach(item => {
+        const key = moment(item.dataPedido).format('YYYY-MM-DD');
+        if (!chartData[key]) {
+            chartData[key] = {};
+        }
+        if (!chartData[key][item.titulo]) {
+            chartData[key][item.titulo] = 0;
+        }
+        chartData[key][item.titulo] += item.itemQuantidade;
+    });
+
+    const chartDataArray = Object.keys(chartData).map(date => {
+        const entry = { data: date };
+        Object.keys(chartData[date]).forEach(book => {
+            entry[book] = chartData[date][book];
+        });
+        return entry;
+    });
+
+    console.log(chartDataArray);
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
@@ -57,13 +85,21 @@ function Dashboard() {
                                 <InputLabel id="dashboard-livro">Produtos</InputLabel>
                                 <Select
                                     labelId="dashboard-livro"
-                                    value={filter.produtoId}
-                                    onChange={(event) => setFilter({ ...filter, produtoId: event.target.value })}
+                                    value={filter.produtos}
+                                    multiple
+                                    onChange={handleChangeFilterProducts}
+                                    renderValue={(selected) => (
+                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                            {selected.map((livro) => (
+                                                <Chip key={livro.id} label={livro.titulo} />
+                                            ))}
+                                        </Box>
+                                    )}
+
                                 >
-                                    <MenuItem value={0}>TODOS</MenuItem>
                                     {listaLivrosSelect?.map((livro) => (
-                                        <MenuItem key={livro.id} value={livro.id}>
-                                            {livro.id} - {livro.titulo}
+                                        <MenuItem key={livro.id} value={livro}>
+                                            {livro.titulo}
                                         </MenuItem>
                                     ))}
                                 </Select>
@@ -98,8 +134,8 @@ function Dashboard() {
 
                 <Box sx={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer>
-                        <AreaChart
-                            data={chartData}
+                        <LineChart
+                            data={chartDataArray}
                             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                         >
                             <XAxis
@@ -110,9 +146,10 @@ function Dashboard() {
                             <YAxis />
                             <CartesianGrid strokeDasharray="3 3" />
                             <Tooltip />
-                            <Legend verticalAlign="top" height={36} />
-                            <Area name="Total Vendido" type="monotone" dataKey="valorTotal" stroke="#bc7655" fill="#ce8659" />
-                        </AreaChart>
+                            {listaLivrosSelect.map((livro, index) => (
+                                <Line key={index} type="monotone" dataKey={livro.titulo} connectNulls stroke={`#${((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0')}`} />
+                            ))}
+                        </LineChart>
                     </ResponsiveContainer>
                 </Box>
             </Paper>

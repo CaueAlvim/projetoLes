@@ -19,28 +19,23 @@ public class DashboardRepositoryImpl implements DashboardRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<DashboardDTO> findVendasPorPeriodoEProduto(Integer livroId, LocalDate dataInicial, LocalDate dataFinal) {
-        String buscarTodos = livroId.equals(0) ? "l.id IS NOT NULL" : "l.id = :livroId";
+    public List<DashboardDTO> findVendasPorPeriodoEProduto(List<Integer> livrosId, LocalDate dataInicial, LocalDate dataFinal) {
 
-        String queryString = "SELECT GROUP_CONCAT(DISTINCT l.titulo), " +
-                "SUM(pitem.valor_unitario * pitem.quantidade_unitaria) as valorTotalPedidoItem, " +
-                "SUM(pitem.quantidade_unitaria) as itemQuantidade," +
+        String queryString = "SELECT DISTINCT l.titulo, " +
+                "(pitem.valor_unitario * pitem.quantidade_unitaria) as valorTotalPedidoItem, " +
+                "pitem.quantidade_unitaria as itemQuantidade," +
                 "p.data_pedido as dataPedido " +
                 "FROM pedido_venda p " +
                 "LEFT JOIN pedido_venda_item pitem ON p.id = pitem.pedido_venda_id " +
                 "LEFT JOIN estoque_livro el ON pitem.estoque_livro_id = el.id " +
                 "LEFT JOIN livro l ON el.livro_id = l.id " +
-                "WHERE " + buscarTodos + " AND (p.data_pedido BETWEEN :dataInicial AND :dataFinal)" +
-                "GROUP BY p.data_pedido " +
+                "WHERE l.id IN :livrosId AND (p.data_pedido BETWEEN :dataInicial AND :dataFinal)" +
                 "ORDER BY p.data_pedido";
 
         Query query = entityManager.createNativeQuery(queryString)
                 .setParameter("dataInicial", dataInicial)
-                .setParameter("dataFinal", dataFinal);
-
-        if (!livroId.equals(0)) {
-            query.setParameter("livroId", livroId);
-        }
+                .setParameter("dataFinal", dataFinal)
+                .setParameter("livrosId", livrosId);
 
         @SuppressWarnings("unchecked")
         List<Object[]> results = query.getResultList();
@@ -49,7 +44,7 @@ public class DashboardRepositoryImpl implements DashboardRepository {
                 .map(coluna -> DashboardDTO.builder()
                         .titulo((String) coluna[0])
                         .valorTotalPedidoItem((Double) coluna[1])
-                        .itemQuantidade((BigDecimal) coluna[2])
+                        .itemQuantidade((Integer) coluna[2])
                         .dataPedido(((java.sql.Date) coluna[3]).toLocalDate())
                         .build())
                 .collect(Collectors.toList());

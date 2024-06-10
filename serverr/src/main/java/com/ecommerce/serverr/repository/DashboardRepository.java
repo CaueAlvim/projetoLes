@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface DashboardRepository {
 
-    List<DashboardDTO> findVendasPorPeriodoEProduto(Integer livroId, LocalDate dataInicial, LocalDate dataFinal);
+    List<DashboardDTO> findVendasPorPeriodoEProduto(List<Integer> livroId, LocalDate dataInicial, LocalDate dataFinal);
 }
