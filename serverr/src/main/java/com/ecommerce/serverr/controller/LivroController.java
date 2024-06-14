@@ -23,4 +23,14 @@ public class LivroController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @CrossOrigin
+    @GetMapping("/recomendacao/{id}")
+    public ResponseEntity<Object> recomendarLivros(@PathVariable("id") Integer clienteId) {
+        try {
+            return ResponseEntity.ok(service.recomendar(clienteId));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

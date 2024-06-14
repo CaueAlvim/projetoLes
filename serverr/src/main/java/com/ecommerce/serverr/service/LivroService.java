@@ -3,10 +3,12 @@ package com.ecommerce.serverr.service;
 import com.ecommerce.serverr.dto.LivroDTO;
 import com.ecommerce.serverr.model.Livro;
 import com.ecommerce.serverr.repository.LivroRepository;
+import com.ecommerce.serverr.validator.ClienteValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +37,15 @@ public class LivroService {
                 .valor(l.getEstoque().getValor())
                 .caminhoImagem(l.getCaminhoImagem())
                 .build()).collect(Collectors.toList());
+    }
+
+    public List<LivroDTO> recomendar(Integer clienteId) throws Exception {
+        ClienteValidator.validate(clienteId);
+
+        StringJoiner joiner = new StringJoiner(", ");
+        repository.buscarLivrosCompradosPorCliente(clienteId).forEach(joiner::add);
+
+        return null;
     }
 
 }
