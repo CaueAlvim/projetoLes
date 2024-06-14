@@ -82,7 +82,7 @@ function UserPedidos({ isAdmin }) {
     }
 
     return (
-        <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center' }}>
+        <Grid container sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f1f1f1', alignItems: 'center', height: '100vh' }}>
 
             <ModalSolicitarTroca
                 open={openDevolucaoDialog}
