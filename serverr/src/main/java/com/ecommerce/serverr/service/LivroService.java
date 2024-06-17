@@ -39,13 +39,17 @@ public class LivroService {
                 .build()).collect(Collectors.toList());
     }
 
-    public List<LivroDTO> recomendar(Integer clienteId) throws Exception {
+    public String recomendar(Integer clienteId) throws Exception {
         ClienteValidator.validate(clienteId);
 
-        StringJoiner joiner = new StringJoiner(", ");
-        repository.buscarLivrosCompradosPorCliente(clienteId).forEach(joiner::add);
+        StringJoiner livrosComprados = new StringJoiner(", ");
+        StringJoiner livrosDisponiveis = new StringJoiner(", ");
 
-        return null;
+        repository.buscarLivrosCompradosPorCliente(clienteId).forEach(livrosComprados::add);
+        repository.buscarLivrosDisponiveis().forEach(livrosDisponiveis::add);
+
+        String recomendacao = AIService.recomendacaoLivrosIa(livrosComprados.toString(), livrosDisponiveis.toString());
+        return recomendacao;
     }
 
 }
