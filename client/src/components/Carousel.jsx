@@ -25,9 +25,6 @@ function Carousel({ setBgColor }) {
             pagination={{
                 clickable: true,
             }}
-            autoplay={{
-                delay: 4000,
-            }}
             navigation={true}
             allowTouchMove={true}
             modules={[Autoplay, Pagination, Navigation]}

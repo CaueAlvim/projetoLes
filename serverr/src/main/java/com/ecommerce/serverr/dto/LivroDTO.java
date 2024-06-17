@@ -26,4 +26,6 @@ public class LivroDTO {
     private Double valor;
 
     private String caminhoImagem;
+
+    private String motivoRecomendacao;
 }

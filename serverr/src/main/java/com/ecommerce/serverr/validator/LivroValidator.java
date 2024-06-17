@@ -16,4 +16,9 @@ public class LivroValidator {
     public static Livro validate(Integer id) throws Exception {
         return repository.findById(id).orElseThrow(() -> new Exception("Livro inválido"));
     }
+
+    public static Livro validatePorTitulo(String titulo) throws Exception {
+        return repository.findFirstByTituloLikeIgnoreCaseAndIsAtivoIsTrue(titulo).orElseThrow(() -> new Exception("Livro inválido"));
+    }
+
 }
