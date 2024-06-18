@@ -1,6 +1,7 @@
 package com.ecommerce.serverr.service;
 
 import com.ecommerce.serverr.dto.ClienteDTO;
+import com.ecommerce.serverr.dto.LoginDTO;
 import com.ecommerce.serverr.filter.ClienteFilter;
 import com.ecommerce.serverr.form.ClienteForm;
 import com.ecommerce.serverr.model.Carrinho;
@@ -49,11 +50,17 @@ public class ClienteService {
         return ClienteValidator.validate(id);
     }
 
-    public Cliente login(ClienteForm form) throws Exception {
+    public LoginDTO login(ClienteForm form) throws Exception {
         Cliente clienteLogin = ClienteValidator.validatePorEmail(form.getEmail());
 
         if (clienteLogin.getSenha().equals(encryptPassword(form.getSenha()))){
-            return clienteLogin;
+            return LoginDTO.builder()
+                    .id(clienteLogin.getId())
+                    .nome(clienteLogin.getNome())
+                    .email(clienteLogin.getEmail())
+                    .admin(clienteLogin.isAdmin())
+                    .temCompras(!repository.temCompras(clienteLogin.getId()).isEmpty())
+                    .build();
         } else {
             throw new Exception("Senha incorreta");
         }

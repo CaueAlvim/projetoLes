@@ -12,7 +12,7 @@ function ModalLogin({ open, setOpen, setOpenModalCadastro }) {
         try {
             const user = await ClienteService.login(loginFields);
             if (user) {
-                localStorage.setItem('user', JSON.stringify({ id: user?.id, nome: user?.nome, email: user?.email, isAdmin: user?.admin }));
+                localStorage.setItem('user', JSON.stringify({ id: user?.id, nome: user?.nome, email: user?.email, isAdmin: user?.admin, temCompras: user?.temCompras }));
                 toast.success("Logado com sucesso!", {
                     toastId: 'login-success',
                     autoClose: 1500,

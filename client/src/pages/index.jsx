@@ -49,7 +49,6 @@ function Index() {
     }
   }
 
-  console.log(listaRecomendacao);
   return (
     <>
       <Grid sx={{ overflow: 'hidden' }}>
@@ -58,7 +57,7 @@ function Index() {
         <Grid container sx={{ overflow: 'scroll', display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 4.2rem)', backgroundColor: backgroundColor, alignItems: 'center' }}>
           <Carousel setBgColor={setBackgroundColor} />
 
-          {user && (
+          {user?.temCompras && (
             <Grid container item xs={12} sx={{ backgroundColor: '#f1f1f1', height: 'auto', width: '90vw', borderRadius: '10px', marginBottom: '.5rem', display: 'flex', flexWrap: 'initial', flexDirection: 'column', overflowX: 'auto' }}>
               {listaRecomendacao.length > 0 ? (
                 <>

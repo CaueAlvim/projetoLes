@@ -19,4 +19,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
                    "AND (c.data_cadastro BETWEEN ?2 AND ?3) AND c.is_admin = 0 AND c.is_ativo = 1 ", nativeQuery = true)
     List<Cliente> pesquisar(String nome, LocalDate dataInicial, LocalDate dataFinal);
 
+    @Query(value = "SELECT id FROM pedido_venda pv WHERE pv.cliente_id = ?1 ", nativeQuery = true)
+    List<Integer> temCompras(Integer clienteId);
 }
