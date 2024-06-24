@@ -1,4 +1,4 @@
-import { Box, Button, Container, Divider, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography, Chip, OutlinedInput } from "@mui/material";
+import { Button, Container, Divider, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography, Chip } from "@mui/material";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -89,11 +89,11 @@ function Dashboard() {
                                     multiple
                                     onChange={handleChangeFilterProducts}
                                     renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        <Grid sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                             {selected.map((livro) => (
                                                 <Chip key={livro.id} label={livro.titulo} />
                                             ))}
-                                        </Box>
+                                        </Grid>
                                     )}
 
                                 >
@@ -126,13 +126,13 @@ function Dashboard() {
                     </Grid>
                 </Container>
 
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
+                <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} >
                     <Button id='cypress-dashboard-search' onClick={handlePesquisar} sx={{ mb: 1, mr: 5 }}>Pesquisar</Button>
-                </Box>
+                </Grid>
 
                 <Divider variant='fullWidth' sx={{ width: '97%', margin: 'auto', marginBottom: '1rem' }} />
 
-                <Box sx={{ width: '100%', height: 400 }}>
+                <Grid sx={{ width: '100%', height: 400 }}>
                     <ResponsiveContainer>
                         <LineChart
                             data={chartDataArray}
@@ -151,7 +151,7 @@ function Dashboard() {
                             ))}
                         </LineChart>
                     </ResponsiveContainer>
-                </Box>
+                </Grid>
             </Paper>
 
         </Grid>

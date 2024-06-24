@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Grid, Table, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, TableBody } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Table, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, TableBody } from "@mui/material";
 
 function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsados, setCartoesUsados, valorFrete, listaCupons, cupomDesconto, handleFinalizarCompra }) {
     const [fieldsError, setFieldsError] = useState(undefined);
@@ -30,7 +30,7 @@ function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsad
                     Pagamento
                 </DialogTitle>
                 <DialogContent>
-                    <Box sx={{ width: '34rem' }}>
+                    <Grid sx={{ width: '34rem' }}>
                         <Grid container sx={{ display: 'flex', alignItems: 'center', mb: 3, mt: 4, width: '100%' }}>
 
                             {(cartoesUsados.length > 1 || cartoesUsados[0].cartaoInfo !== null) && (
@@ -122,28 +122,28 @@ function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsad
                         )}
 
                         {listaCupons?.length > 0 && (
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, width: '100%' }}>
+                            <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5, width: '100%' }}>
                                 <Typography variant={"body1"} sx={{ ml: 1 }}>
                                     Desconto dos cupons de troca:
                                 </Typography>
                                 <Typography variant={"body1"} sx={{ mr: 1 }}>
                                     R${(listaCupons?.reduce((total, cupom) => total + cupom.valor, 0)).toFixed(2)}
                                 </Typography>
-                            </Box>
+                            </Grid>
                         )}
 
                         {cupomDesconto && (
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1, width: '100%' }}>
+                            <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1, width: '100%' }}>
                                 <Typography variant={"body1"} sx={{ ml: 1 }}>
                                     Desconto do cupom promocional:
                                 </Typography>
                                 <Typography variant={"body1"} sx={{ mr: 1 }}>
                                     {cupomDesconto.valor * 100}%
                                 </Typography>
-                            </Box>
+                            </Grid>
                         )}
 
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1, width: '100%' }}>
+                        <Grid sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1, width: '100%' }}>
                             <Typography variant={"h6"} sx={{ ml: 1 }}>
                                 Valor a ser pago:
                             </Typography>
@@ -153,8 +153,8 @@ function ModalFinalizacaoPagamento({ open, setOpen, valorTotalItens, cartoesUsad
                                     0
                                 ).toFixed(2)}
                             </Typography>
-                        </Box>
-                    </Box>
+                        </Grid>
+                    </Grid>
                     {fieldsError && (
                         <Typography color="red" variant="subtitle">
                             {fieldsError}

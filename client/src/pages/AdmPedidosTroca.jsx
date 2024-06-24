@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, Box, Dialog, DialogTitle, DialogContent, Select, MenuItem, DialogActions } from '@mui/material';
+import { Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, Dialog, DialogTitle, DialogContent, Select, MenuItem, DialogActions } from '@mui/material';
 import moment from 'moment';
 import PedidoTrocaService from '../services/PedidoTrocaService';
 
@@ -140,9 +140,9 @@ function AdmPedidosTroca({ isAdmin }) {
                             </Grid>
                         </Container>
 
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
+                        <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} >
                             <Button id='cypress-pedidosearch' onClick={handlePesquisar} sx={{ mb: 2, mr: 5 }}> Pesquisar</Button>
-                        </Box>
+                        </Grid>
 
                         <Divider variant='fullWidth' sx={{ width: '97%', margin: ' auto' }} />
                     </>

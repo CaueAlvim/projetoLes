@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Divider, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -8,7 +8,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 function UserDrawer({ isAdmin, setPage }) {
 
     return (
-        <Box sx={{ bgcolor: 'white', width: '20rem' }}>
+        <Grid sx={{ bgcolor: 'white', width: '20rem' }}>
             <Grid item xs={12}>
                 <List>
                     <ListItem disablePadding>
@@ -60,7 +60,7 @@ function UserDrawer({ isAdmin, setPage }) {
             <Grid item xs={12}>
                 <Divider />
             </Grid>
-        </Box>
+        </Grid>
     )
 }
 

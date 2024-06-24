@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Container, Divider, Grid, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
+import { Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import moment from 'moment';
 import ClienteService from '../services/ClienteService';
 import { toast } from 'react-toastify';
@@ -77,9 +77,9 @@ function AdmUsuarios() {
                     </Grid>
                 </Container>
 
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
+                <Grid sx={{ display: 'flex', justifyContent: 'flex-end' }} >
                     <Button id='cypress-admusersearch' onClick={fetchUsuarios} sx={{ mb: 2, mr: 5 }}> Pesquisar</Button>
-                </Box>
+                </Grid>
 
                 <Divider variant='fullWidth' sx={{ width: '97%', margin: ' auto' }} />
 

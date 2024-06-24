@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Box, Drawer, Grid, Paper, Typography, Button } from "@mui/material";
+import { Drawer, Grid, Paper, Typography, Button } from "@mui/material";
 import { styled } from '@mui/system';
 import ResumoCompra from "./ResumoCompra";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -66,12 +65,12 @@ function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal, 
                                             </Grid>
 
                                             <Grid item xs={7} >
-                                                <Box>
+                                                <Grid>
                                                     <Typography variant="h5" sx={{ ml: '1rem' }}>
                                                         {product?.livroNome}
                                                     </Typography>
 
-                                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <Grid sx={{ display: 'flex', alignItems: 'center' }}>
                                                         <Button variant="text" color="primary" onClick={() => handleAlterarQtd(product?.livroId, false)}>
                                                             <RemoveIcon />
                                                         </Button>
@@ -81,12 +80,12 @@ function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal, 
                                                         <Button variant="text" color="primary" onClick={() => handleAlterarQtd(product?.livroId, true)}>
                                                             <AddIcon />
                                                         </Button>
-                                                    </Box>
+                                                    </Grid>
 
                                                     <Typography variant="h6" sx={{ ml: '1rem', mt: '.6rem' }}>
                                                         Valor: {(product?.valor * product?.quantidade).toFixed(2)}
                                                     </Typography>
-                                                </Box>
+                                                </Grid>
                                             </Grid>
 
                                             <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -112,11 +111,11 @@ function CarrinhoDrawer({ open, setOpen, products, quantidadeTotal, valorTotal, 
                         </Grid>
                     </Grid>
                 ) : (
-                    <Box sx={{ height: '100vh', width: '30rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <Grid sx={{ height: '100vh', width: '30rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Typography variant="h6" sx={{ ml: 2.25 }}>
                             Carrinho vazio <RemoveShoppingCartIcon />
                         </Typography>
-                    </Box>
+                    </Grid>
                 )}
             </Drawer>
         </>

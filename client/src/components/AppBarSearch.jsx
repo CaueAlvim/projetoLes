@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { AppBar, IconButton, Toolbar, Button, Box, Badge } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Button, Badge, Grid } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import ModalLogin from './ModalLogin';
 import ModalCadastroEndereco from './ModalCadastroEndereco';
@@ -94,7 +94,7 @@ function AppBarSearch({ isCheckout, carrinho, setCarrinho }) {
 
           <img src={logo} alt="Logo" style={{ maxHeight: '50px' }} onClick={() => navigate('/')} />
 
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+          <Grid sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -105,7 +105,7 @@ function AppBarSearch({ isCheckout, carrinho, setCarrinho }) {
                 sx={{ width: { xs: '20rem', md: '30rem', lg: '50rem' } }}
               />
             </Search>
-          </Box>
+          </Grid>
 
           {user === undefined ? (
             <Button color="inherit" onClick={() => setOpenModalLogin(true)}>

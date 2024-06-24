@@ -1,10 +1,10 @@
-import { Grid, Box, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 
 function Footer() {
 
     return (
         <>
-            <Box sx={{ width: "100%", height: "auto", backgroundColor: "#559bbc", paddingTop: "1rem",paddingBottom: "1rem", }} >
+            <Grid sx={{ width: "100%", height: "auto", backgroundColor: "#559bbc", paddingTop: "1rem",paddingBottom: "1rem", }} >
                 <Grid container direction="column" alignItems="center">
                     <Grid item xs={12}>
                         <Typography color="black" variant="h5">
@@ -17,7 +17,7 @@ function Footer() {
                         </Typography>
                     </Grid>
                 </Grid>
-            </Box>
+            </Grid>
         </>
     )
 }

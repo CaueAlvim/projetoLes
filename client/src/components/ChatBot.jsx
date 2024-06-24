@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper } from "@mui/material";
+import { Button, Grid, Paper } from "@mui/material";
 import ChatIcon from '@mui/icons-material/Chat';
 import { useState } from "react";
 
@@ -49,9 +49,9 @@ function ChatBot() {
                             ce
                         </Grid>
 
-                        <Box sx={{ height: '10%', bgcolor: 'green' }}>
+                        <Grid sx={{ height: '10%', bgcolor: 'green' }}>
                             ba
-                        </Box>
+                        </Grid>
                     </Paper>
                 )}
         </>

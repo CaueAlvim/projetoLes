@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Grid, Typography, Box } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AppBarSearch from '../components/AppBarSearch';
 import Footer from '../components/Footer';
@@ -139,19 +139,19 @@ function Checkout() {
                     <Grid container item spacing={2} xs={12} md={12} sx={{ height: 'auto', width: '91vw', marginTop: '.5rem' }}>
 
                         <Grid item xs={12} md={8} sx={{ height: 'auto', mt: '.5rem' }}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', height: 'auto', bgcolor: 'white', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)' }}>
-                                <Box sx={{ borderBottom: '1px solid #000', paddingBottom: '10px', width: '100%' }}>
+                            <Grid sx={{ display: 'flex', flexDirection: 'column', height: 'auto', bgcolor: 'white', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)' }}>
+                                <Grid sx={{ borderBottom: '1px solid #000', paddingBottom: '10px', width: '100%' }}>
                                     <Typography variant="h4" sx={{ ml: 1.8, mt: 1.8 }}>
                                         Checkout
                                     </Typography>
-                                </Box>
+                                </Grid>
 
                                 <CheckoutForm
                                     listaCartoes={listaCartoes} listaEnderecos={listaEnderecos} user={user}
                                     cardFields={cardFields} setCardFields={setCardFields}
                                     enderecoField={enderecoField} setEnderecoField={setEnderecoField} />
 
-                            </Box>
+                            </Grid>
 
                             <CheckoutProducts carrinho={carrinho} />
 

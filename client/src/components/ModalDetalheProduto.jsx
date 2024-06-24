@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Dialog, Typography, Grid, AppBar, Toolbar, IconButton, Slide, Card, CardMedia, Box, Divider, Button } from '@mui/material';
+import { Dialog, Typography, Grid, AppBar, Toolbar, IconButton, Slide, Card, CardMedia, Divider, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
@@ -33,7 +33,7 @@ function ModalDetalheProduto({ open, setOpen, product, handleAddCart }) {
                     </Toolbar>
                 </AppBar>
 
-                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Grid sx={{ display: 'flex', justifyContent: 'center' }}>
 
                     <Grid container item xs={12} md={10} sx={{ height: '45rem', width: 'auto', marginTop: '2rem' }}>
 
@@ -84,7 +84,7 @@ function ModalDetalheProduto({ open, setOpen, product, handleAddCart }) {
 
                             <Grid container sx={{ height: 'auto', mb: '2.5rem' }}>
                                 <Grid item xs={6}>
-                                    <Box sx={{ margin: '1.25rem' }}>
+                                    <Grid sx={{ margin: '1.25rem' }}>
                                         <Typography variant="body1">
                                             - Ano: {product?.ano}
                                         </Typography>
@@ -100,10 +100,10 @@ function ModalDetalheProduto({ open, setOpen, product, handleAddCart }) {
                                         <Typography variant="body1">
                                             - Número de páginas: {product?.numeroPaginas}
                                         </Typography>
-                                    </Box>
+                                    </Grid>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Box sx={{ margin: '1.25rem' }}>
+                                    <Grid sx={{ margin: '1.25rem' }}>
                                         <Typography variant="body1">
                                             - Largura: {product?.largura}
                                         </Typography>
@@ -116,11 +116,11 @@ function ModalDetalheProduto({ open, setOpen, product, handleAddCart }) {
                                         <Typography variant="body1">
                                             - Profundidade: {product?.profundidade}
                                         </Typography>
-                                    </Box>
+                                    </Grid>
                                 </Grid>
                             </Grid>
 
-                            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                            <Grid sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                                 <Button
                                     variant="contained"
                                     color="primary"
@@ -133,12 +133,12 @@ function ModalDetalheProduto({ open, setOpen, product, handleAddCart }) {
                                     <AddShoppingCartIcon sx={{ mr: '8px' }} />
                                     ADICIONAR AO CARRINHO
                                 </Button>
-                            </Box>
+                            </Grid>
 
                         </Grid>
 
                     </Grid>
-                </Box>
+                </Grid>
 
             </Dialog>
         </>

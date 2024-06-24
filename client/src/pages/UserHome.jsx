@@ -1,4 +1,4 @@
-import { AppBar, Box, Grid, Toolbar, Button } from '@mui/material';
+import { AppBar, Grid, Toolbar, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import UserDrawer from '../components/UserDrawer';
@@ -54,10 +54,10 @@ function UserHome() {
                     </Toolbar>
                 </AppBar>
 
-                <Box sx={{ display: 'flex', justifyContent: 'center', overflow: 'scroll', height: 'calc(100vh - 9.7rem)' }}>
+                <Grid sx={{ display: 'flex', justifyContent: 'center', overflow: 'scroll', height: 'calc(100vh - 9.7rem)' }}>
                     <UserDrawer isAdmin={user.isAdmin} setPage={setCurrentPage} />
                     {renderPage()}
-                </Box>
+                </Grid>
                 <Footer />
             </Grid>
         </>

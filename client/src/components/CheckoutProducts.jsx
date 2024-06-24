@@ -1,12 +1,12 @@
-import { Typography, Grid, Box } from '@mui/material';
+import { Typography, Grid } from '@mui/material';
 
 function CheckoutProducts({ carrinho }) {
 
     return (
         <>
             {carrinho?.itens && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', height: 'auto', maxHeight: '46vh', bgcolor: 'white', overflowY: 'scroll', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', mt: 2 }}>
-                    <Box sx={{ borderBottom: '1px solid #000', width: '100%' }}>
+                <Grid sx={{ display: 'flex', flexDirection: 'column', height: 'auto', maxHeight: '46vh', bgcolor: 'white', overflowY: 'scroll', borderRadius: '10px', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', mt: 2 }}>
+                    <Grid sx={{ borderBottom: '1px solid #000', width: '100%' }}>
                         <Typography variant="h4" sx={{ ml: 1.8, mt: 1.8, mb: 1 }}>
                             Resumo do pedido
                         </Typography>
@@ -34,11 +34,11 @@ function CheckoutProducts({ carrinho }) {
                             </Grid>
 
                         </Grid>
-                    </Box>
+                    </Grid>
 
                     {carrinho?.itens?.map((product) => (
 
-                        <Box key={product.livroId} >
+                        <Grid key={product.livroId} >
                             <Grid container sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <Grid item xs={2} sx={{ ml: 1, mt: 1 }}>
                                     <img src={`/capas/${product?.caminhoImagem}`} alt={product?.livroNome} style={{ width: '100px', height: '150px', objectFit: 'cover', borderRadius: '7px' }} />
@@ -63,10 +63,10 @@ function CheckoutProducts({ carrinho }) {
                                 </Grid>
 
                             </Grid>
-                        </Box>
+                        </Grid>
 
                     ))}
-                </Box>
+                </Grid>
             )}
         </>
     )

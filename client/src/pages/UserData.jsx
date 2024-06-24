@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Button, Container, Divider, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import HomeIcon from '@mui/icons-material/Home';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -180,11 +180,11 @@ function UserData() {
                                 />
                             </Grid>
                         </Grid>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
+                        <Grid sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
                             <Button id='cypress-editarcliente' variant='contained' onClick={handleAlterarUsuario}>
                                 alterar
                             </Button>
-                        </Box>
+                        </Grid>
 
                     </Container>
                 )}
@@ -221,11 +221,11 @@ function UserData() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
+                        <Grid sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
                             <Button variant='contained' onClick={() => 1}>
                                 adicionar
                             </Button>
-                        </Box>
+                        </Grid>
                     </Container>
                 )}
 
@@ -258,11 +258,11 @@ function UserData() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
+                        <Grid sx={{ display: 'flex', justifyContent: 'flex-end', mt: '2rem' }}>
                             <Button variant='contained' onClick={() => 1}>
                                 adicionar
                             </Button>
-                        </Box>
+                        </Grid>
                     </Container>
                 )}
 
