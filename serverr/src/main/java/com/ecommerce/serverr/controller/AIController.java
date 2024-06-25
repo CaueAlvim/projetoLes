@@ -1,27 +1,29 @@
 package com.ecommerce.serverr.controller;
 
-import com.ecommerce.serverr.service.LivroService;
+import com.ecommerce.serverr.form.ChatForm;
+import com.ecommerce.serverr.service.AIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/livro")
-public class LivroController {
-    private final LivroService service;
+@RequestMapping("/ai")
+public class AIController {
+    private final AIService service;
+
     @Autowired
-    public LivroController( LivroService service ) {
+    public AIController(AIService service) {
         this.service = service;
     }
+
     @CrossOrigin
-    @GetMapping("/")
-    public ResponseEntity<Object> carregar() {
+    @PostMapping("/chat")
+    public ResponseEntity<Object> recomendarLivros(@RequestBody ChatForm form) {
         try {
-            return ResponseEntity.ok(service.pesquisar());
+            return ResponseEntity.ok(service.chat(form));
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-
 }

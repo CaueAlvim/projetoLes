@@ -38,7 +38,7 @@ function UserData() {
             console.error(error)
         }
     }
-
+console.log(cardsData);
     const fetchAddresses = async (userToFetch) => {
         try {
             const fetchedAddresses = await EnderecoService.carregarPorCliente(userToFetch.id);

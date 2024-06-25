@@ -1,8 +1,9 @@
 import { Button, Grid, Paper, TextField, Typography, styled } from "@mui/material";
 import ChatIcon from '@mui/icons-material/Chat';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
+import AIService from "../services/AIService";
 
 const ChatBubble = styled('div')(({ theme, isSender }) => ({
     padding: theme.spacing(1),
@@ -13,11 +14,11 @@ const ChatBubble = styled('div')(({ theme, isSender }) => ({
     backgroundColor: isSender ? '#DCF8C6' : '#EAEAEA',
 }));
 
-function ChatMessage({ message, isSender }) {
+function ChatMessage({ mensagem, isSender }) {
     return (
         <Grid sx={{ display: 'flex', justifyContent: isSender ? 'flex-start' : 'flex-end', marginBottom: '8px' }} >
             <ChatBubble isSender={isSender}>
-                <Typography>{message}</Typography>
+                <Typography>{mensagem}</Typography>
             </ChatBubble>
         </Grid>
     );
@@ -25,11 +26,35 @@ function ChatMessage({ message, isSender }) {
 
 function ChatBot() {
     const [chatOpen, setChatOpen] = useState(false);
-    const [chatMessage, setChatMessage] = useState('');
+    const [chatForm, setChatForm] = useState({ clienteId: 0, mensagem: '' });
+    const [mensagens, setMensagens] = useState([]);
 
-    const mandarMensagem = async (mensagem) => {
-        console.log(mensagem);
+    useEffect(() => {
+        fetchLocalStorage();
+    }, []);
+
+    const fetchLocalStorage = async () => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+            setChatForm({ ...chatForm, clienteId: storedUser?.id });
+        }
     }
+
+    const mandarMensagem = async () => {
+        try {
+            const novaMensagem = {
+                mensagem: chatForm?.mensagem,
+                isSender: true
+            };
+
+            const mensagemRecebida = await AIService.chat(chatForm);
+
+            setMensagens([...mensagens, novaMensagem, mensagemRecebida]);
+            setChatForm({ ...chatForm, mensagem: '' });
+        } catch (error) {
+            console.error('Erro ao enviar mensagem:', error);
+        }
+    };
 
     return (
         <>
@@ -83,14 +108,10 @@ function ChatBot() {
 
                         <Grid container sx={{ height: '80%' }}>
                             <Grid item xs={12} sx={{ height: '95%', overflowY: 'auto', padding: '1rem' }}>
-                                <ChatMessage message='Olá! Como vai?' isSender={true} />
-                                <ChatMessage message='Estou bem, obrigado!' isSender={false} />
-                                <ChatMessage message='Olá! Como vai?' isSender={true} />
-                                <ChatMessage message='Estou bem, obrigado!' isSender={false} />
-                                <ChatMessage message='Olá! Como vai?' isSender={true} />
-                                <ChatMessage message='Estou bem, obrigado!' isSender={false} />
-                                <ChatMessage message='Olá! Como vai?' isSender={true} />
-                                <ChatMessage message='Estou bem, obrigado!' isSender={false} />
+                                <ChatMessage mensagem='Olá eu sou o assistente virtual do ecommerce Mundo dos livros! No que posso ajudar?' isSender={false} />
+                                {mensagens.map((e, index) => (
+                                    <ChatMessage key={index} mensagem={e.mensagem} isSender={e.isSender} />
+                                ))}
                             </Grid>
                         </Grid>
 
@@ -104,13 +125,18 @@ function ChatBot() {
                                     type="text"
                                     fullWidth
                                     variant="standard"
-                                    value={chatMessage}
-                                    onChange={(event) => setChatMessage(event.target.value)}
+                                    value={chatForm.mensagem}
+                                    onChange={(event) => setChatForm({ ...chatForm, mensagem: event.target.value })}
+                                    onKeyDown={(event) => {
+                                        if (event.key === 'Enter') {
+                                            mandarMensagem();
+                                        }
+                                    }}
                                     sx={{ ml: '.5rem' }}
                                 />
                             </Grid>
                             <Grid item xs={2} sx={{ pr: '5px', display: 'flex', justifyContent: 'end' }}>
-                                <Button variant="contained" onClick={() => mandarMensagem(chatMessage)} >
+                                <Button variant="contained" onClick={mandarMensagem} >
                                     <SendIcon sx={{ fontSize: '2rem' }} />
                                 </Button>
                             </Grid>
